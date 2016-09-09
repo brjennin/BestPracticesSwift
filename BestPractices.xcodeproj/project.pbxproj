@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08F8128CA9ECC2978D2DABFA /* Pods_BestPracticesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EAC0E99A6C92352273C8513 /* Pods_BestPracticesTests.framework */; };
 		AECA4A481D8311EF00EBB222 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECA4A471D8311EF00EBB222 /* AppDelegate.swift */; };
 		AECA4A4A1D8311EF00EBB222 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECA4A491D8311EF00EBB222 /* ViewController.swift */; };
 		AECA4A4D1D8311EF00EBB222 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AECA4A4B1D8311EF00EBB222 /* Main.storyboard */; };
 		AECA4A4F1D8311EF00EBB222 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECA4A4E1D8311EF00EBB222 /* Assets.xcassets */; };
 		AECA4A521D8311EF00EBB222 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AECA4A501D8311EF00EBB222 /* LaunchScreen.storyboard */; };
 		AECA4A5D1D8311EF00EBB222 /* BestPracticesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECA4A5C1D8311EF00EBB222 /* BestPracticesTests.swift */; };
+		B63E7639F005B244B8EB149B /* Pods_BestPractices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A960EF264F74121529805475 /* Pods_BestPractices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +28,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0AC07C5D20B35015417D7DA0 /* Pods-BestPracticesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestPracticesTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BestPracticesTests/Pods-BestPracticesTests.release.xcconfig"; sourceTree = "<group>"; };
+		6A276F38FC1726A8C7E937B7 /* Pods-BestPractices.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestPractices.release.xcconfig"; path = "Pods/Target Support Files/Pods-BestPractices/Pods-BestPractices.release.xcconfig"; sourceTree = "<group>"; };
+		9EAC0E99A6C92352273C8513 /* Pods_BestPracticesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestPracticesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A68A29476DAABD3F71D1B900 /* Pods-BestPracticesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestPracticesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestPracticesTests/Pods-BestPracticesTests.debug.xcconfig"; sourceTree = "<group>"; };
+		A960EF264F74121529805475 /* Pods_BestPractices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestPractices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECA4A441D8311EF00EBB222 /* BestPractices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestPractices.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECA4A471D8311EF00EBB222 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AECA4A491D8311EF00EBB222 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +43,7 @@
 		AECA4A581D8311EF00EBB222 /* BestPracticesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BestPracticesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECA4A5C1D8311EF00EBB222 /* BestPracticesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestPracticesTests.swift; sourceTree = "<group>"; };
 		AECA4A5E1D8311EF00EBB222 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB5D658DE51C8BC1AD7FB586 /* Pods-BestPractices.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestPractices.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestPractices/Pods-BestPractices.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B63E7639F005B244B8EB149B /* Pods_BestPractices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,18 +59,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08F8128CA9ECC2978D2DABFA /* Pods_BestPracticesTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		09F368F64D307807BD0F14A9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A960EF264F74121529805475 /* Pods_BestPractices.framework */,
+				9EAC0E99A6C92352273C8513 /* Pods_BestPracticesTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AECA4A3B1D8311EF00EBB222 = {
 			isa = PBXGroup;
 			children = (
 				AECA4A461D8311EF00EBB222 /* BestPractices */,
 				AECA4A5B1D8311EF00EBB222 /* BestPracticesTests */,
 				AECA4A451D8311EF00EBB222 /* Products */,
+				D0205E958FE7369AF3A79338 /* Pods */,
+				09F368F64D307807BD0F14A9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,6 +117,17 @@
 			path = BestPracticesTests;
 			sourceTree = "<group>";
 		};
+		D0205E958FE7369AF3A79338 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FB5D658DE51C8BC1AD7FB586 /* Pods-BestPractices.debug.xcconfig */,
+				6A276F38FC1726A8C7E937B7 /* Pods-BestPractices.release.xcconfig */,
+				A68A29476DAABD3F71D1B900 /* Pods-BestPracticesTests.debug.xcconfig */,
+				0AC07C5D20B35015417D7DA0 /* Pods-BestPracticesTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -103,9 +135,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AECA4A611D8311EF00EBB222 /* Build configuration list for PBXNativeTarget "BestPractices" */;
 			buildPhases = (
+				3FA447BC1433CE83A247A398 /* [CP] Check Pods Manifest.lock */,
 				AECA4A401D8311EF00EBB222 /* Sources */,
 				AECA4A411D8311EF00EBB222 /* Frameworks */,
 				AECA4A421D8311EF00EBB222 /* Resources */,
+				A61823E9E83B6E9130ED0E31 /* [CP] Embed Pods Frameworks */,
+				FB4A78688743DAC082D2D138 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -120,9 +155,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AECA4A641D8311EF00EBB222 /* Build configuration list for PBXNativeTarget "BestPracticesTests" */;
 			buildPhases = (
+				19A4DE8F43F2C180802DAAB2 /* [CP] Check Pods Manifest.lock */,
 				AECA4A541D8311EF00EBB222 /* Sources */,
 				AECA4A551D8311EF00EBB222 /* Frameworks */,
 				AECA4A561D8311EF00EBB222 /* Resources */,
+				01BF72E8CC0485E1855E067A /* [CP] Embed Pods Frameworks */,
+				E05CCAC24AC14C1F62EB90AE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -191,6 +229,99 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		01BF72E8CC0485E1855E067A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BestPracticesTests/Pods-BestPracticesTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		19A4DE8F43F2C180802DAAB2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		3FA447BC1433CE83A247A398 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A61823E9E83B6E9130ED0E31 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BestPractices/Pods-BestPractices-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E05CCAC24AC14C1F62EB90AE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BestPracticesTests/Pods-BestPracticesTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB4A78688743DAC082D2D138 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BestPractices/Pods-BestPractices-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		AECA4A401D8311EF00EBB222 /* Sources */ = {
@@ -325,6 +456,7 @@
 		};
 		AECA4A621D8311EF00EBB222 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB5D658DE51C8BC1AD7FB586 /* Pods-BestPractices.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BestPractices/Info.plist;
@@ -336,6 +468,7 @@
 		};
 		AECA4A631D8311EF00EBB222 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6A276F38FC1726A8C7E937B7 /* Pods-BestPractices.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BestPractices/Info.plist;
@@ -347,6 +480,7 @@
 		};
 		AECA4A651D8311EF00EBB222 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A68A29476DAABD3F71D1B900 /* Pods-BestPracticesTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = BestPracticesTests/Info.plist;
@@ -359,6 +493,7 @@
 		};
 		AECA4A661D8311EF00EBB222 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0AC07C5D20B35015417D7DA0 /* Pods-BestPracticesTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = BestPracticesTests/Info.plist;
@@ -388,6 +523,7 @@
 				AECA4A631D8311EF00EBB222 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AECA4A641D8311EF00EBB222 /* Build configuration list for PBXNativeTarget "BestPracticesTests" */ = {
 			isa = XCConfigurationList;
@@ -396,6 +532,7 @@
 				AECA4A661D8311EF00EBB222 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
