@@ -13,6 +13,7 @@
 		AECA4A4D1D8311EF00EBB222 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AECA4A4B1D8311EF00EBB222 /* Main.storyboard */; };
 		AECA4A4F1D8311EF00EBB222 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECA4A4E1D8311EF00EBB222 /* Assets.xcassets */; };
 		AECA4A521D8311EF00EBB222 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AECA4A501D8311EF00EBB222 /* LaunchScreen.storyboard */; };
+		AEE1B39A1D83178C00588483 /* HomeViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE1B3991D83178C00588483 /* HomeViewControllerSpec.swift */; };
 		B63E7639F005B244B8EB149B /* Pods_BestPractices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A960EF264F74121529805475 /* Pods_BestPractices.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		AECA4A531D8311EF00EBB222 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AECA4A581D8311EF00EBB222 /* BestPracticesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BestPracticesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECA4A5E1D8311EF00EBB222 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AEE1B3991D83178C00588483 /* HomeViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewControllerSpec.swift; sourceTree = "<group>"; };
 		FB5D658DE51C8BC1AD7FB586 /* Pods-BestPractices.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestPractices.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestPractices/Pods-BestPractices.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				AECA4A5E1D8311EF00EBB222 /* Info.plist */,
+				AEE1B3991D83178C00588483 /* HomeViewControllerSpec.swift */,
 			);
 			path = BestPracticesTests;
 			sourceTree = "<group>";
@@ -158,6 +161,7 @@
 				AECA4A561D8311EF00EBB222 /* Resources */,
 				01BF72E8CC0485E1855E067A /* [CP] Embed Pods Frameworks */,
 				E05CCAC24AC14C1F62EB90AE /* [CP] Copy Pods Resources */,
+				AE304A6A1D831986001F1D0C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -288,6 +292,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BestPractices/Pods-BestPractices-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		AE304A6A1D831986001F1D0C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Fleet/Fleet/Script/copy_storyboard_info_files.sh\"";
+		};
 		E05CCAC24AC14C1F62EB90AE /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -334,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AEE1B39A1D83178C00588483 /* HomeViewControllerSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,6 +406,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -433,6 +452,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -479,10 +499,12 @@
 			baseConfigurationReference = A68A29476DAABD3F71D1B900 /* Pods-BestPracticesTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = BestPracticesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = brianjennings.BestPracticesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BestPractices.app/BestPractices";
 			};
 			name = Debug;
@@ -492,6 +514,7 @@
 			baseConfigurationReference = 0AC07C5D20B35015417D7DA0 /* Pods-BestPracticesTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = BestPracticesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = brianjennings.BestPracticesTests;
