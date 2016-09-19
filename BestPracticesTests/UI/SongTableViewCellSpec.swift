@@ -17,7 +17,7 @@ class SongTableViewCellSpec: QuickSpec {
         
         describe("Configuring a cell with a song") {
             beforeEach {
-                let song = Song(name: "title")
+                let song = Song(identifier: 123, name: "title", artist: "", url: "", albumArt: "")
                 subject.configureWithSong(song)
             }
             

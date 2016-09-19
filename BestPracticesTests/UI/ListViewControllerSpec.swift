@@ -60,8 +60,8 @@ class ListViewControllerSpec: QuickSpec {
             
             describe("When the service returns") {
                 beforeEach {
-                    let songOne = Song(name: "Song One")
-                    let songTwo = Song(name: "Song Two")
+                    let songOne = Song(identifier: 123, name: "Song One", artist: "", url: "", albumArt: "")
+                    let songTwo = Song(identifier: 111, name: "Song Two", artist: "", url: "", albumArt: "")
                     let songs = [songOne, songTwo]
                     
                     songService.completion(songs)
@@ -105,7 +105,7 @@ class ListViewControllerSpec: QuickSpec {
                     it("calls the delegate with the correct song") {
                         expect(songSelectionDelegate.calledDelegate).to(beTruthy())
                         expect(songSelectionDelegate.capturedSong).toNot(beNil())
-                        expect(songSelectionDelegate.capturedSong!.name).to(equal("Song One"))
+                        expect(songSelectionDelegate.capturedSong!.identifier).to(equal(123))
                     }
                 }
             }

@@ -16,7 +16,12 @@ class SongService: SongServiceProtocol {
             
             if let json = jsonObject {
                 for (_, subJson):(String, JSON) in json {
-                    songs.append(Song(name: subJson["name"].stringValue))
+                    let song = Song(identifier: subJson["id"].intValue,
+                                    name: subJson["name"].stringValue,
+                                    artist: subJson["artist"].stringValue,
+                                    url: subJson["url"].stringValue,
+                                    albumArt: subJson["album_art"].stringValue)
+                    songs.append(song)
                 }
             }
 
