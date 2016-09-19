@@ -9,6 +9,7 @@ class HomeViewControllerSpec: QuickSpec {
         var subject: HomeViewController!
         var navigationController: UINavigationController!
         var listViewController: ListViewController!
+        var imageService: MockImageService!
 
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -17,6 +18,10 @@ class HomeViewControllerSpec: QuickSpec {
             try! storyboard.bindViewController(listViewController, toIdentifier: "ListViewController")
 
             subject = storyboard.instantiateViewControllerWithIdentifier("HomeViewController") as! HomeViewController
+            
+            imageService = MockImageService()
+            subject.imageService = imageService
+            
             navigationController = UINavigationController(rootViewController: subject)
         }
 
@@ -54,6 +59,39 @@ class HomeViewControllerSpec: QuickSpec {
                     
                     it("pops the list view controller off the navigation stack") {
                         expect(navigationController.topViewController).to(beIdenticalTo(subject))
+                    }
+                    
+                    it("calls the image service") {
+                        expect(imageService.calledService).to(beTruthy())
+                        expect(imageService.capturedURL).to(equal("album_art"))
+                    }
+                    
+                    describe("When the image service resolves") {
+                        var image: UIImage?
+                        
+                        context("If there was an issue and there is no image") {
+                            beforeEach {
+                                image = nil
+                                imageService.completion(image)
+                            }
+                            
+                            it("leaves the imageview blank") {
+                                expect(subject.albumArtImageView.image).to(beNil())
+                            }
+                        }
+                        
+                        context("If the server properly returned an image") {
+                            beforeEach {
+                                let bundle = NSBundle(forClass: self.dynamicType)
+                                let path = bundle.pathForResource("hall_and_oates_cover", ofType: "jpeg")!
+                                image = UIImage(contentsOfFile: path)
+                                imageService.completion(image)
+                            }
+                            
+                            it("sets the album art image") {
+                                expect(subject.albumArtImageView.image).to(equal(image))
+                            }
+                        }
                     }
                 }
             }

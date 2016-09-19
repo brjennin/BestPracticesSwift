@@ -18,6 +18,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bg5-RO-Cu9" userLabel="album art">
+                                <rect key="frame" x="20" y="64" width="560" height="536"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qcZ-Sj-h7c">
                                 <rect key="frame" x="255" y="285" width="91" height="30"/>
                                 <state key="normal" title="Loose Button"/>
@@ -36,12 +39,17 @@
                         <constraints>
                             <constraint firstItem="qcZ-Sj-h7c" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CXb-fJ-xPf"/>
                             <constraint firstItem="qcZ-Sj-h7c" firstAttribute="top" secondItem="PER-4W-yur" secondAttribute="bottom" constant="15" id="Dis-K2-Sgr"/>
+                            <constraint firstItem="Bg5-RO-Cu9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Fhg-Vc-7E8"/>
                             <constraint firstItem="qcZ-Sj-h7c" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="KgF-qg-Alz"/>
                             <constraint firstItem="PER-4W-yur" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aQ6-hx-xdz"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bg5-RO-Cu9" secondAttribute="bottom" id="iSx-DS-7RK"/>
+                            <constraint firstItem="Bg5-RO-Cu9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="kZr-Im-xdW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Bg5-RO-Cu9" secondAttribute="trailing" id="qym-sh-O7h"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fQz-4l-7U3"/>
                     <connections>
+                        <outlet property="albumArtImageView" destination="Bg5-RO-Cu9" id="DKt-mo-3CF"/>
                         <outlet property="currentSongLabel" destination="PER-4W-yur" id="EpU-ac-yyl"/>
                         <outlet property="looseButton" destination="qcZ-Sj-h7c" id="bhK-o6-dVy"/>
                     </connections>

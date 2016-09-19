@@ -30,6 +30,10 @@
 		AEAACF371D8C4C01007177CF /* MockRequestTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF361D8C4C01007177CF /* MockRequestTranslator.swift */; };
 		AEAACF391D8C4C9C007177CF /* RequestTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF381D8C4C9C007177CF /* RequestTranslator.swift */; };
 		AEAACF421D8C7A9B007177CF /* RequestTranslatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF411D8C7A9B007177CF /* RequestTranslatorSpec.swift */; };
+		AEAACF441D908FA1007177CF /* hall_and_oates_cover.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = AEAACF431D908FA1007177CF /* hall_and_oates_cover.jpeg */; };
+		AEAACF461D908FF7007177CF /* MockImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF451D908FF7007177CF /* MockImageService.swift */; };
+		AEAACF481D90907D007177CF /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF471D90907D007177CF /* ImageService.swift */; };
+		AEAACF4A1D909E1D007177CF /* ImageServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF491D909E1D007177CF /* ImageServiceSpec.swift */; };
 		AECA4A481D8311EF00EBB222 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECA4A471D8311EF00EBB222 /* AppDelegate.swift */; };
 		AECA4A4F1D8311EF00EBB222 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECA4A4E1D8311EF00EBB222 /* Assets.xcassets */; };
 		B63E7639F005B244B8EB149B /* Pods_BestPractices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A960EF264F74121529805475 /* Pods_BestPractices.framework */; };
@@ -83,6 +87,10 @@
 		AEAACF361D8C4C01007177CF /* MockRequestTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequestTranslator.swift; sourceTree = "<group>"; };
 		AEAACF381D8C4C9C007177CF /* RequestTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTranslator.swift; sourceTree = "<group>"; };
 		AEAACF411D8C7A9B007177CF /* RequestTranslatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTranslatorSpec.swift; sourceTree = "<group>"; };
+		AEAACF431D908FA1007177CF /* hall_and_oates_cover.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hall_and_oates_cover.jpeg; sourceTree = "<group>"; };
+		AEAACF451D908FF7007177CF /* MockImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockImageService.swift; sourceTree = "<group>"; };
+		AEAACF471D90907D007177CF /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		AEAACF491D909E1D007177CF /* ImageServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageServiceSpec.swift; sourceTree = "<group>"; };
 		AECA4A441D8311EF00EBB222 /* BestPractices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestPractices.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECA4A471D8311EF00EBB222 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AECA4A4E1D8311EF00EBB222 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -163,6 +171,7 @@
 				AEAACF1D1D8B1161007177CF /* MockRequestProvider.swift */,
 				AEAACF2B1D8B1B08007177CF /* MockHTTPClient.swift */,
 				AEAACF361D8C4C01007177CF /* MockRequestTranslator.swift */,
+				AEAACF451D908FF7007177CF /* MockImageService.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -183,6 +192,7 @@
 				AEAACF2F1D8B2586007177CF /* RequestProviderSpec.swift */,
 				AEAACF341D8B6373007177CF /* HTTPClientSpec.swift */,
 				AEAACF411D8C7A9B007177CF /* RequestTranslatorSpec.swift */,
+				AEAACF491D909E1D007177CF /* ImageServiceSpec.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -190,6 +200,7 @@
 		AEAACF311D8B518C007177CF /* ResponseFixtures */ = {
 			isa = PBXGroup;
 			children = (
+				AEAACF431D908FA1007177CF /* hall_and_oates_cover.jpeg */,
 				AEAACF321D8B56B7007177CF /* getSongsListResponse.json */,
 			);
 			path = ResponseFixtures;
@@ -270,6 +281,7 @@
 				AEAACF231D8B1277007177CF /* RequestProvider.swift */,
 				AEAACF2D1D8B1CC8007177CF /* HTTPClient.swift */,
 				AEAACF381D8C4C9C007177CF /* RequestTranslator.swift */,
+				AEAACF471D90907D007177CF /* ImageService.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -391,6 +403,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEAACF331D8B56B7007177CF /* getSongsListResponse.json in Resources */,
+				AEAACF441D908FA1007177CF /* hall_and_oates_cover.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,6 +528,7 @@
 				AEAACF391D8C4C9C007177CF /* RequestTranslator.swift in Sources */,
 				DE99CC8B9BF5F664B889EB45 /* ListViewController.swift in Sources */,
 				DE99C7ED7FAF55CA1CBA9709 /* Song.swift in Sources */,
+				AEAACF481D90907D007177CF /* ImageService.swift in Sources */,
 				AEAACF2E1D8B1CC8007177CF /* HTTPClient.swift in Sources */,
 				AE304A821D888212001F1D0C /* SongSelectionDelegate.swift in Sources */,
 				DE99C1B1FCC8BB442521DA28 /* SongService.swift in Sources */,
@@ -537,6 +551,8 @@
 				AEAACF161D8B0697007177CF /* SongServiceSpec.swift in Sources */,
 				DE99C16832E147A8C83CC18E /* HomeViewControllerSpec.swift in Sources */,
 				AEAACF0C1D8A10AE007177CF /* MockListViewController.swift in Sources */,
+				AEAACF461D908FF7007177CF /* MockImageService.swift in Sources */,
+				AEAACF4A1D909E1D007177CF /* ImageServiceSpec.swift in Sources */,
 				AEAACF351D8B6373007177CF /* HTTPClientSpec.swift in Sources */,
 				AEAACF061D8A0B6B007177CF /* MockSongService.swift in Sources */,
 				AEAACF111D8B023F007177CF /* DispatcherSpec.swift in Sources */,
