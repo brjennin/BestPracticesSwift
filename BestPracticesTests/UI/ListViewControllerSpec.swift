@@ -32,6 +32,10 @@ class ListViewControllerSpec: QuickSpec {
                 Fleet.setApplicationWindowRootViewController(subject)
             }
             
+            it("sets the title") {
+                expect(subject.title).to(equal("YACHTY"))
+            }
+            
             it("sets itself as the data source for the table view") {
                 expect(subject.tableView.dataSource).to(beIdenticalTo(subject))
             }

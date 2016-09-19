@@ -8,6 +8,12 @@ class HomeViewController: UIViewController {
 
     var imageService: ImageServiceProtocol! = ImageService()
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.title = "YACHTY"
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "segueToListView" {
             if let listViewController = segue.destinationViewController as? ListViewController {

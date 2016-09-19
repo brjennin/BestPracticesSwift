@@ -34,6 +34,10 @@ class HomeViewControllerSpec: QuickSpec {
                 expect(subject.looseButton).toNot(beNil())
             }
             
+            it("sets the title") {
+                expect(subject.title).to(equal("YACHTY"))
+            }
+            
             describe("Tapping on the button to get to the list view") {
                 beforeEach {
                     subject.looseButton.tap()

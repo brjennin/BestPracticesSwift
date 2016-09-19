@@ -9,7 +9,9 @@ class ListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
+        self.title = "YACHTY"
+        
         self.songService.getSongs({ songs in
             self.songs = songs
             self.dispatcher.dispatchToMainQueue({
