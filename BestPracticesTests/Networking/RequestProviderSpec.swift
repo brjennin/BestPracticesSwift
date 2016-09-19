@@ -20,7 +20,7 @@ class RequestProviderSpec: QuickSpec {
             }
             
             it("returns a request") {
-                expect(result.urlString).to(equal("https://pockethawk.herokuapp.com/api/v1/birds"))
+                expect(result.urlString).to(equal("https://yachty.herokuapp.com/api/v1/songs"))
                 expect(result.httpMethod).to(equal(HTTPMethod.GET))
                 expect(result.params).to(beNil())
                 expect(result.headers).to(beNil())
