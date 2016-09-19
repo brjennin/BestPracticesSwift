@@ -1,18 +1,35 @@
 PODS:
+  - Alamofire (3.5.0)
   - Fleet (0.2.3)
+  - Mockingjay (1.2.2):
+    - Mockingjay/Core (= 1.2.2)
+    - Mockingjay/XCTest (= 1.2.2)
+  - Mockingjay/Core (1.2.2):
+    - URITemplate (~> 1.3)
+  - Mockingjay/XCTest (1.2.2):
+    - Mockingjay/Core
   - Nimble (4.1.0)
   - Quick (0.9.3)
+  - SwiftyJSON (2.3.2)
+  - URITemplate (1.3.1)
 
 DEPENDENCIES:
+  - Alamofire (~> 3.5)
   - Fleet (~> 0.2)
+  - Mockingjay (~> 1.2)
   - Nimble (~> 4.1)
   - Quick (~> 0.9)
+  - SwiftyJSON (~> 2.3)
 
 SPEC CHECKSUMS:
+  Alamofire: b70a7352335f8ea5babd0a923eb7e8eacc67b877
   Fleet: a28158f64ac3e34e3e6fa4daefbe12d5d65acac5
+  Mockingjay: 5de65f14108473afc6727e05df9a3ecc9cef8562
   Nimble: 97a0a4cae5124c117115634b2d055d8c97d0af19
   Quick: 13a2a2b19a5d8e3ed4fd0c36ee46597fd77ebf71
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  URITemplate: 398a48d6559e23b77bd41176b675b017ad1fc959
 
-PODFILE CHECKSUM: 2cee0a68a17a2c31c54ec7d39ce2665f80543b1b
+PODFILE CHECKSUM: 580014e3d0cbed65a8533833b20d0192e90017df
 
 COCOAPODS: 1.0.1

@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Home View Controller-->
@@ -21,18 +22,27 @@
                                 <rect key="frame" x="255" y="285" width="91" height="30"/>
                                 <state key="normal" title="Loose Button"/>
                                 <connections>
-                                    <segue destination="aYW-py-we1" kind="show" id="XBd-rF-CR5"/>
+                                    <segue destination="aYW-py-we1" kind="show" identifier="segueToListView" id="XBd-rF-CR5"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PER-4W-yur">
+                                <rect key="frame" x="256" y="249" width="89" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="qcZ-Sj-h7c" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CXb-fJ-xPf"/>
+                            <constraint firstItem="qcZ-Sj-h7c" firstAttribute="top" secondItem="PER-4W-yur" secondAttribute="bottom" constant="15" id="Dis-K2-Sgr"/>
                             <constraint firstItem="qcZ-Sj-h7c" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="KgF-qg-Alz"/>
+                            <constraint firstItem="PER-4W-yur" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aQ6-hx-xdz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fQz-4l-7U3"/>
                     <connections>
+                        <outlet property="currentSongLabel" destination="PER-4W-yur" id="EpU-ac-yyl"/>
                         <outlet property="looseButton" destination="qcZ-Sj-h7c" id="bhK-o6-dVy"/>
                     </connections>
                 </viewController>
@@ -40,22 +50,38 @@
             </objects>
             <point key="canvasLocation" x="369" y="547"/>
         </scene>
-        <!--Table View Controller-->
+        <!--List View Controller-->
         <scene sceneID="SjO-2H-9OQ">
             <objects>
-                <tableViewController storyboardIdentifier="ListViewController" id="aYW-py-we1" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="ListViewController" id="aYW-py-we1" customClass="ListViewController" customModule="BestPractices" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="gJy-oy-Oug">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="idi-UU-MD0">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SongTableViewCell" rowHeight="44" id="idi-UU-MD0" customClass="SongTableViewCell" customModule="BestPractices" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="idi-UU-MD0" id="d0D-Rm-Hdu">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1E-l9-61Q" userLabel="Title Label">
+                                            <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="a1E-l9-61Q" secondAttribute="trailing" id="kH4-PQ-jjj"/>
+                                        <constraint firstItem="a1E-l9-61Q" firstAttribute="leading" secondItem="d0D-Rm-Hdu" secondAttribute="leadingMargin" id="nzc-V4-8O2"/>
+                                        <constraint firstItem="a1E-l9-61Q" firstAttribute="centerY" secondItem="d0D-Rm-Hdu" secondAttribute="centerY" id="zbn-XS-QtK"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="titleLabel" destination="a1E-l9-61Q" id="Ln5-JZ-shp"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
