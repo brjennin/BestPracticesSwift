@@ -9,13 +9,14 @@ class HomeViewController: UIViewController {
 
     var imageService: ImageServiceProtocol! = ImageService()
     var player: PlayerProtocol! = Player()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.title = "YACHTY"
+        self.currentSongLabel.text = ""
     }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "segueToListView" {
             if let listViewController = segue.destinationViewController as? ListViewController {
@@ -23,7 +24,7 @@ class HomeViewController: UIViewController {
             }
         }
     }
-    
+
     @IBAction func didTapPlay(sender: UIButton) {
         self.player.play()
     }
@@ -35,7 +36,7 @@ extension HomeViewController: SongSelectionDelegate {
         self.navigationController?.popViewControllerAnimated(true)
         self.currentSongLabel.text = song.name
         self.player.loadSong(song)
-        
+
         self.imageService.getImage(song.albumArt) { image in
             if let albumArt = image {
                 self.albumArtImageView.image = albumArt
