@@ -10,6 +10,7 @@ class HomeViewControllerSpec: QuickSpec {
         var navigationController: UINavigationController!
         var listViewController: ListViewController!
         var imageService: MockImageService!
+        var player: MockPlayer!
 
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -21,6 +22,9 @@ class HomeViewControllerSpec: QuickSpec {
             
             imageService = MockImageService()
             subject.imageService = imageService
+            
+            player = MockPlayer()
+            subject.player = player
             
             navigationController = UINavigationController(rootViewController: subject)
         }
@@ -36,6 +40,20 @@ class HomeViewControllerSpec: QuickSpec {
             
             it("sets the title") {
                 expect(subject.title).to(equal("YACHTY"))
+            }
+            
+            it("does not load the player") {
+                expect(player.loadedSong).to(beFalsy())
+            }
+            
+            describe("Tapping on the play button") {
+                beforeEach {
+                    subject.playButton.tap()
+                }
+                
+                it("tells the player to play") {
+                    expect(player.playedSong).to(beTruthy())
+                }
             }
             
             describe("Tapping on the button to get to the list view") {
@@ -68,6 +86,11 @@ class HomeViewControllerSpec: QuickSpec {
                     it("calls the image service") {
                         expect(imageService.calledService).to(beTruthy())
                         expect(imageService.capturedURL).to(equal("album_art"))
+                    }
+                    
+                    it("loads the song into the player") {
+                        expect(player.loadedSong).to(beTruthy())
+                        expect(player.capturedLoadedSong!.identifier).to(equal(993))
                     }
                     
                     describe("When the image service resolves") {

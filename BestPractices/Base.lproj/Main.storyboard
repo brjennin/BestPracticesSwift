@@ -31,20 +31,30 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Song Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PER-4W-yur">
                                 <rect key="frame" x="256" y="249" width="89" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVg-wo-ubL">
+                                <rect key="frame" x="285" y="520" width="31" height="60"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <state key="normal" title="►"/>
+                                <connections>
+                                    <action selector="didTapPlay:" destination="BYZ-38-t0r" eventType="touchUpInside" id="j7G-qY-d8D"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="qcZ-Sj-h7c" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CXb-fJ-xPf"/>
                             <constraint firstItem="qcZ-Sj-h7c" firstAttribute="top" secondItem="PER-4W-yur" secondAttribute="bottom" constant="15" id="Dis-K2-Sgr"/>
                             <constraint firstItem="Bg5-RO-Cu9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Fhg-Vc-7E8"/>
+                            <constraint firstItem="NVg-wo-ubL" firstAttribute="centerX" secondItem="Bg5-RO-Cu9" secondAttribute="centerX" id="Ft3-zo-UTQ"/>
                             <constraint firstItem="qcZ-Sj-h7c" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="KgF-qg-Alz"/>
                             <constraint firstItem="PER-4W-yur" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aQ6-hx-xdz"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bg5-RO-Cu9" secondAttribute="bottom" id="iSx-DS-7RK"/>
                             <constraint firstItem="Bg5-RO-Cu9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="kZr-Im-xdW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Bg5-RO-Cu9" secondAttribute="trailing" id="qym-sh-O7h"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NVg-wo-ubL" secondAttribute="bottom" constant="20" id="uK5-5I-9f2"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fQz-4l-7U3"/>
@@ -52,6 +62,7 @@
                         <outlet property="albumArtImageView" destination="Bg5-RO-Cu9" id="DKt-mo-3CF"/>
                         <outlet property="currentSongLabel" destination="PER-4W-yur" id="EpU-ac-yyl"/>
                         <outlet property="looseButton" destination="qcZ-Sj-h7c" id="bhK-o6-dVy"/>
+                        <outlet property="playButton" destination="NVg-wo-ubL" id="sog-xO-J6M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -77,7 +88,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1E-l9-61Q" userLabel="Title Label">
                                             <rect key="frame" x="8" y="11" width="584" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>

@@ -34,6 +34,10 @@
 		AEAACF461D908FF7007177CF /* MockImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF451D908FF7007177CF /* MockImageService.swift */; };
 		AEAACF481D90907D007177CF /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF471D90907D007177CF /* ImageService.swift */; };
 		AEAACF4A1D909E1D007177CF /* ImageServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF491D909E1D007177CF /* ImageServiceSpec.swift */; };
+		AEAACF4C1D90B595007177CF /* MockPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF4B1D90B595007177CF /* MockPlayer.swift */; };
+		AEAACF4F1D90B662007177CF /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF4E1D90B662007177CF /* Player.swift */; };
+		AEC6AE141D90B83B00933DCC /* PlayerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC6AE131D90B83B00933DCC /* PlayerSpec.swift */; };
+		AEC6AE161D91997400933DCC /* maneater.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AEC6AE151D91997400933DCC /* maneater.mp3 */; };
 		AECA4A481D8311EF00EBB222 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AECA4A471D8311EF00EBB222 /* AppDelegate.swift */; };
 		AECA4A4F1D8311EF00EBB222 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AECA4A4E1D8311EF00EBB222 /* Assets.xcassets */; };
 		B63E7639F005B244B8EB149B /* Pods_BestPractices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A960EF264F74121529805475 /* Pods_BestPractices.framework */; };
@@ -91,6 +95,10 @@
 		AEAACF451D908FF7007177CF /* MockImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockImageService.swift; sourceTree = "<group>"; };
 		AEAACF471D90907D007177CF /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		AEAACF491D909E1D007177CF /* ImageServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageServiceSpec.swift; sourceTree = "<group>"; };
+		AEAACF4B1D90B595007177CF /* MockPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPlayer.swift; sourceTree = "<group>"; };
+		AEAACF4E1D90B662007177CF /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		AEC6AE131D90B83B00933DCC /* PlayerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerSpec.swift; sourceTree = "<group>"; };
+		AEC6AE151D91997400933DCC /* maneater.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = maneater.mp3; sourceTree = "<group>"; };
 		AECA4A441D8311EF00EBB222 /* BestPractices.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BestPractices.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AECA4A471D8311EF00EBB222 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AECA4A4E1D8311EF00EBB222 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -172,6 +180,7 @@
 				AEAACF2B1D8B1B08007177CF /* MockHTTPClient.swift */,
 				AEAACF361D8C4C01007177CF /* MockRequestTranslator.swift */,
 				AEAACF451D908FF7007177CF /* MockImageService.swift */,
+				AEAACF4B1D90B595007177CF /* MockPlayer.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -200,10 +209,27 @@
 		AEAACF311D8B518C007177CF /* ResponseFixtures */ = {
 			isa = PBXGroup;
 			children = (
+				AEC6AE151D91997400933DCC /* maneater.mp3 */,
 				AEAACF431D908FA1007177CF /* hall_and_oates_cover.jpeg */,
 				AEAACF321D8B56B7007177CF /* getSongsListResponse.json */,
 			);
 			path = ResponseFixtures;
+			sourceTree = "<group>";
+		};
+		AEAACF4D1D90B645007177CF /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				AEAACF4E1D90B662007177CF /* Player.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		AEC6AE121D90B82A00933DCC /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				AEC6AE131D90B83B00933DCC /* PlayerSpec.swift */,
+			);
+			path = Player;
 			sourceTree = "<group>";
 		};
 		AECA4A3B1D8311EF00EBB222 = {
@@ -229,6 +255,7 @@
 		AECA4A461D8311EF00EBB222 /* BestPractices */ = {
 			isa = PBXGroup;
 			children = (
+				AEAACF4D1D90B645007177CF /* Player */,
 				AE304A7B1D88528A001F1D0C /* UI */,
 				AECA4A471D8311EF00EBB222 /* AppDelegate.swift */,
 				AECA4A4E1D8311EF00EBB222 /* Assets.xcassets */,
@@ -243,6 +270,7 @@
 		AECA4A5B1D8311EF00EBB222 /* BestPracticesTests */ = {
 			isa = PBXGroup;
 			children = (
+				AEC6AE121D90B82A00933DCC /* Player */,
 				AEAACF311D8B518C007177CF /* ResponseFixtures */,
 				AEAACF141D8B0671007177CF /* Networking */,
 				AEAACF0F1D8B0222007177CF /* Dispatching */,
@@ -404,6 +432,7 @@
 			files = (
 				AEAACF331D8B56B7007177CF /* getSongsListResponse.json in Resources */,
 				AEAACF441D908FA1007177CF /* hall_and_oates_cover.jpeg in Resources */,
+				AEC6AE161D91997400933DCC /* maneater.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,6 +553,7 @@
 				AEAACF241D8B1277007177CF /* RequestProvider.swift in Sources */,
 				AECA4A481D8311EF00EBB222 /* AppDelegate.swift in Sources */,
 				DE99C6A10D742ACFD3D52FA5 /* HomeViewController.swift in Sources */,
+				AEAACF4F1D90B662007177CF /* Player.swift in Sources */,
 				DE99C15018384EC0FA4D377B /* SongTableViewCell.swift in Sources */,
 				AEAACF391D8C4C9C007177CF /* RequestTranslator.swift in Sources */,
 				DE99CC8B9BF5F664B889EB45 /* ListViewController.swift in Sources */,
@@ -545,6 +575,7 @@
 				AEAACF371D8C4C01007177CF /* MockRequestTranslator.swift in Sources */,
 				AEAACF2C1D8B1B08007177CF /* MockHTTPClient.swift in Sources */,
 				DE99C358C42FCD188D5ECBC4 /* ListViewControllerSpec.swift in Sources */,
+				AEC6AE141D90B83B00933DCC /* PlayerSpec.swift in Sources */,
 				AE304A7E1D885A03001F1D0C /* SongSpec.swift in Sources */,
 				AEAACF131D8B033C007177CF /* MockOperationQueue.swift in Sources */,
 				AEAACF421D8C7A9B007177CF /* RequestTranslatorSpec.swift in Sources */,
@@ -559,6 +590,7 @@
 				AEAACF301D8B2586007177CF /* RequestProviderSpec.swift in Sources */,
 				AEAACF0A1D8A0BA3007177CF /* MockSongSelectionDelegate.swift in Sources */,
 				AEAACF1E1D8B1161007177CF /* MockRequestProvider.swift in Sources */,
+				AEAACF4C1D90B595007177CF /* MockPlayer.swift in Sources */,
 				AE304A801D885CAD001F1D0C /* SongTableViewCellSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

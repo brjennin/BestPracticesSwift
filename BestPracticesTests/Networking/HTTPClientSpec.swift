@@ -164,6 +164,109 @@ class HTTPClientSpec: QuickSpec {
                 }
             }
         }
+        
+        describe(".downloadFile") {
+            let bundle = NSBundle(forClass: self.dynamicType)
+            let path = bundle.pathForResource("maneater", ofType: "mp3")!
+            let sampleData = NSData(contentsOfFile: path)
+            
+            let fileManager = NSFileManager.defaultManager()
+            
+            context("When a 200 response code") {
+                beforeEach {
+                    self.stub(uri("dataURL"), builder: http(200, data: sampleData))
+                }
+                
+                it("returns a url") {
+                    var completionCalled = false
+                    
+                    waitUntil { done in
+                        subject.downloadFile("dataURL", completion: {url in
+                            completionCalled = true
+                            expect(url).toNot(beNil())
+                            expect(fileManager.fileExistsAtPath(url!.path!)).to(beTruthy())
+                            expect(NSData(contentsOfURL: url!)).to(equal(sampleData))
+                            
+                            done()
+                        })
+                    }
+                    
+                    expect(completionCalled).toEventually(beTruthy())
+                }
+
+                it("will still return a URL to the file if it already exists in the system") {
+                    var firstComplationCalled = false
+                    var secondComplationCalled = false
+                    
+                    waitUntil { done in
+                        subject.downloadFile("dataURL", completion: {url in
+                            firstComplationCalled = true
+                            expect(url).toNot(beNil())
+                            expect(fileManager.fileExistsAtPath(url!.path!)).to(beTruthy())
+                            expect(NSData(contentsOfURL: url!)).to(equal(sampleData))
+                            
+                            done()
+                        })
+                    }
+                    
+                    expect(firstComplationCalled).toEventually(beTruthy())
+                    
+                    waitUntil { done in
+                        subject.downloadFile("dataURL", completion: {url in
+                            secondComplationCalled = true
+                            expect(url).toNot(beNil())
+                            expect(fileManager.fileExistsAtPath(url!.path!)).to(beTruthy())
+                            expect(NSData(contentsOfURL: url!)).to(equal(sampleData))
+                            
+                            done()
+                        })
+                    }
+                    
+                    expect(secondComplationCalled).toEventually(beTruthy())
+                }
+            }
+            
+            context("When a non-200 response code") {
+                beforeEach {
+                    self.stub(uri("dataURL"), builder: http(300, data: sampleData))
+                }
+                
+                it("returns nil for the URL") {
+                    var completionCalled = false
+                    
+                    waitUntil { done in
+                        subject.downloadFile("dataURL", completion: {url in
+                            completionCalled = true
+                            expect(url).to(beNil())
+                            done()
+                        })
+                    }
+                    
+                    expect(completionCalled).toEventually(beTruthy())
+                }
+            }
+            
+            context("When there is a server error") {
+                beforeEach {
+                    let error = NSError(domain: "com.error.thing", code: 500, userInfo: nil)
+                    self.stub(uri("dataURL"), builder: failure(error))
+                }
+                
+                it("returns nil for the URL") {
+                    var completionCalled = false
+                    
+                    waitUntil { done in
+                        subject.downloadFile("dataURL", completion: {url in
+                            completionCalled = true
+                            expect(url).to(beNil())
+                            done()
+                        })
+                    }
+                    
+                    expect(completionCalled).toEventually(beTruthy())
+                }
+            }
+        }
 
     }
 }
