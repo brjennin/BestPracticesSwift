@@ -3,7 +3,7 @@ import Nimble
 import Fleet
 @testable import BestPractices
 
-class ListViewControllerSpec: QuickSpec {        
+class ListViewControllerSpec: QuickSpec {
     
     override func spec() {
         
@@ -27,10 +27,74 @@ class ListViewControllerSpec: QuickSpec {
             subject.songSelectionDelegate = songSelectionDelegate
         }
         
+        sharedExamples("fetching songs from the service") {
+            it("calls the SongService") {
+                expect(songService.calledService).to(beTruthy())
+            }
+            
+            describe("When the service returns") {
+                beforeEach {
+                    let songOne = Song(identifier: 123, name: "Song One", artist: "", url: "", albumArt: "")
+                    let songTwo = Song(identifier: 111, name: "Song Two", artist: "", url: "", albumArt: "")
+                    let songs = [songOne, songTwo]
+                    
+                    songService.completion!(songs)
+                }
+                
+                it("should dispatch to the main queue") {
+                    expect(dispatcher.calledDispatch).to(beTruthy())
+                }
+                
+                it("has 2 song table view cells correctly configured") {
+                    expect(subject.tableView.visibleCells.count).to(equal(2))
+                    expect(subject.tableView.visibleCells.first).to(beAKindOf(SongTableViewCell))
+                    expect(subject.tableView.visibleCells.last).to(beAKindOf(SongTableViewCell))
+                    
+                    let cellOne = subject.tableView.visibleCells.first as! SongTableViewCell
+                    let cellTwo = subject.tableView.visibleCells.last as! SongTableViewCell
+                    expect(cellOne.titleLabel.text).to(equal("Song One"))
+                    expect(cellTwo.titleLabel.text).to(equal("Song Two"))
+                }
+                
+                it("should end refreshing") {
+                    expect(subject.refreshControl!.refreshing).to(beFalsy())
+                }
+                
+                describe("As a UITableViewDataSource") {
+                    describe(".numberOfSectionsInTableView") {
+                        it("should have 1 section") {
+                            expect(subject.numberOfSectionsInTableView(subject.tableView)).to(equal(1))
+                        }
+                    }
+                    
+                    describe(".tableView:numberOfRowsInSection:") {
+                        it("should have 2 rows in the first section") {
+                            expect(subject.tableView(subject.tableView, numberOfRowsInSection: 0)).to(equal(2))
+                        }
+                    }
+                }
+                
+                describe("Tapping on a cell") {
+                    beforeEach {
+                        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
+                        subject.tableView(subject.tableView, didSelectRowAtIndexPath: indexPath)
+                    }
+                    
+                    it("calls the delegate with the correct song") {
+                        expect(songSelectionDelegate.calledDelegate).to(beTruthy())
+                        expect(songSelectionDelegate.capturedSong).toNot(beNil())
+                        expect(songSelectionDelegate.capturedSong!.identifier).to(equal(123))
+                    }
+                }
+            }
+        }
+        
         describe(".viewDidLoad") {
             beforeEach {
                 Fleet.setApplicationWindowRootViewController(subject)
             }
+            
+            itBehavesLike("fetching songs from the service")
             
             it("sets the title") {
                 expect(subject.title).to(equal("YACHTY"))
@@ -44,8 +108,9 @@ class ListViewControllerSpec: QuickSpec {
                 expect(subject.tableView.delegate).to(beIdenticalTo(subject))
             }
             
-            it("calls the SongService") {
-                expect(songService.calledService).to(beTruthy())
+            it("sets up a refresh control") {
+                expect(subject.refreshControl!).toNot(beNil())
+                expect(subject.tableView.subviews).to(contain(subject.refreshControl))
             }
             
             describe("As a UITableViewDataSource") {
@@ -62,56 +127,14 @@ class ListViewControllerSpec: QuickSpec {
                 }
             }
             
-            describe("When the service returns") {
+            describe("Pulling to refresh") {
                 beforeEach {
-                    let songOne = Song(identifier: 123, name: "Song One", artist: "", url: "", albumArt: "")
-                    let songTwo = Song(identifier: 111, name: "Song Two", artist: "", url: "", albumArt: "")
-                    let songs = [songOne, songTwo]
-                    
-                    songService.completion(songs)
-                }
-
-                it("should dispatch to the main queue") {
-                    expect(dispatcher.calledDispatch).to(beTruthy())
+                    songService.reset()
+                    subject.refreshControl!.sendActionsForControlEvents(.ValueChanged)
+                    subject.refreshControl!.beginRefreshing()
                 }
                 
-                it("has 2 song table view cells correctly configured") {
-                    expect(subject.tableView.visibleCells.count).to(equal(2))
-                    expect(subject.tableView.visibleCells.first).to(beAKindOf(SongTableViewCell))
-                    expect(subject.tableView.visibleCells.last).to(beAKindOf(SongTableViewCell))
-                    
-                    let cellOne = subject.tableView.visibleCells.first as! SongTableViewCell
-                    let cellTwo = subject.tableView.visibleCells.last as! SongTableViewCell
-                    expect(cellOne.titleLabel.text).to(equal("Song One"))
-                    expect(cellTwo.titleLabel.text).to(equal("Song Two"))
-                }
-                
-                describe("As a UITableViewDataSource") {
-                    describe(".numberOfSectionsInTableView") {
-                        it("should have 1 section") {
-                            expect(subject.numberOfSectionsInTableView(subject.tableView)).to(equal(1))
-                        }
-                    }
-                    
-                    describe(".tableView:numberOfRowsInSection:") {
-                        it("should have 2 rows in the first section") {
-                            expect(subject.tableView(subject.tableView, numberOfRowsInSection: 0)).to(equal(2))
-                        }                        
-                    }
-                }
-                
-                describe("Tapping on a cell") {
-                    beforeEach {
-                        let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                        subject.tableView(subject.tableView, didSelectRowAtIndexPath: indexPath)
-                    }
-                    
-                    it("calls the delegate with the correct song") {
-                        expect(songSelectionDelegate.calledDelegate).to(beTruthy())
-                        expect(songSelectionDelegate.capturedSong).toNot(beNil())
-                        expect(songSelectionDelegate.capturedSong!.identifier).to(equal(123))
-                    }
-                }
+                itBehavesLike("fetching songs from the service")
             }
         }
         

@@ -12,12 +12,10 @@ class ListViewController: UITableViewController {
         
         self.title = "YACHTY"
         
-        self.songService.getSongs({ songs in
-            self.songs = songs
-            self.dispatcher.dispatchToMainQueue({
-                self.tableView.reloadData()
-            })
-        })
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.addTarget(self, action: #selector(refresh(_:)), forControlEvents: .ValueChanged)
+
+        fetchSongs()
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -35,4 +33,17 @@ class ListViewController: UITableViewController {
         self.songSelectionDelegate.songWasSelected(self.songs[indexPath.row])
     }
     
+    func refresh(refreshControl: UIRefreshControl) {
+        fetchSongs()
+    }
+    
+    private func fetchSongs() {
+        self.songService.getSongs({ songs in
+            self.songs = songs
+            self.dispatcher.dispatchToMainQueue({
+                self.tableView.reloadData()
+                self.refreshControl!.endRefreshing()
+            })
+        })
+    }
 }
