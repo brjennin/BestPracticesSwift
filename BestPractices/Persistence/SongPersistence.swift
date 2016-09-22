@@ -19,7 +19,7 @@ class SongPersistence: SongPersistenceProtocol {
         }
 
         for song in songs {
-            try! self.realm.write {
+            _ = try? self.realm.write {
                 self.realm.add(song)
             }
         }
