@@ -13,6 +13,9 @@ class SongPersistenceSpec: QuickSpec {
         beforeEach {
             subject = SongPersistence()
 
+        }
+        
+        afterEach {
             let realm = try! Realm()
             try! realm.write {
                 realm.deleteAll()
