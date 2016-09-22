@@ -10,6 +10,11 @@ PODS:
     - Mockingjay/Core
   - Nimble (4.1.0)
   - Quick (0.9.3)
+  - Realm (1.1.0):
+    - Realm/Headers (= 1.1.0)
+  - Realm/Headers (1.1.0)
+  - RealmSwift (1.1.0):
+    - Realm (= 1.1.0)
   - SwiftyJSON (2.3.2)
   - URITemplate (1.3.1)
 
@@ -19,6 +24,7 @@ DEPENDENCIES:
   - Mockingjay (~> 1.2)
   - Nimble (~> 4.1)
   - Quick (~> 0.9)
+  - RealmSwift (~> 1.1)
   - SwiftyJSON (~> 2.3)
 
 SPEC CHECKSUMS:
@@ -27,9 +33,11 @@ SPEC CHECKSUMS:
   Mockingjay: 5de65f14108473afc6727e05df9a3ecc9cef8562
   Nimble: 97a0a4cae5124c117115634b2d055d8c97d0af19
   Quick: 13a2a2b19a5d8e3ed4fd0c36ee46597fd77ebf71
+  Realm: ceecf1a4540c4ce9efe196fe73fa9855bce05bd8
+  RealmSwift: 838058b2db95b12cb86bd0cf209df642c33fb60a
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   URITemplate: 398a48d6559e23b77bd41176b675b017ad1fc959
 
-PODFILE CHECKSUM: 580014e3d0cbed65a8533833b20d0192e90017df
+PODFILE CHECKSUM: 4e6c382427327e246f28e876cd6cc4d9414a5c68
 
 COCOAPODS: 1.0.1

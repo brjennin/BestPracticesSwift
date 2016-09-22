@@ -2,9 +2,10 @@ import UIKit
 
 class ListViewController: UITableViewController {
 
-    var songService: SongServiceProtocol! = SongService()
     var dispatcher: DispatcherProtocol! = Dispatcher()
+    var songCache: SongCacheProtocol! = SongCache()
     var songSelectionDelegate: SongSelectionDelegate!
+    
     var songs: [Song] = []
     
     override func viewDidLoad() {
@@ -15,7 +16,12 @@ class ListViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: #selector(refresh(_:)), forControlEvents: .ValueChanged)
 
-        fetchSongs()
+        self.songCache.getSongs { songs in
+            self.songs = songs
+            self.dispatcher.dispatchToMainQueue({
+                self.tableView.reloadData()
+            })
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -38,12 +44,12 @@ class ListViewController: UITableViewController {
     }
     
     private func fetchSongs() {
-        self.songService.getSongs({ songs in
+        self.songCache.getSongsAndRefreshCache { songs in
             self.songs = songs
-            self.dispatcher.dispatchToMainQueue({
+            self.dispatcher.dispatchToMainQueue {
                 self.tableView.reloadData()
                 self.refreshControl!.endRefreshing()
-            })
-        })
+            }
+        }
     }
 }

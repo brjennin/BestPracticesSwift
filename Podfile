@@ -4,6 +4,7 @@ use_frameworks!
 target 'BestPractices' do
   pod 'Alamofire', '~> 3.5'
   pod 'SwiftyJSON', '~> 2.3'  
+  pod 'RealmSwift', '~> 1.1'
 
   target 'BestPracticesTests' do
     inherit! :search_paths

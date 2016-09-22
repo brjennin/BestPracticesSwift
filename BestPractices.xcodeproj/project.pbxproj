@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		08F8128CA9ECC2978D2DABFA /* Pods_BestPracticesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EAC0E99A6C92352273C8513 /* Pods_BestPracticesTests.framework */; };
+		AE1ABA7E1D93059700357DA5 /* MockSongCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA7D1D93059700357DA5 /* MockSongCache.swift */; };
+		AE1ABA821D9305EF00357DA5 /* SongCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA811D9305EF00357DA5 /* SongCache.swift */; };
+		AE1ABA841D9308AA00357DA5 /* SongCacheSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA831D9308AA00357DA5 /* SongCacheSpec.swift */; };
+		AE1ABA861D9330D200357DA5 /* MockSongPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA851D9330D200357DA5 /* MockSongPersistence.swift */; };
+		AE1ABA881D9330EA00357DA5 /* SongPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA871D9330EA00357DA5 /* SongPersistence.swift */; };
+		AE1ABA8A1D93394E00357DA5 /* SongPersistenceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA891D93394E00357DA5 /* SongPersistenceSpec.swift */; };
+		AE1ABA8C1D94429800357DA5 /* PersistedSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA8B1D94429800357DA5 /* PersistedSong.swift */; };
 		AE304A7E1D885A03001F1D0C /* SongSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE304A7D1D885A03001F1D0C /* SongSpec.swift */; };
 		AE304A801D885CAD001F1D0C /* SongTableViewCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE304A7F1D885CAD001F1D0C /* SongTableViewCellSpec.swift */; };
 		AE304A821D888212001F1D0C /* SongSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE304A811D888212001F1D0C /* SongSelectionDelegate.swift */; };
@@ -72,6 +79,13 @@
 		9EAC0E99A6C92352273C8513 /* Pods_BestPracticesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestPracticesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A68A29476DAABD3F71D1B900 /* Pods-BestPracticesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestPracticesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestPracticesTests/Pods-BestPracticesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A960EF264F74121529805475 /* Pods_BestPractices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestPractices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE1ABA7D1D93059700357DA5 /* MockSongCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSongCache.swift; sourceTree = "<group>"; };
+		AE1ABA811D9305EF00357DA5 /* SongCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongCache.swift; sourceTree = "<group>"; };
+		AE1ABA831D9308AA00357DA5 /* SongCacheSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongCacheSpec.swift; sourceTree = "<group>"; };
+		AE1ABA851D9330D200357DA5 /* MockSongPersistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSongPersistence.swift; sourceTree = "<group>"; };
+		AE1ABA871D9330EA00357DA5 /* SongPersistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongPersistence.swift; sourceTree = "<group>"; };
+		AE1ABA891D93394E00357DA5 /* SongPersistenceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongPersistenceSpec.swift; sourceTree = "<group>"; };
+		AE1ABA8B1D94429800357DA5 /* PersistedSong.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistedSong.swift; sourceTree = "<group>"; };
 		AE304A7D1D885A03001F1D0C /* SongSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongSpec.swift; sourceTree = "<group>"; };
 		AE304A7F1D885CAD001F1D0C /* SongTableViewCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewCellSpec.swift; sourceTree = "<group>"; };
 		AE304A811D888212001F1D0C /* SongSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongSelectionDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +167,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AE1ABA7F1D9305B800357DA5 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				AE1ABA811D9305EF00357DA5 /* SongCache.swift */,
+				AE1ABA871D9330EA00357DA5 /* SongPersistence.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		AE1ABA801D9305DA00357DA5 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				AE1ABA831D9308AA00357DA5 /* SongCacheSpec.swift */,
+				AE1ABA891D93394E00357DA5 /* SongPersistenceSpec.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
 		AE304A7B1D88528A001F1D0C /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +220,8 @@
 				AEAACF451D908FF7007177CF /* MockImageService.swift */,
 				AEAACF4B1D90B595007177CF /* MockPlayer.swift */,
 				AEC6AE1A1D92EBC900933DCC /* MockSongListDeserializer.swift */,
+				AE1ABA7D1D93059700357DA5 /* MockSongCache.swift */,
+				AE1ABA851D9330D200357DA5 /* MockSongPersistence.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -278,6 +312,7 @@
 		AECA4A461D8311EF00EBB222 /* BestPractices */ = {
 			isa = PBXGroup;
 			children = (
+				AE1ABA7F1D9305B800357DA5 /* Persistence */,
 				AEC6AE1C1D92EBF200933DCC /* Deserialization */,
 				AEAACF4D1D90B645007177CF /* Player */,
 				AE304A7B1D88528A001F1D0C /* UI */,
@@ -294,6 +329,7 @@
 		AECA4A5B1D8311EF00EBB222 /* BestPracticesTests */ = {
 			isa = PBXGroup;
 			children = (
+				AE1ABA801D9305DA00357DA5 /* Persistence */,
 				AEC6AE1F1D92EE6C00933DCC /* Deserialization */,
 				AEC6AE121D90B82A00933DCC /* Player */,
 				AEAACF311D8B518C007177CF /* ResponseFixtures */,
@@ -353,6 +389,7 @@
 			isa = PBXGroup;
 			children = (
 				DE99CA3080E76DC1FD30D52D /* Song.swift */,
+				AE1ABA8B1D94429800357DA5 /* PersistedSong.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -577,11 +614,14 @@
 				AEAACF221D8B11E2007177CF /* HTTPRequest.swift in Sources */,
 				AEAACF241D8B1277007177CF /* RequestProvider.swift in Sources */,
 				AECA4A481D8311EF00EBB222 /* AppDelegate.swift in Sources */,
+				AE1ABA881D9330EA00357DA5 /* SongPersistence.swift in Sources */,
 				DE99C6A10D742ACFD3D52FA5 /* HomeViewController.swift in Sources */,
 				AEAACF4F1D90B662007177CF /* Player.swift in Sources */,
+				AE1ABA821D9305EF00357DA5 /* SongCache.swift in Sources */,
 				DE99C15018384EC0FA4D377B /* SongTableViewCell.swift in Sources */,
 				AEC6AE1E1D92EC1300933DCC /* SongListDeserializer.swift in Sources */,
 				AEAACF391D8C4C9C007177CF /* RequestTranslator.swift in Sources */,
+				AE1ABA8C1D94429800357DA5 /* PersistedSong.swift in Sources */,
 				DE99CC8B9BF5F664B889EB45 /* ListViewController.swift in Sources */,
 				DE99C7ED7FAF55CA1CBA9709 /* Song.swift in Sources */,
 				AEAACF481D90907D007177CF /* ImageService.swift in Sources */,
@@ -597,6 +637,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AEAACF261D8B1442007177CF /* HTTPRequestSpec.swift in Sources */,
+				AE1ABA861D9330D200357DA5 /* MockSongPersistence.swift in Sources */,
 				AEAACF081D8A0B89007177CF /* MockDispatcher.swift in Sources */,
 				AEAACF371D8C4C01007177CF /* MockRequestTranslator.swift in Sources */,
 				AEAACF2C1D8B1B08007177CF /* MockHTTPClient.swift in Sources */,
@@ -608,7 +649,9 @@
 				AEAACF161D8B0697007177CF /* SongServiceSpec.swift in Sources */,
 				DE99C16832E147A8C83CC18E /* HomeViewControllerSpec.swift in Sources */,
 				AEAACF0C1D8A10AE007177CF /* MockListViewController.swift in Sources */,
+				AE1ABA7E1D93059700357DA5 /* MockSongCache.swift in Sources */,
 				AEAACF461D908FF7007177CF /* MockImageService.swift in Sources */,
+				AE1ABA8A1D93394E00357DA5 /* SongPersistenceSpec.swift in Sources */,
 				AEAACF4A1D909E1D007177CF /* ImageServiceSpec.swift in Sources */,
 				AEAACF351D8B6373007177CF /* HTTPClientSpec.swift in Sources */,
 				AEAACF061D8A0B6B007177CF /* MockSongService.swift in Sources */,
@@ -619,6 +662,7 @@
 				AEAACF0A1D8A0BA3007177CF /* MockSongSelectionDelegate.swift in Sources */,
 				AEAACF1E1D8B1161007177CF /* MockRequestProvider.swift in Sources */,
 				AEAACF4C1D90B595007177CF /* MockPlayer.swift in Sources */,
+				AE1ABA841D9308AA00357DA5 /* SongCacheSpec.swift in Sources */,
 				AE304A801D885CAD001F1D0C /* SongTableViewCellSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
