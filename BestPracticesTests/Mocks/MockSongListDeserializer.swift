@@ -10,8 +10,8 @@ class MockSongListDeserializer: SongListDeserializerProtocol {
         capturedJSON = json
 
         return [
-            Song(identifier: 123, name: "private eyes", artist: "", url: "", albumArt: ""),
-            Song(identifier: 456, name: "rich girl", artist: "", url: "", albumArt: "")
+            Song(value: ["identifier": 123, "name": "private eyes"]),
+            Song(value: ["identifier": 456, "name": "rich girl"])
         ]
     }
 

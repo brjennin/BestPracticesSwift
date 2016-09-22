@@ -75,7 +75,7 @@ class HomeViewControllerSpec: QuickSpec {
 
                 describe("As a SongSelectionDelegate") {
                     beforeEach {
-                        let song = Song(identifier: 993, name: "Hall and Oates", artist: "", url: "", albumArt: "album_art")
+                        let song = Song(value: ["identifier": 993, "name": "Hall and Oates", "albumArt": "album_art"])
                         subject.songWasSelected(song)
                     }
 

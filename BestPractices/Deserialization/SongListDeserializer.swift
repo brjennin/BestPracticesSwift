@@ -10,11 +10,13 @@ class SongListDeserializer: SongListDeserializerProtocol {
 
         if let json = json {
             for (_, subJson):(String, JSON) in json {
-                let song = Song(identifier: subJson["id"].intValue,
-                                name: subJson["name"].stringValue,
-                                artist: subJson["artist"].stringValue,
-                                url: subJson["url"].stringValue,
-                                albumArt: subJson["album_art"].stringValue)
+                let song = Song()
+                song.identifier = subJson["id"].intValue
+                song.name = subJson["name"].stringValue
+                song.artist = subJson["artist"].stringValue
+                song.url = subJson["url"].stringValue
+                song.albumArt = subJson["album_art"].stringValue
+
                 songs.append(song)
             }
         }

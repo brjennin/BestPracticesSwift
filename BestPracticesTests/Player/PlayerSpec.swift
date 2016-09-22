@@ -7,135 +7,135 @@ import AVFoundation
 
 class PlayerSpec: QuickSpec {
     override func spec() {
-        
+
         var subject: Player!
         var httpClient: MockHTTPClient!
-        
+
         beforeEach {
             subject = Player()
-            
+
             httpClient = MockHTTPClient()
             subject.httpClient = httpClient
         }
-        
+
         describe(".loadSong") {
             var song: Song!
-            
+
             context("With a good URL") {
                 beforeEach {
-                    song = Song(identifier: 0, name: "", artist: "", url: "url", albumArt: "")
+                    song = Song(value: ["url": "url"])
                     subject.loadSong(song)
                 }
-                
+
                 it("calls the HTTP client with the url") {
                     expect(httpClient.madeDownloadRequest).to(beTruthy())
                     expect(httpClient.capturedDownloadURL).to(equal("url"))
                 }
-                
+
                 it("does not initialize an audio player until we have a song file") {
                     expect(subject.audioPlayer).to(beNil())
                 }
-                
+
                 describe("When the http client resolves") {
                     let bundle = NSBundle(forClass: self.dynamicType)
                     let path = bundle.pathForResource("maneater", ofType: "mp3")!
                     let sampleFileURL = NSURL(fileURLWithPath: path)
-                    
+
                     beforeEach {
                         httpClient.capturedDownloadCompletion!(sampleFileURL)
                     }
-                    
+
                     it("loads the song into the audio player") {
                         expect(subject.audioPlayer).toNot(beNil())
                         expect(subject.audioPlayer!.url!).to(equal(sampleFileURL))
                     }
                 }
             }
-            
+
             context("With no URL") {
                 beforeEach {
-                    song = Song(identifier: 0, name: "", artist: "", url: "url", albumArt: "")
+                    song = Song(value: ["url": "url"])
                     subject.loadSong(song)
                 }
-                
+
                 it("calls the HTTP client with the url") {
                     expect(httpClient.madeDownloadRequest).to(beTruthy())
                     expect(httpClient.capturedDownloadURL).to(equal("url"))
                 }
-                
+
                 it("does not initialize an audio player until we have a song file") {
                     expect(subject.audioPlayer).to(beNil())
                 }
-                
+
                 describe("When the http client resolves") {
                     beforeEach {
                         httpClient.capturedDownloadCompletion!(nil)
                     }
-                    
+
                     it("loads the song into the audio player") {
                         expect(subject.audioPlayer).to(beNil())
                     }
                 }
             }
-            
+
             context("With a bad URL") {
                 beforeEach {
-                    song = Song(identifier: 0, name: "", artist: "", url: "url", albumArt: "")
+                    song = Song(value: ["url": "url"])
                     subject.loadSong(song)
                 }
-                
+
                 it("calls the HTTP client with the url") {
                     expect(httpClient.madeDownloadRequest).to(beTruthy())
                     expect(httpClient.capturedDownloadURL).to(equal("url"))
                 }
-                
+
                 it("does not initialize an audio player until we have a song file") {
                     expect(subject.audioPlayer).to(beNil())
                 }
-                
+
                 describe("When the http client resolves") {
                     beforeEach {
                         httpClient.capturedDownloadCompletion!(NSURL(fileURLWithPath: "http://www.example.com"))
                     }
-                    
+
                     it("loads the song into the audio player") {
                         expect(subject.audioPlayer).to(beNil())
                     }
                 }
             }
         }
-        
+
         describe(".play") {
             context("When there is a song loaded") {
                 let bundle = NSBundle(forClass: self.dynamicType)
                 let path = bundle.pathForResource("maneater", ofType: "mp3")!
                 let sampleFileURL = NSURL(fileURLWithPath: path)
                 let player = try! AVAudioPlayer(contentsOfURL: sampleFileURL)
-                
+
                 beforeEach {
                     subject.audioPlayer = player
                     subject.play()
                 }
-                
+
                 afterEach {
                     subject.audioPlayer!.stop()
                 }
-                
+
                 it("plays the song") {
                     expect(subject.audioPlayer!.playing).to(beTruthy())
                 }
             }
-            
+
             context("When there is no song loaded") {
                 beforeEach {
                     subject.audioPlayer = nil
                 }
-                
+
                 it("plays the song") {
                     expect(subject.play()).toNot(throwError())
                 }
             }
         }
-        
+
     }
 }
