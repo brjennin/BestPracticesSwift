@@ -3,28 +3,29 @@ protocol SongLoaderProtocol: class {
 }
 
 class SongLoader: SongLoaderProtocol {
-    
+
     var httpClient: HTTPClientProtocol! = HTTPClient()
     var songPersistence: SongPersistenceProtocol! = SongPersistence()
-    
+    var diskMaster: DiskMasterProtocol! = DiskMaster()
+
     func loadSongAssets(song: Song, songCompletion: (Song) -> (), imageCompletion: (Song) -> ()) {
-        
-        let songFolder = "songs/\(song.identifier)/"
-        let imageFolder = "images/\(song.identifier)/"
-        
-        self.httpClient.downloadFile(song.url, folderPath: songFolder) { url in
-            if let url = url {
-                self.songPersistence.updateLocalSongUrl(song, url: url.path!)
+        fetchAssetAtPath(song, folderName: "songs", path: song.songLocalPath, downloadURL: song.url, completion: songCompletion, updateFunction: self.songPersistence.updateLocalSongUrl)
+
+        fetchAssetAtPath(song, folderName: "images", path: song.imageLocalPath, downloadURL: song.albumArt, completion: imageCompletion, updateFunction: self.songPersistence.updateLocalImageUrl)
+    }
+
+    private func fetchAssetAtPath(song: Song, folderName: String, path: String?, downloadURL: String, completion: (Song) -> (), updateFunction: (Song, String) -> ()) {
+        if path != nil && self.diskMaster.isMediaFilePresent(path!) {
+            completion(song)
+        } else {
+            let folder = "\(folderName)/\(song.identifier)/"
+            self.httpClient.downloadFile(downloadURL, folderPath: folder) { url in
+                if let url = url {
+                    updateFunction(song, url.path!)
+                }
+                completion(song)
             }
-            songCompletion(song)
-        }
-        
-        self.httpClient.downloadFile(song.albumArt, folderPath: imageFolder) { url in
-            if let url = url {
-                self.songPersistence.updateLocalImageUrl(song, url: url.path!)
-            }
-            imageCompletion(song)
         }
     }
-    
+
 }
