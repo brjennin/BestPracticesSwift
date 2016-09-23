@@ -68,12 +68,16 @@ class SongPersistenceSpec: QuickSpec {
                 }
 
                 describe("Replacing with different songs") {
+                    var songOne: Song!
+                    var songTwo: Song!
+                    var songThree: Song!
+                    
                     beforeEach {
-                        let songs = [
-                            Song(value: ["identifier": 258, "name": "Rich Girl", "artist": "Hall & Oates", "url": "url3", "albumArt": "album_art3"]),
-                            Song(value: ["identifier": 257, "name": "Long Train Runnin", "artist": "Doobie Brothers", "url": "url2", "albumArt": "album_art2"]),
-                            Song(value: ["identifier": 259, "name": "Sara Smile", "artist": "Hall & Oates", "url": "url4", "albumArt": "album_art4"]),
-                        ]
+                        songOne = Song(value: ["identifier": 258, "name": "Rich Girl", "artist": "Hall & Oates", "url": "url3", "albumArt": "album_art3"])
+                        songTwo = Song(value: ["identifier": 257, "name": "Long Train Runnin", "artist": "Doobie Brothers", "url": "url2", "albumArt": "album_art2"])
+                        songThree = Song(value: ["identifier": 259, "name": "Sara Smile", "artist": "Hall & Oates", "url": "url4", "albumArt": "album_art4"])
+                        
+                        let songs: [Song] = [songOne, songTwo, songThree]
                         subject.replace(songs)
                     }
 
@@ -87,18 +91,50 @@ class SongPersistenceSpec: QuickSpec {
                         expect(result![0].artist).to(equal("Doobie Brothers"))
                         expect(result![0].url).to(equal("url2"))
                         expect(result![0].albumArt).to(equal("album_art2"))
+                        expect(result![0].imageLocalPath).to(beNil())
+                        expect(result![0].songLocalPath).to(beNil())
 
                         expect(result![1].identifier).to(equal(258))
                         expect(result![1].name).to(equal("Rich Girl"))
                         expect(result![1].artist).to(equal("Hall & Oates"))
                         expect(result![1].url).to(equal("url3"))
                         expect(result![1].albumArt).to(equal("album_art3"))
-
+                        expect(result![1].imageLocalPath).to(beNil())
+                        expect(result![1].songLocalPath).to(beNil())
+                        
                         expect(result![2].identifier).to(equal(259))
                         expect(result![2].name).to(equal("Sara Smile"))
                         expect(result![2].artist).to(equal("Hall & Oates"))
                         expect(result![2].url).to(equal("url4"))
                         expect(result![2].albumArt).to(equal("album_art4"))
+                        expect(result![2].imageLocalPath).to(beNil())
+                        expect(result![2].songLocalPath).to(beNil())
+                    }
+                    
+                    describe("Updating urls for songs") {
+                        beforeEach {
+                            subject.updateLocalSongUrl(songTwo, url: "testurl")
+                        }
+                        
+                        it("stores off the url for the song") {
+                            expect(songTwo.songLocalPath).to(equal("testurl"))
+                            let result = subject.retrieve()
+                            expect(result![0].identifier).to(equal(257))
+                            expect(result![0].songLocalPath).to(equal("testurl"))
+                        }
+                    }
+                    
+                    describe("Updating urls for images") {
+                        beforeEach {
+                            subject.updateLocalImageUrl(songOne, url: "imageurl")
+                        }
+                        
+                        it("stores off the url for the image") {
+                            expect(songOne.imageLocalPath).to(equal("imageurl"))
+                            let result = subject.retrieve()
+                            expect(result![1].identifier).to(equal(258))
+                            expect(result![1].imageLocalPath).to(equal("imageurl"))
+                        }
                     }
                 }
             }

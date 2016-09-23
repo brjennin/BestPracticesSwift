@@ -6,6 +6,8 @@ class Song: Object {
     dynamic var artist = ""
     dynamic var url = ""
     dynamic var albumArt = ""
+    dynamic var songLocalPath: String? = nil
+    dynamic var imageLocalPath: String? = nil
 
     override static func primaryKey() -> String? {
         return "identifier"

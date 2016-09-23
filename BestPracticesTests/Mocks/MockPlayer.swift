@@ -2,16 +2,22 @@
 
 class MockPlayer: PlayerProtocol {
     var loadedSong = false
-    var capturedLoadedSong: Song?
+    var capturedFilePath: String?
+    
+    func loadSong(filePath: String) {
+        loadedSong = true
+        capturedFilePath = filePath
+    }
     
     var playedSong = false
     
-    func loadSong(song: Song) {
-        loadedSong = true
-        capturedLoadedSong = song
-    }
-    
     func play() {
         playedSong = true
+    }
+    
+    var calledClearSong = false
+    
+    func clearSong() {
+        calledClearSong = true
     }
 }

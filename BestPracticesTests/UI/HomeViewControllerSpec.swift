@@ -9,8 +9,8 @@ class HomeViewControllerSpec: QuickSpec {
         var subject: HomeViewController!
         var navigationController: UINavigationController!
         var listViewController: ListViewController!
-        var imageService: MockImageService!
         var player: MockPlayer!
+        var songLoader: MockSongLoader!
 
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -20,11 +20,11 @@ class HomeViewControllerSpec: QuickSpec {
 
             subject = storyboard.instantiateViewControllerWithIdentifier("HomeViewController") as! HomeViewController
 
-            imageService = MockImageService()
-            subject.imageService = imageService
-
             player = MockPlayer()
             subject.player = player
+            
+            songLoader = MockSongLoader()
+            subject.songLoader = songLoader
 
             navigationController = UINavigationController(rootViewController: subject)
         }
@@ -42,8 +42,9 @@ class HomeViewControllerSpec: QuickSpec {
                 expect(subject.title).to(equal("YACHTY"))
             }
 
-            it("does not load the player") {
+            it("does not load the song") {
                 expect(player.loadedSong).to(beFalsy())
+                expect(songLoader.calledLoadSongAssets).to(beFalsy())
             }
 
             it("clears label text") {
@@ -74,53 +75,93 @@ class HomeViewControllerSpec: QuickSpec {
                 }
 
                 describe("As a SongSelectionDelegate") {
+                    let bundle = NSBundle(forClass: self.dynamicType)
+                    let imagePath = bundle.pathForResource("hall_and_oates_cover", ofType: "jpeg")!
+                    
                     beforeEach {
-                        let song = Song(value: ["identifier": 993, "name": "Hall and Oates", "albumArt": "album_art"])
+                        subject.albumArtImageView.image = UIImage(contentsOfFile: imagePath)
+                        subject.currentSongLabel.text = "something"
+                        
+                        let song = Song(value: ["identifier": 993, "name": "Hall and Oates"])
                         subject.songWasSelected(song)
                     }
 
-                    it("sets the label to the song name") {
-                        expect(subject.currentSongLabel.text).to(equal("Hall and Oates"))
+                    it("calls the song loader") {
+                        expect(songLoader.calledLoadSongAssets).to(beTruthy())
+                        expect(songLoader.capturedSong!.identifier).to(equal(993))
                     }
-
+                    
                     it("pops the list view controller off the navigation stack") {
                         expect(navigationController.topViewController).to(beIdenticalTo(subject))
                     }
-
-                    it("calls the image service") {
-                        expect(imageService.calledService).to(beTruthy())
-                        expect(imageService.capturedURL).to(equal("album_art"))
+                    
+                    it("clears the album art image") {
+                        expect(subject.albumArtImageView.image).to(beNil())
                     }
-
-                    it("loads the song into the player") {
-                        expect(player.loadedSong).to(beTruthy())
-                        expect(player.capturedLoadedSong!.identifier).to(equal(993))
+                    
+                    it("clears the previously loaded song") {
+                        expect(player.calledClearSong).to(beTruthy())
                     }
-
-                    describe("When the image service resolves") {
-                        var image: UIImage?
-
-                        context("If there was an issue and there is no image") {
+                    
+                    it("sets the label to the song name") {
+                        expect(subject.currentSongLabel.text).to(equal("Hall and Oates"))
+                    }
+                    
+                    describe("When the image asset has loaded") {
+                        context("When the image asset exists") {
+                            let songWithAssets = Song(value: ["imageLocalPath": imagePath])
+                            
                             beforeEach {
-                                image = nil
-                                imageService.completion(image)
+                                songLoader.capturedImageCompletion!(songWithAssets)
                             }
-
-                            it("leaves the imageview blank") {
+                            
+                            it("sets the album art image") {
+                                let image = UIImage(contentsOfFile: imagePath)!
+                                let expectedData = UIImageJPEGRepresentation(image, 1)
+                                expect(UIImageJPEGRepresentation(subject.albumArtImageView.image!, 1)).to(equal(expectedData))
+                            }
+                        }
+                        
+                        context("When the image does not exist") {
+                            let songWithoutAssets = Song()
+                            songWithoutAssets.imageLocalPath = nil
+                            
+                            beforeEach {
+                                songLoader.capturedImageCompletion!(songWithoutAssets)
+                            }
+                            
+                            it("clears the album art image") {
                                 expect(subject.albumArtImageView.image).to(beNil())
                             }
                         }
-
-                        context("If the server properly returned an image") {
+                    }
+                    
+                    describe("When the song asset has loaded") {
+                        let songAssetPath = bundle.pathForResource("maneater", ofType: "mp3")!
+                        
+                        context("When the song asset exists") {
+                            let songWithAssets = Song(value: ["songLocalPath": songAssetPath])
+                            
                             beforeEach {
-                                let bundle = NSBundle(forClass: self.dynamicType)
-                                let path = bundle.pathForResource("hall_and_oates_cover", ofType: "jpeg")!
-                                image = UIImage(contentsOfFile: path)
-                                imageService.completion(image)
+                                songLoader.capturedSongCompletion!(songWithAssets)
                             }
-
-                            it("sets the album art image") {
-                                expect(subject.albumArtImageView.image).to(equal(image))
+                            
+                            it("loads the song into the player") {
+                                expect(player.loadedSong).to(beTruthy())
+                                expect(player.capturedFilePath!).to(equal(songAssetPath))
+                            }
+                        }
+                        
+                        context("When the song asset does not exist") {
+                            let songWithoutAssets = Song()
+                            songWithoutAssets.songLocalPath = nil
+                            
+                            beforeEach {
+                                songLoader.capturedSongCompletion!(songWithoutAssets)
+                            }
+                            
+                            it("does not load the song into the player") {
+                                expect(player.loadedSong).to(beFalsy())
                             }
                         }
                     }

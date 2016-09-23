@@ -4,6 +4,10 @@ protocol SongPersistenceProtocol: class {
     func replace(songs: [Song])
 
     func retrieve() -> [Song]?
+    
+    func updateLocalSongUrl(song: Song, url: String)
+    
+    func updateLocalImageUrl(song: Song, url: String)
 }
 
 class SongPersistence: SongPersistenceProtocol {
@@ -46,6 +50,28 @@ class SongPersistence: SongPersistenceProtocol {
         }
 
         return result
+    }
+    
+    func updateLocalSongUrl(song: Song, url: String) {
+        do {
+            try establishConnection()
+            try realm.write {
+                song.songLocalPath = url
+            }
+        } catch {
+            return
+        }
+    }
+    
+    func updateLocalImageUrl(song: Song, url: String) {
+        do {
+            try establishConnection()
+            try realm.write {
+                song.imageLocalPath = url
+            }
+        } catch {
+            return
+        }
     }
 
     private func establishConnection() throws {

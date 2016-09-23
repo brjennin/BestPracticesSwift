@@ -22,15 +22,15 @@ class MockHTTPClient: HTTPClientProtocol {
         capturedDataCompletion = completion
     }
     
-    var madeDownloadRequest = false
-    var capturedDownloadURL: String?
-    var capturedFolderPath: String?
-    var capturedDownloadCompletion: ((NSURL?) -> ())?
+    var downloadCallCount = 0
+    var downloadUrls = [String]()
+    var downloadFolders = [String]()
+    var downloadCompletions: [((NSURL?) -> ())] = []
     
     func downloadFile(url: String, folderPath: String, completion: ((NSURL?) -> ())) {
-        madeDownloadRequest = true
-        capturedDownloadURL = url
-        capturedFolderPath = folderPath
-        capturedDownloadCompletion = completion
+        downloadCallCount += 1
+        downloadUrls.append(url)
+        downloadFolders.append(folderPath)
+        downloadCompletions.append(completion)
     }
 }
