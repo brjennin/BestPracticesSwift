@@ -9,14 +9,23 @@ class SongPersistenceSpec: QuickSpec {
     override func spec() {
 
         var subject: SongPersistence!
-
+        var diskMaster: MockDiskMaster!
+        let realm = try! Realm()
+        
         beforeEach {
             subject = SongPersistence()
-
+            
+            diskMaster = MockDiskMaster()
+            subject.diskMaster = diskMaster            
+        }
+        
+        beforeEach {
+            try! realm.write {
+                realm.deleteAll()
+            }
         }
         
         afterEach {
-            let realm = try! Realm()
             try! realm.write {
                 realm.deleteAll()
             }
@@ -36,6 +45,10 @@ class SongPersistenceSpec: QuickSpec {
                     subject.replace(songs)
                 }
 
+                it("wipes the local storage of songs and images") {
+                    expect(diskMaster.calledWipeLocalStorage).to(beTruthy())
+                }
+                
                 it("returns the songs when retrieving") {
                     let result = subject.retrieve()
                     expect(result).toNot(beNil())

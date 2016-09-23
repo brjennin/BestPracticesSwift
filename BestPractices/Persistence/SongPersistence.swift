@@ -9,6 +9,7 @@ protocol SongPersistenceProtocol: class {
 class SongPersistence: SongPersistenceProtocol {
 
     var realm: Realm!
+    var diskMaster: DiskMasterProtocol! = DiskMaster()
 
     func replace(songs: [Song]) {
         do {
@@ -18,6 +19,8 @@ class SongPersistence: SongPersistenceProtocol {
             return
         }
 
+        self.diskMaster.wipeLocalStorage()
+        
         for song in songs {
             _ = try? self.realm.write {
                 self.realm.add(song)

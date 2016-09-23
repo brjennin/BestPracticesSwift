@@ -7,12 +7,13 @@ protocol HTTPClientProtocol: class {
     
     func makeDataRequest(url: String, completion: ((NSData?) -> ()))
     
-    func downloadFile(url: String, completion: ((NSURL?) -> ()))
+    func downloadFile(url: String, folderPath: String, completion: ((NSURL?) -> ()))
 }
 
 class HTTPClient: HTTPClientProtocol {
     
     var requestTranslator: RequestTranslatorProtocol! = RequestTranslator()
+    var diskMaster: DiskMasterProtocol! = DiskMaster()
     
     func makeJsonRequest(request: HTTPRequest, completion: ((JSON?) -> ())) {
         let alamofireRequest = self.requestTranslator.translateRequestForAlamofire(request)
@@ -47,22 +48,13 @@ class HTTPClient: HTTPClientProtocol {
         })
     }
     
-    func downloadFile(url: String, completion: ((NSURL?) -> ())) {
+    func downloadFile(url: String, folderPath: String, completion: ((NSURL?) -> ())) {
         var destinationURL: NSURL?
         
         Alamofire.download(.GET, url) { temporaryURL, response in
-            let fileManager = NSFileManager.defaultManager()
-            let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-            let pathComponent = response.suggestedFilename
-            let finalURL = directoryURL.URLByAppendingPathComponent(pathComponent!)
+            destinationURL = self.diskMaster.mediaURLForSongWithFilename(folderPath, filename: response.suggestedFilename!)
             
-            if fileManager.fileExistsAtPath(finalURL.path!) {
-                _ = try? fileManager.removeItemAtURL(finalURL)
-            }
-            
-            destinationURL = finalURL
-            
-            return finalURL
+            return destinationURL!
         }.validate().response { _, _, _, error in
             var url: NSURL?
             if error == nil {

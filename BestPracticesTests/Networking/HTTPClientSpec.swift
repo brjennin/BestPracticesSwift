@@ -11,12 +11,16 @@ class HTTPClientSpec: QuickSpec {
 
         var subject: HTTPClient!
         var requestTranslator: MockRequestTranslator!
+        var diskMaster: MockDiskMaster!
 
         beforeEach {
             subject = HTTPClient()
 
             requestTranslator = MockRequestTranslator()
             subject.requestTranslator = requestTranslator
+            
+            diskMaster = MockDiskMaster()
+            subject.diskMaster = diskMaster
         }
 
         describe(".makeJsonRequest") {
@@ -171,6 +175,8 @@ class HTTPClientSpec: QuickSpec {
             let sampleData = NSData(contentsOfFile: path)
             
             let fileManager = NSFileManager.defaultManager()
+            let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
+            let testFile = directoryURL.URLByAppendingPathComponent("tests/testfile.example")
             
             context("When a 200 response code") {
                 beforeEach {
@@ -181,9 +187,12 @@ class HTTPClientSpec: QuickSpec {
                     var completionCalled = false
                     
                     waitUntil { done in
-                        subject.downloadFile("dataURL", completion: {url in
+                        subject.downloadFile("dataURL", folderPath: "something/or/other/", completion: {url in
                             completionCalled = true
-                            expect(url).toNot(beNil())
+                            expect(diskMaster.calledMediaURLForSongWithFilename).to(beTruthy())
+                            expect(diskMaster.capturedFolderForMediaURL!).to(equal("something/or/other/"))
+                            expect(diskMaster.capturedFilenameForMediaURL!).to(equal("dataURL.mp3"))
+                            expect(url).to(equal(testFile))
                             expect(fileManager.fileExistsAtPath(url!.path!)).to(beTruthy())
                             expect(NSData(contentsOfURL: url!)).to(equal(sampleData))
                             
@@ -192,38 +201,7 @@ class HTTPClientSpec: QuickSpec {
                     }
                     
                     expect(completionCalled).toEventually(beTruthy())
-                }
-
-                it("will still return a URL to the file if it already exists in the system") {
-                    var firstComplationCalled = false
-                    var secondComplationCalled = false
-                    
-                    waitUntil { done in
-                        subject.downloadFile("dataURL", completion: {url in
-                            firstComplationCalled = true
-                            expect(url).toNot(beNil())
-                            expect(fileManager.fileExistsAtPath(url!.path!)).to(beTruthy())
-                            expect(NSData(contentsOfURL: url!)).to(equal(sampleData))
-                            
-                            done()
-                        })
-                    }
-                    
-                    expect(firstComplationCalled).toEventually(beTruthy())
-                    
-                    waitUntil { done in
-                        subject.downloadFile("dataURL", completion: {url in
-                            secondComplationCalled = true
-                            expect(url).toNot(beNil())
-                            expect(fileManager.fileExistsAtPath(url!.path!)).to(beTruthy())
-                            expect(NSData(contentsOfURL: url!)).to(equal(sampleData))
-                            
-                            done()
-                        })
-                    }
-                    
-                    expect(secondComplationCalled).toEventually(beTruthy())
-                }
+                }                
             }
             
             context("When a non-200 response code") {
@@ -235,7 +213,7 @@ class HTTPClientSpec: QuickSpec {
                     var completionCalled = false
                     
                     waitUntil { done in
-                        subject.downloadFile("dataURL", completion: {url in
+                        subject.downloadFile("dataURL", folderPath: "something/or/other/", completion: {url in
                             completionCalled = true
                             expect(url).to(beNil())
                             done()
@@ -256,7 +234,7 @@ class HTTPClientSpec: QuickSpec {
                     var completionCalled = false
                     
                     waitUntil { done in
-                        subject.downloadFile("dataURL", completion: {url in
+                        subject.downloadFile("dataURL", folderPath: "something/or/other/", completion: {url in
                             completionCalled = true
                             expect(url).to(beNil())
                             done()

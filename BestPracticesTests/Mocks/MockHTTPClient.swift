@@ -6,29 +6,31 @@ class MockHTTPClient: HTTPClientProtocol {
     var capturedJSONRequest: HTTPRequest?
     var capturedJSONCompletion: ((JSON?) -> ())?
 
-    var madeDataRequest = false
-    var capturedDataURL: String?
-    var capturedDataCompletion: ((NSData?) -> ())?
-
-    var madeDownloadRequest = false
-    var capturedDownloadURL: String?
-    var capturedDownloadCompletion: ((NSURL?) -> ())?
-    
     func makeJsonRequest(request: HTTPRequest, completion: ((JSON?) -> ())) {
         madeJSONRequest = true
         capturedJSONRequest = request
         capturedJSONCompletion = completion
     }
 
+    var madeDataRequest = false
+    var capturedDataURL: String?
+    var capturedDataCompletion: ((NSData?) -> ())?
+    
     func makeDataRequest(url: String, completion: ((NSData?) -> ())) {
         madeDataRequest = true
         capturedDataURL = url
         capturedDataCompletion = completion
     }
     
-    func downloadFile(url: String, completion: ((NSURL?) -> ())) {
+    var madeDownloadRequest = false
+    var capturedDownloadURL: String?
+    var capturedFolderPath: String?
+    var capturedDownloadCompletion: ((NSURL?) -> ())?
+    
+    func downloadFile(url: String, folderPath: String, completion: ((NSURL?) -> ())) {
         madeDownloadRequest = true
         capturedDownloadURL = url
+        capturedFolderPath = folderPath
         capturedDownloadCompletion = completion
     }
 }

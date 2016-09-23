@@ -13,7 +13,7 @@ class Player: PlayerProtocol {
     var audioPlayer: AVAudioPlayer?
     
     func loadSong(song: Song) {
-        self.httpClient.downloadFile(song.url) { url in
+        self.httpClient.downloadFile(song.url, folderPath: "songs/\(song.identifier)/") { url in
             if let url = url {
                 self.audioPlayer = try? AVAudioPlayer(contentsOfURL: url)
             }

@@ -19,17 +19,17 @@ class PlayerSpec: QuickSpec {
         }
 
         describe(".loadSong") {
-            var song: Song!
+            let song = Song(value: ["identifier": 23311, "url": "url"])
 
             context("With a good URL") {
                 beforeEach {
-                    song = Song(value: ["url": "url"])
                     subject.loadSong(song)
                 }
 
                 it("calls the HTTP client with the url") {
                     expect(httpClient.madeDownloadRequest).to(beTruthy())
                     expect(httpClient.capturedDownloadURL).to(equal("url"))
+                    expect(httpClient.capturedFolderPath).to(equal("songs/23311/"))
                 }
 
                 it("does not initialize an audio player until we have a song file") {
@@ -54,13 +54,13 @@ class PlayerSpec: QuickSpec {
 
             context("With no URL") {
                 beforeEach {
-                    song = Song(value: ["url": "url"])
                     subject.loadSong(song)
                 }
 
                 it("calls the HTTP client with the url") {
                     expect(httpClient.madeDownloadRequest).to(beTruthy())
                     expect(httpClient.capturedDownloadURL).to(equal("url"))
+                    expect(httpClient.capturedFolderPath).to(equal("songs/23311/"))
                 }
 
                 it("does not initialize an audio player until we have a song file") {
@@ -80,13 +80,13 @@ class PlayerSpec: QuickSpec {
 
             context("With a bad URL") {
                 beforeEach {
-                    song = Song(value: ["url": "url"])
                     subject.loadSong(song)
                 }
 
                 it("calls the HTTP client with the url") {
                     expect(httpClient.madeDownloadRequest).to(beTruthy())
                     expect(httpClient.capturedDownloadURL).to(equal("url"))
+                    expect(httpClient.capturedFolderPath).to(equal("songs/23311/"))
                 }
 
                 it("does not initialize an audio player until we have a song file") {
