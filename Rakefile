@@ -20,3 +20,8 @@ task :trim do
     exit 1
   end
 end
+
+desc 'Clear provisioning profiles'
+task :wipe do
+  exit 1 unless system('rm ~/Library/MobileDevice/Provisioning\ Profiles/*.mobileprovision')
+end
