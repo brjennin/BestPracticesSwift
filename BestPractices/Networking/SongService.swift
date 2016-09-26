@@ -12,7 +12,7 @@ class SongService: SongServiceProtocol {
 
     func getSongs(completion: (([Song]) -> ())) {
         let request = self.requestProvider.getSongsListRequest()
-        self.httpClient.makeJsonRequest(request) { jsonObject in
+        self.httpClient.makeJsonRequest(request) { jsonObject, error in
             completion(self.songListDeserializer.deserialize(jsonObject))
         }
     }

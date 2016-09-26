@@ -4,9 +4,9 @@ import SwiftyJSON
 class MockHTTPClient: HTTPClientProtocol {
     var madeJSONRequest = false
     var capturedJSONRequest: HTTPRequest?
-    var capturedJSONCompletion: ((JSON?) -> ())?
+    var capturedJSONCompletion: ((JSON?, NSError?) -> ())?
 
-    func makeJsonRequest(request: HTTPRequest, completion: ((JSON?) -> ())) {
+    func makeJsonRequest(request: HTTPRequest, completion: ((JSON?, NSError?) -> ())) {
         madeJSONRequest = true
         capturedJSONRequest = request
         capturedJSONCompletion = completion
@@ -15,18 +15,18 @@ class MockHTTPClient: HTTPClientProtocol {
     var madeDataRequest = false
     var capturedDataURL: String?
     var capturedDataCompletion: ((NSData?) -> ())?
-    
+
     func makeDataRequest(url: String, completion: ((NSData?) -> ())) {
         madeDataRequest = true
         capturedDataURL = url
         capturedDataCompletion = completion
     }
-    
+
     var downloadCallCount = 0
     var downloadUrls = [String]()
     var downloadFolders = [String]()
     var downloadCompletions: [((NSURL?) -> ())] = []
-    
+
     func downloadFile(url: String, folderPath: String, completion: ((NSURL?) -> ())) {
         downloadCallCount += 1
         downloadUrls.append(url)

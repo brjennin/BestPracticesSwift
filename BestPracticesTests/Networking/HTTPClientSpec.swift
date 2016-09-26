@@ -18,23 +18,24 @@ class HTTPClientSpec: QuickSpec {
 
             requestTranslator = MockRequestTranslator()
             subject.requestTranslator = requestTranslator
-            
+
             diskMaster = MockDiskMaster()
             subject.diskMaster = diskMaster
         }
 
-        describe(".makeJsonRequest") {
+        fdescribe(".makeJsonRequest") {
             var returnedJSON: JSON?
+            var returnedError: NSError?
             var completionCalled: Bool!
             var request: HTTPRequest!
-            var completion: ((JSON?) -> ())!
+            var completion: ((JSON?, NSError?) -> ())!
 
             beforeEach {
-                completion = { json in
+                completion = { json, error in
                     completionCalled = true
                     returnedJSON = json
+                    returnedError = error
                 }
-                returnedJSON = nil
                 completionCalled = false
                 request = HTTPRequest(urlString: "urlstring", httpMethod: HTTPMethod.GET, params: nil, headers: nil)
             }
@@ -56,6 +57,10 @@ class HTTPClientSpec: QuickSpec {
                         expect(returnedJSON).toEventuallyNot(beNil())
                         expect(returnedJSON).toEventually(equal(JSON(["key": "val"])))
                     }
+
+                    it("does not send an error") {
+                        expect(returnedError).to(beNil())
+                    }
                 }
 
                 context("Without JSON") {
@@ -72,6 +77,10 @@ class HTTPClientSpec: QuickSpec {
                     it("returns nil for json") {
                         expect(completionCalled).toEventually(beTruthy())
                         expect(returnedJSON).toEventually(beNil())
+                    }
+
+                    it("sends along the error") {
+                        expect(returnedError).toNot(beNil())
                     }
                 }
             }
@@ -91,6 +100,10 @@ class HTTPClientSpec: QuickSpec {
                     expect(completionCalled).toEventually(beTruthy())
                     expect(returnedJSON).toEventually(beNil())
                 }
+
+                it("returns the error") {
+                    expect(returnedError).toNot(beNil())
+                }
             }
 
             context("When there is a server error") {
@@ -108,6 +121,10 @@ class HTTPClientSpec: QuickSpec {
                 it("returns nil for the json") {
                     expect(completionCalled).toEventually(beTruthy())
                     expect(returnedJSON).toEventually(beNil())
+                }
+
+                it("returns the error") {
+                    expect(returnedError!.code).to(equal(500))
                 }
             }
         }
@@ -168,24 +185,24 @@ class HTTPClientSpec: QuickSpec {
                 }
             }
         }
-        
+
         describe(".downloadFile") {
             let bundle = NSBundle(forClass: self.dynamicType)
             let path = bundle.pathForResource("maneater", ofType: "mp3")!
             let sampleData = NSData(contentsOfFile: path)
-            
+
             let fileManager = NSFileManager.defaultManager()
             let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
             let testFile = directoryURL.URLByAppendingPathComponent("tests/testfile.example")
-            
+
             context("When a 200 response code") {
                 beforeEach {
                     self.stub(uri("dataURL"), builder: http(200, data: sampleData))
                 }
-                
+
                 it("returns a url") {
                     var completionCalled = false
-                    
+
                     waitUntil { done in
                         subject.downloadFile("dataURL", folderPath: "something/or/other/", completion: {url in
                             completionCalled = true
@@ -195,23 +212,23 @@ class HTTPClientSpec: QuickSpec {
                             expect(url).to(equal(testFile))
                             expect(fileManager.fileExistsAtPath(url!.path!)).to(beTruthy())
                             expect(NSData(contentsOfURL: url!)).to(equal(sampleData))
-                            
+
                             done()
                         })
                     }
-                    
+
                     expect(completionCalled).toEventually(beTruthy())
-                }                
+                }
             }
-            
+
             context("When a non-200 response code") {
                 beforeEach {
                     self.stub(uri("dataURL"), builder: http(300, data: sampleData))
                 }
-                
+
                 it("returns nil for the URL") {
                     var completionCalled = false
-                    
+
                     waitUntil { done in
                         subject.downloadFile("dataURL", folderPath: "something/or/other/", completion: {url in
                             completionCalled = true
@@ -219,20 +236,20 @@ class HTTPClientSpec: QuickSpec {
                             done()
                         })
                     }
-                    
+
                     expect(completionCalled).toEventually(beTruthy())
                 }
             }
-            
+
             context("When there is a server error") {
                 beforeEach {
                     let error = NSError(domain: "com.error.thing", code: 500, userInfo: nil)
                     self.stub(uri("dataURL"), builder: failure(error))
                 }
-                
+
                 it("returns nil for the URL") {
                     var completionCalled = false
-                    
+
                     waitUntil { done in
                         subject.downloadFile("dataURL", folderPath: "something/or/other/", completion: {url in
                             completionCalled = true
@@ -240,7 +257,7 @@ class HTTPClientSpec: QuickSpec {
                             done()
                         })
                     }
-                    
+
                     expect(completionCalled).toEventually(beTruthy())
                 }
             }

@@ -43,10 +43,12 @@ class SongServiceSpec: QuickSpec {
             describe("When the HTTP call resolves") {
                 context("When there are songs") {
                     var json: JSON!
+                    var error: NSError!
 
                     beforeEach {
                         json = JSON(["thing1", "thing2"])
-                        httpClient.capturedJSONCompletion!(json)
+                        error = NSError(domain: "com.example", code: 123, userInfo: nil)
+                        httpClient.capturedJSONCompletion!(json, error)
                     }
 
                     it("calls the deserializer") {
