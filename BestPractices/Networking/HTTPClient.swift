@@ -14,11 +14,15 @@ class HTTPClient: HTTPClientProtocol {
 
     var requestTranslator: RequestTranslatorProtocol! = RequestTranslator()
     var diskMaster: DiskMasterProtocol! = DiskMaster()
+    var activityIndicator: ActivityIndicatorProtocol! = ActivityIndicator()
 
     func makeJsonRequest(request: HTTPRequest, completion: ((JSON?, NSError?) -> ())) {
+        self.activityIndicator.start()
+
         let alamofireRequest = self.requestTranslator.translateRequestForAlamofire(request)
         alamofireRequest.validate().responseJSON(completionHandler: { response in
             var json: JSON?
+            self.activityIndicator.stop()
 
             switch response.result {
             case .Success:

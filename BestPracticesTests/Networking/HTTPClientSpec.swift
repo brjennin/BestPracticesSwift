@@ -12,6 +12,7 @@ class HTTPClientSpec: QuickSpec {
         var subject: HTTPClient!
         var requestTranslator: MockRequestTranslator!
         var diskMaster: MockDiskMaster!
+        var activityIndicator: MockActivityIndicator!
 
         beforeEach {
             subject = HTTPClient()
@@ -21,6 +22,23 @@ class HTTPClientSpec: QuickSpec {
 
             diskMaster = MockDiskMaster()
             subject.diskMaster = diskMaster
+
+            activityIndicator = MockActivityIndicator()
+            subject.activityIndicator = activityIndicator
+        }
+
+        sharedExamples("displaying network activity") {
+            it("started the activity indicator") {
+                expect(activityIndicator.calledStart).to(beTruthy())
+            }
+
+            it("stopped the activity indicator") {
+                expect(activityIndicator.calledStop).toEventually(beTruthy())
+            }
+
+            it("is not currently spinning") {
+                expect(activityIndicator.spinning).toEventually(beFalsy())
+            }
         }
 
         describe(".makeJsonRequest") {
@@ -47,6 +65,8 @@ class HTTPClientSpec: QuickSpec {
                         subject.makeJsonRequest(request, completion: completion)
                     }
 
+                    itBehavesLike("displaying network activity")
+
                     it("translates the request into an Alamofire request") {
                         expect(requestTranslator.calledTranslate).to(beTruthy())
                         expect(requestTranslator.capturedRequest!.urlString).to(equal("urlstring"))
@@ -68,6 +88,8 @@ class HTTPClientSpec: QuickSpec {
                         self.stub(uri("translatedURL"), builder: http(200))
                         subject.makeJsonRequest(request, completion: completion)
                     }
+
+                    itBehavesLike("displaying network activity")
 
                     it("translates the request into an Alamofire request") {
                         expect(requestTranslator.calledTranslate).to(beTruthy())
@@ -91,6 +113,8 @@ class HTTPClientSpec: QuickSpec {
                     subject.makeJsonRequest(request, completion: completion)
                 }
 
+                itBehavesLike("displaying network activity")
+
                 it("translates the request into an Alamofire request") {
                     expect(requestTranslator.calledTranslate).to(beTruthy())
                     expect(requestTranslator.capturedRequest!.urlString).to(equal("urlstring"))
@@ -112,6 +136,8 @@ class HTTPClientSpec: QuickSpec {
                     self.stub(uri("translatedURL"), builder: failure(error))
                     subject.makeJsonRequest(request, completion: completion)
                 }
+
+                itBehavesLike("displaying network activity")
 
                 it("translates the request into an Alamofire request") {
                     expect(requestTranslator.calledTranslate).to(beTruthy())
