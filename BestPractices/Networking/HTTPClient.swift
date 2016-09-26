@@ -20,9 +20,9 @@ class HTTPClient: HTTPClientProtocol {
         self.activityIndicator.start()
 
         let alamofireRequest = self.requestTranslator.translateRequestForAlamofire(request)
-        alamofireRequest.validate().responseJSON(completionHandler: { response in
+        alamofireRequest.validate().responseJSON(completionHandler: { [weak self] response in
             var json: JSON?
-            self.activityIndicator.stop()
+            self?.activityIndicator.stop()
 
             switch response.result {
             case .Success:
@@ -40,9 +40,9 @@ class HTTPClient: HTTPClientProtocol {
     func makeDataRequest(url: String, completion: ((NSData?) -> ())) {
         self.activityIndicator.start()
 
-        Alamofire.request(.GET, url).validate().responseData(completionHandler: { response in
+        Alamofire.request(.GET, url).validate().responseData(completionHandler: { [weak self] response in
             var data: NSData?
-            self.activityIndicator.stop()
+            self?.activityIndicator.stop()
 
             switch response.result {
             case .Success:
@@ -59,13 +59,13 @@ class HTTPClient: HTTPClientProtocol {
         var destinationURL: NSURL?
         self.activityIndicator.start()
 
-        Alamofire.download(.GET, url) { temporaryURL, response in
-            destinationURL = self.diskMaster.mediaURLForSongWithFilename(folderPath, filename: response.suggestedFilename!)
+        Alamofire.download(.GET, url) {[weak self] (temporaryURL, response) in
+            destinationURL = self?.diskMaster.mediaURLForSongWithFilename(folderPath, filename: response.suggestedFilename!)
 
             return destinationURL!
-        }.validate().response { _, _, _, error in
+        }.validate().response {[weak self] _, _, _, error in
             var url: NSURL?
-            self.activityIndicator.stop()
+            self?.activityIndicator.stop()
 
             if error == nil {
                 url = destinationURL

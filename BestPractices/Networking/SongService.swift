@@ -12,8 +12,8 @@ class SongService: SongServiceProtocol {
 
     func getSongs(completion: (([Song]?, NSError?) -> ())) {
         let request = self.requestProvider.getSongsListRequest()
-        self.httpClient.makeJsonRequest(request) { jsonObject, error in
-            completion(self.songListDeserializer.deserialize(jsonObject), error)
+        self.httpClient.makeJsonRequest(request) { [weak self] jsonObject, error in
+            completion(self?.songListDeserializer.deserialize(jsonObject), error)
         }
     }
 

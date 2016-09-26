@@ -20,11 +20,13 @@ class ListViewController: UITableViewController {
 
         self.refreshControl!.beginRefreshing()
 
-        songsCompletion = { songs in
-            self.songs = songs
-            self.dispatcher.dispatchToMainQueue({
-                self.tableView.reloadData()
-                self.refreshControl!.endRefreshing()
+        songsCompletion = { [weak self] songs in
+            if self != nil {
+                self!.songs = songs
+            }
+            self?.dispatcher.dispatchToMainQueue({
+                self?.tableView.reloadData()
+                self?.refreshControl!.endRefreshing()
             })
         }
 

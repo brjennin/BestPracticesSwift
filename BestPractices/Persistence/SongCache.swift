@@ -14,10 +14,10 @@ class SongCache: SongCacheProtocol {
         if let songs = persistedSongs {
             completion(songs)
         } else {
-            self.songService.getSongs { songs, error in
+            self.songService.getSongs { [weak self] songs, error in
                 var songsResult = [Song]()
                 if let songs = songs {
-                    self.songPersistence.replace(songs)
+                    self?.songPersistence.replace(songs)
                     songsResult = songs
                 }
 
@@ -27,13 +27,13 @@ class SongCache: SongCacheProtocol {
     }
 
     func getSongsAndRefreshCache(completion: [Song] -> ()) {
-        self.songService.getSongs { songs, error in
+        self.songService.getSongs { [weak self] songs, error in
             var songsResult = [Song]()
             if let songs = songs {
-                self.songPersistence.replace(songs)
+                self?.songPersistence.replace(songs)
                 songsResult = songs
             } else {
-                let persistedSongs = self.songPersistence.retrieve()
+                let persistedSongs = self?.songPersistence.retrieve()
                 if let persistedSongs = persistedSongs {
                     songsResult = persistedSongs
                 }
