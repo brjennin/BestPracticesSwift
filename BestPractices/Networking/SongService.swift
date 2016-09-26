@@ -1,7 +1,7 @@
 import SwiftyJSON
 
 protocol SongServiceProtocol: class {
-    func getSongs(completion: (([Song]) -> ()))
+    func getSongs(completion: (([Song]?, NSError?) -> ()))
 }
 
 class SongService: SongServiceProtocol {
@@ -10,10 +10,10 @@ class SongService: SongServiceProtocol {
     var httpClient: HTTPClientProtocol! = HTTPClient()
     var songListDeserializer: SongListDeserializerProtocol! = SongListDeserializer()
 
-    func getSongs(completion: (([Song]) -> ())) {
+    func getSongs(completion: (([Song]?, NSError?) -> ())) {
         let request = self.requestProvider.getSongsListRequest()
         self.httpClient.makeJsonRequest(request) { jsonObject, error in
-            completion(self.songListDeserializer.deserialize(jsonObject))
+            completion(self.songListDeserializer.deserialize(jsonObject), error)
         }
     }
 

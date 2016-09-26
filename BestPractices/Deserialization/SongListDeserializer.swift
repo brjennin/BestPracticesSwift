@@ -1,14 +1,15 @@
 import SwiftyJSON
 
 protocol SongListDeserializerProtocol: class {
-    func deserialize(json: JSON?) -> [Song]
+    func deserialize(json: JSON?) -> [Song]?
 }
 
 class SongListDeserializer: SongListDeserializerProtocol {
-    func deserialize(json: JSON?) -> [Song] {
-        var songs = [Song]()
+    func deserialize(json: JSON?) -> [Song]? {
+        var songs: [Song]?
 
         if let json = json {
+            songs = [Song]()
             for (_, subJson):(String, JSON) in json {
                 let song = Song()
                 song.identifier = subJson["id"].intValue
@@ -17,7 +18,7 @@ class SongListDeserializer: SongListDeserializerProtocol {
                 song.url = subJson["url"].stringValue
                 song.albumArt = subJson["album_art"].stringValue
 
-                songs.append(song)
+                songs!.append(song)
             }
         }
         return songs

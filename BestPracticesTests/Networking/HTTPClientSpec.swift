@@ -23,7 +23,7 @@ class HTTPClientSpec: QuickSpec {
             subject.diskMaster = diskMaster
         }
 
-        fdescribe(".makeJsonRequest") {
+        describe(".makeJsonRequest") {
             var returnedJSON: JSON?
             var returnedError: NSError?
             var completionCalled: Bool!

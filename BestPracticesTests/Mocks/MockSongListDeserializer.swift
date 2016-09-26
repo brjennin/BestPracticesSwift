@@ -4,15 +4,13 @@ import SwiftyJSON
 class MockSongListDeserializer: SongListDeserializerProtocol {
     var calledDeserialize = false
     var capturedJSON: JSON?
+    var returnValueForDeserialize: [Song]?
 
-    func deserialize(json: JSON?) -> [Song] {
+    func deserialize(json: JSON?) -> [Song]? {
         calledDeserialize = true
         capturedJSON = json
 
-        return [
-            Song(value: ["identifier": 123, "name": "private eyes"]),
-            Song(value: ["identifier": 456, "name": "rich girl"])
-        ]
+        return returnValueForDeserialize
     }
 
 }

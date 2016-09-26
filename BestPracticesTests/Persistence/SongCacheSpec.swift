@@ -11,6 +11,8 @@ class SongCacheSpec: QuickSpec {
         var songService: MockSongService!
         var songPersistence: MockSongPersistence!
 
+        var result: [Song]!
+
         beforeEach {
             subject = SongCache()
 
@@ -22,16 +24,7 @@ class SongCacheSpec: QuickSpec {
         }
 
         describe(".getSongsAndRefreshCache") {
-            var result: [Song]!
-            var songOne: Song!
-            var songTwo: Song!
-            var songs: [Song]!
-
             beforeEach {
-                songOne = Song(value: ["identifier": 111])
-                songTwo = Song(value: ["identifier": 222])
-                songs = [songOne, songTwo]
-
                 subject.getSongsAndRefreshCache { returnedSongs in
                     result = returnedSongs
                 }
@@ -42,22 +35,81 @@ class SongCacheSpec: QuickSpec {
             }
 
             describe("When the service resolves") {
-                beforeEach {
-                    songService.completion!(songs)
+                context("When it resolves with songs") {
+                    var songOne: Song!
+                    var songTwo: Song!
+                    var songs: [Song]!
+
+                    beforeEach {
+                        songOne = Song(value: ["identifier": 111])
+                        songTwo = Song(value: ["identifier": 222])
+                        songs = [songOne, songTwo]
+
+                        songService.completion!(songs, nil)
+                    }
+
+                    it("calls the completion with the song list") {
+                        expect(result.count).to(equal(2))
+                        expect(result.first!.identifier).to(equal(111))
+                        expect(result.last!.identifier).to(equal(222))
+                    }
+
+                    it("persists the songs") {
+                        expect(songPersistence.calledReplace).to(beTruthy())
+                        expect(songPersistence.capturedReplaceSongs!.first!.identifier).to(equal(111))
+                        expect(songPersistence.capturedReplaceSongs!.last!.identifier).to(equal(222))
+                    }
                 }
 
-                it("calls the completion with the song list") {
-                    expect(result.count).to(equal(2))
-                    expect(result.first!.identifier).to(equal(111))
-                    expect(result.last!.identifier).to(equal(222))
-                }
+                context("When it resolves without songs") {
+                    let error = NSError(domain: "com.example", code: 213, userInfo: nil)
 
-                it("persists the songs") {
-                    expect(songPersistence.calledReplace).to(beTruthy())
-                    expect(songPersistence.capturedReplaceSongs!.first!.identifier).to(equal(111))
-                    expect(songPersistence.capturedReplaceSongs!.last!.identifier).to(equal(222))
+                    context("When there are songs persisted") {
+                        beforeEach {
+                            songPersistence.songsThatGetRetrieved = [
+                                Song(value: ["identifier": 831]),
+                                Song(value: ["identifier": 821]),
+                            ]
+
+                            songService.completion!(nil, error)
+                        }
+
+                        it("does not replace the songs in the persistence layer") {
+                            expect(songPersistence.calledReplace).to(beFalsy())
+                        }
+
+                        it("retrieves songs from the persistence layer") {
+                            expect(songPersistence.calledRetrieve).to(beTruthy())
+                        }
+
+                        it("calls the completion with the result from the persistence layer") {
+                            expect(result.first!.identifier).to(equal(831))
+                            expect(result.last!.identifier).to(equal(821))
+                        }
+                    }
+
+                    context("When there are no songs persisted") {
+                        beforeEach {
+                            songPersistence.songsThatGetRetrieved = nil
+                            songService.completion!(nil, error)
+                        }
+
+                        it("does not replace the songs in the persistence layer") {
+                            expect(songPersistence.calledReplace).to(beFalsy())
+                        }
+
+                        it("retrieves songs from the persistence layer") {
+                            expect(songPersistence.calledRetrieve).to(beTruthy())
+                        }
+
+                        it("calls the completion with an empty array") {
+                            expect(result.count).to(equal(0))
+                        }
+                    }
+
                 }
             }
+
         }
 
         describe(".getSongs") {
@@ -102,7 +154,7 @@ class SongCacheSpec: QuickSpec {
                     }
                 }
 
-                it("retrieves songs from the persistence layer") {
+                it("tries to retrieve songs from the persistence layer") {
                     expect(songPersistence.calledRetrieve).to(beTruthy())
                 }
 
@@ -111,24 +163,47 @@ class SongCacheSpec: QuickSpec {
                 }
 
                 describe("When the service resolves") {
-                    beforeEach {
-                        let songs = [
-                            Song(value: ["identifier": 743]),
-                            Song(value: ["identifier": 148]),
-                        ]
-                        songService.completion!(songs)
+                    context("When it resolves with songs") {
+                        var songOne: Song!
+                        var songTwo: Song!
+                        var songs: [Song]!
+
+                        beforeEach {
+                            songOne = Song(value: ["identifier": 111])
+                            songTwo = Song(value: ["identifier": 222])
+                            songs = [songOne, songTwo]
+
+                            songService.completion!(songs, nil)
+                        }
+
+                        it("calls the completion with the song list") {
+                            expect(result.count).to(equal(2))
+                            expect(result.first!.identifier).to(equal(111))
+                            expect(result.last!.identifier).to(equal(222))
+                        }
+
+                        it("persists the songs") {
+                            expect(songPersistence.calledReplace).to(beTruthy())
+                            expect(songPersistence.capturedReplaceSongs!.first!.identifier).to(equal(111))
+                            expect(songPersistence.capturedReplaceSongs!.last!.identifier).to(equal(222))
+                        }
                     }
 
-                    it("calls the completion with the song list") {
-                        expect(result.count).to(equal(2))
-                        expect(result.first!.identifier).to(equal(743))
-                        expect(result.last!.identifier).to(equal(148))
-                    }
+                    context("When it resolves without songs") {
+                        let error = NSError(domain: "com.example", code: 213, userInfo: nil)
 
-                    it("persists the songs") {
-                        expect(songPersistence.calledReplace).to(beTruthy())
-                        expect(songPersistence.capturedReplaceSongs!.first!.identifier).to(equal(743))
-                        expect(songPersistence.capturedReplaceSongs!.last!.identifier).to(equal(148))
+                        beforeEach {
+                            songPersistence.songsThatGetRetrieved = nil
+                            songService.completion!(nil, error)
+                        }
+
+                        it("does not replace the songs in the persistence layer") {
+                            expect(songPersistence.calledReplace).to(beFalsy())
+                        }
+
+                        it("calls the completion with an empty array") {
+                            expect(result.count).to(equal(0))
+                        }
                     }
                 }
             }

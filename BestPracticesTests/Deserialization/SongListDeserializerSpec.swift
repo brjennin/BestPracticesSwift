@@ -59,8 +59,8 @@ class SongListDeserializerSpec: QuickSpec {
                     returnedSongs = subject.deserialize(nil)
                 }
 
-                it("returns an empty array") {
-                    expect(returnedSongs.count).to(equal(0))
+                it("returns nil") {
+                    expect(returnedSongs).to(beNil())
                 }
             }
         }
