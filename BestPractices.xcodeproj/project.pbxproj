@@ -47,9 +47,6 @@
 		AEAACF391D8C4C9C007177CF /* RequestTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF381D8C4C9C007177CF /* RequestTranslator.swift */; };
 		AEAACF421D8C7A9B007177CF /* RequestTranslatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF411D8C7A9B007177CF /* RequestTranslatorSpec.swift */; };
 		AEAACF441D908FA1007177CF /* hall_and_oates_cover.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = AEAACF431D908FA1007177CF /* hall_and_oates_cover.jpeg */; };
-		AEAACF461D908FF7007177CF /* MockImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF451D908FF7007177CF /* MockImageService.swift */; };
-		AEAACF481D90907D007177CF /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF471D90907D007177CF /* ImageService.swift */; };
-		AEAACF4A1D909E1D007177CF /* ImageServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF491D909E1D007177CF /* ImageServiceSpec.swift */; };
 		AEAACF4C1D90B595007177CF /* MockPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF4B1D90B595007177CF /* MockPlayer.swift */; };
 		AEAACF4F1D90B662007177CF /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF4E1D90B662007177CF /* Player.swift */; };
 		AEC6AE141D90B83B00933DCC /* PlayerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEC6AE131D90B83B00933DCC /* PlayerSpec.swift */; };
@@ -126,9 +123,6 @@
 		AEAACF381D8C4C9C007177CF /* RequestTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTranslator.swift; sourceTree = "<group>"; };
 		AEAACF411D8C7A9B007177CF /* RequestTranslatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTranslatorSpec.swift; sourceTree = "<group>"; };
 		AEAACF431D908FA1007177CF /* hall_and_oates_cover.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hall_and_oates_cover.jpeg; sourceTree = "<group>"; };
-		AEAACF451D908FF7007177CF /* MockImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockImageService.swift; sourceTree = "<group>"; };
-		AEAACF471D90907D007177CF /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
-		AEAACF491D909E1D007177CF /* ImageServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageServiceSpec.swift; sourceTree = "<group>"; };
 		AEAACF4B1D90B595007177CF /* MockPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPlayer.swift; sourceTree = "<group>"; };
 		AEAACF4E1D90B662007177CF /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		AEC6AE131D90B83B00933DCC /* PlayerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerSpec.swift; sourceTree = "<group>"; };
@@ -235,7 +229,6 @@
 				AEAACF1D1D8B1161007177CF /* MockRequestProvider.swift */,
 				AEAACF2B1D8B1B08007177CF /* MockHTTPClient.swift */,
 				AEAACF361D8C4C01007177CF /* MockRequestTranslator.swift */,
-				AEAACF451D908FF7007177CF /* MockImageService.swift */,
 				AEAACF4B1D90B595007177CF /* MockPlayer.swift */,
 				AEC6AE1A1D92EBC900933DCC /* MockSongListDeserializer.swift */,
 				AE1ABA7D1D93059700357DA5 /* MockSongCache.swift */,
@@ -263,7 +256,6 @@
 				AEAACF2F1D8B2586007177CF /* RequestProviderSpec.swift */,
 				AEAACF341D8B6373007177CF /* HTTPClientSpec.swift */,
 				AEAACF411D8C7A9B007177CF /* RequestTranslatorSpec.swift */,
-				AEAACF491D909E1D007177CF /* ImageServiceSpec.swift */,
 				AE1ABAA21D99A77A00357DA5 /* ActivityIndicatorSpec.swift */,
 			);
 			path = Networking;
@@ -394,7 +386,6 @@
 				AEAACF231D8B1277007177CF /* RequestProvider.swift */,
 				AEAACF2D1D8B1CC8007177CF /* HTTPClient.swift */,
 				AEAACF381D8C4C9C007177CF /* RequestTranslator.swift */,
-				AEAACF471D90907D007177CF /* ImageService.swift */,
 				AE1ABA9E1D99A2CE00357DA5 /* ActivityIndicator.swift */,
 			);
 			path = Networking;
@@ -649,7 +640,6 @@
 				AE1ABA921D947B0D00357DA5 /* DiskMaster.swift in Sources */,
 				AE1ABA8C1D94429800357DA5 /* Song.swift in Sources */,
 				DE99CC8B9BF5F664B889EB45 /* ListViewController.swift in Sources */,
-				AEAACF481D90907D007177CF /* ImageService.swift in Sources */,
 				AEAACF2E1D8B1CC8007177CF /* HTTPClient.swift in Sources */,
 				AE1ABA9F1D99A2CE00357DA5 /* ActivityIndicator.swift in Sources */,
 				AE304A821D888212001F1D0C /* SongSelectionDelegate.swift in Sources */,
@@ -678,12 +668,10 @@
 				DE99C16832E147A8C83CC18E /* HomeViewControllerSpec.swift in Sources */,
 				AEAACF0C1D8A10AE007177CF /* MockListViewController.swift in Sources */,
 				AE1ABA7E1D93059700357DA5 /* MockSongCache.swift in Sources */,
-				AEAACF461D908FF7007177CF /* MockImageService.swift in Sources */,
 				AE1ABAA31D99A77A00357DA5 /* ActivityIndicatorSpec.swift in Sources */,
 				AE1ABA8A1D93394E00357DA5 /* SongPersistenceSpec.swift in Sources */,
 				AE1ABA9B1D95976900357DA5 /* SongLoaderSpec.swift in Sources */,
 				AE1ABA971D947E2200357DA5 /* DiskMasterSpec.swift in Sources */,
-				AEAACF4A1D909E1D007177CF /* ImageServiceSpec.swift in Sources */,
 				AEAACF351D8B6373007177CF /* HTTPClientSpec.swift in Sources */,
 				AEAACF061D8A0B6B007177CF /* MockSongService.swift in Sources */,
 				AEAACF111D8B023F007177CF /* DispatcherSpec.swift in Sources */,

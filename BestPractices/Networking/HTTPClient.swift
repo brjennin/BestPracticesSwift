@@ -5,8 +5,6 @@ import Foundation
 protocol HTTPClientProtocol: class {
     func makeJsonRequest(request: HTTPRequest, completion: ((JSON?, NSError?) -> ()))
 
-    func makeDataRequest(url: String, completion: ((NSData?) -> ()))
-
     func downloadFile(url: String, folderPath: String, completion: ((NSURL?) -> ()))
 }
 
@@ -34,24 +32,6 @@ class HTTPClient: HTTPClientProtocol {
             }
 
             completion(json, response.result.error)
-        })
-    }
-
-    func makeDataRequest(url: String, completion: ((NSData?) -> ())) {
-        self.activityIndicator.start()
-
-        Alamofire.request(.GET, url).validate().responseData(completionHandler: { [weak self] response in
-            var data: NSData?
-            self?.activityIndicator.stop()
-
-            switch response.result {
-            case .Success:
-                data = response.data
-            case .Failure(_):
-                break
-            }
-
-            completion(data)
         })
     }
 

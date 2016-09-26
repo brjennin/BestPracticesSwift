@@ -155,69 +155,6 @@ class HTTPClientSpec: QuickSpec {
             }
         }
 
-        describe(".makeDataRequest") {
-            var returnedData: NSData?
-            var completionCalled: Bool!
-            var completion: ((NSData?) -> ())!
-
-            let bundle = NSBundle(forClass: self.dynamicType)
-            let path = bundle.pathForResource("hall_and_oates_cover", ofType: "jpeg")!
-            let sampleData = NSData(contentsOfFile: path)
-
-            beforeEach {
-                completion = { data in
-                    completionCalled = true
-                    returnedData = data
-                }
-                returnedData = nil
-                completionCalled = false
-            }
-
-            context("When a 200 response code") {
-                beforeEach {
-                    self.stub(uri("dataURL"), builder: http(200, data: sampleData))
-                    subject.makeDataRequest("dataURL", completion: completion)
-                }
-
-                itBehavesLike("displaying network activity")
-
-                it("returns data") {
-                    expect(completionCalled).toEventually(beTruthy())
-                    expect(returnedData).toEventuallyNot(beNil())
-                    expect(returnedData).toEventually(equal(sampleData))
-                }
-            }
-
-            context("When a non-200 response code") {
-                beforeEach {
-                    self.stub(uri("dataURL"), builder: http(300, data: sampleData))
-                    subject.makeDataRequest("dataURL", completion: completion)
-                }
-
-                itBehavesLike("displaying network activity")
-
-                it("returns nil for data") {
-                    expect(completionCalled).toEventually(beTruthy())
-                    expect(returnedData).toEventually(beNil())
-                }
-            }
-
-            context("When there is a server error") {
-                beforeEach {
-                    let error = NSError(domain: "com.error.thing", code: 500, userInfo: nil)
-                    self.stub(uri("dataURL"), builder: failure(error))
-                    subject.makeDataRequest("dataURL", completion: completion)
-                }
-
-                itBehavesLike("displaying network activity")
-
-                it("returns nil for data") {
-                    expect(completionCalled).toEventually(beTruthy())
-                    expect(returnedData).toEventually(beNil())
-                }
-            }
-        }
-
         describe(".downloadFile") {
             let bundle = NSBundle(forClass: self.dynamicType)
             let path = bundle.pathForResource("maneater", ofType: "mp3")!
