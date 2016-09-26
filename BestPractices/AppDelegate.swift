@@ -1,16 +1,9 @@
-//
-//  AppDelegate.swift
-//  BestPractices
-//
-//  Created by Pivotal on 9/9/16.
-//  Copyright © 2016 Brian Jennings. All rights reserved.
-//
-
 import UIKit
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var applicationProvider: ApplicationProviderProtocol! = ApplicationProvider()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -19,6 +12,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow.init(frame: UIScreen.mainScreen().bounds)
         window!.rootViewController = homeViewController
         window!.makeKeyAndVisible()
+        
+        let sharedApplication = applicationProvider.sharedApplication()
+        sharedApplication.beginReceivingRemoteControlEvents()
         
         return true
     }

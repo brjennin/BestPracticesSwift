@@ -7,16 +7,22 @@ class AppDelegateSpec: QuickSpec {
     override func spec() {
         
         var subject: AppDelegate!
-        var application: UIApplication!
+        var application: MockApplication!
+        var applicationProvider: MockApplicationProvider!
         
         beforeEach {
-            application = UIApplication.sharedApplication()
             subject = AppDelegate()
+            
+            applicationProvider = MockApplicationProvider()
+            subject.applicationProvider = applicationProvider
         }
         
         describe(".application:didFinishLaunchingWithOptions:") {
             beforeEach {
-                subject.application(application, didFinishLaunchingWithOptions: nil)
+                application = MockApplication()
+                applicationProvider.returnValueForSharedApplication = application
+                
+                subject.application(UIApplication.sharedApplication(), didFinishLaunchingWithOptions: nil)
             }
             
             it("loads the view controller into the window") {
@@ -28,6 +34,14 @@ class AppDelegateSpec: QuickSpec {
                 let navController = subject.window!.rootViewController! as! UINavigationController
                 expect(navController.topViewController).toNot(beNil())
                 expect(navController.topViewController!).to(beAKindOf(HomeViewController))                
+            }
+            
+            it("calls the application provider") {
+                expect(applicationProvider.calledSharedApplication).to(beTruthy())
+            }
+            
+            it("starts listening for remote control events") {
+                expect(application.calledBeginReceivingRemoteControlEvents).to(beTruthy())
             }
         }
     }
