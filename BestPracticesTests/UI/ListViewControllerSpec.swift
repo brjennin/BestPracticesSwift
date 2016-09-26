@@ -105,6 +105,10 @@ class ListViewControllerSpec: QuickSpec {
                 expect(subject.tableView.subviews).to(contain(subject.refreshControl))
             }
 
+            it("starts the spinner on the refresh control") {
+                expect(subject.refreshControl!.refreshing).to(beTruthy())
+            }
+
             describe("As a UITableViewDataSource") {
                 describe(".numberOfSectionsInTableView") {
                     it("should have 1 section") {
