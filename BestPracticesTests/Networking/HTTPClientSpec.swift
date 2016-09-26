@@ -179,6 +179,8 @@ class HTTPClientSpec: QuickSpec {
                     subject.makeDataRequest("dataURL", completion: completion)
                 }
 
+                itBehavesLike("displaying network activity")
+
                 it("returns data") {
                     expect(completionCalled).toEventually(beTruthy())
                     expect(returnedData).toEventuallyNot(beNil())
@@ -192,6 +194,8 @@ class HTTPClientSpec: QuickSpec {
                     subject.makeDataRequest("dataURL", completion: completion)
                 }
 
+                itBehavesLike("displaying network activity")
+
                 it("returns nil for data") {
                     expect(completionCalled).toEventually(beTruthy())
                     expect(returnedData).toEventually(beNil())
@@ -204,6 +208,8 @@ class HTTPClientSpec: QuickSpec {
                     self.stub(uri("dataURL"), builder: failure(error))
                     subject.makeDataRequest("dataURL", completion: completion)
                 }
+
+                itBehavesLike("displaying network activity")
 
                 it("returns nil for data") {
                     expect(completionCalled).toEventually(beTruthy())
@@ -244,6 +250,9 @@ class HTTPClientSpec: QuickSpec {
                     }
 
                     expect(completionCalled).toEventually(beTruthy())
+                    expect(activityIndicator.calledStart).to(beTruthy())
+                    expect(activityIndicator.calledStop).toEventually(beTruthy())
+                    expect(activityIndicator.spinning).toEventually(beFalsy())
                 }
             }
 
@@ -264,6 +273,9 @@ class HTTPClientSpec: QuickSpec {
                     }
 
                     expect(completionCalled).toEventually(beTruthy())
+                    expect(activityIndicator.calledStart).to(beTruthy())
+                    expect(activityIndicator.calledStop).toEventually(beTruthy())
+                    expect(activityIndicator.spinning).toEventually(beFalsy())
                 }
             }
 
@@ -285,6 +297,9 @@ class HTTPClientSpec: QuickSpec {
                     }
 
                     expect(completionCalled).toEventually(beTruthy())
+                    expect(activityIndicator.calledStart).to(beTruthy())
+                    expect(activityIndicator.calledStop).toEventually(beTruthy())
+                    expect(activityIndicator.spinning).toEventually(beFalsy())
                 }
             }
         }

@@ -38,8 +38,11 @@ class HTTPClient: HTTPClientProtocol {
     }
 
     func makeDataRequest(url: String, completion: ((NSData?) -> ())) {
+        self.activityIndicator.start()
+
         Alamofire.request(.GET, url).validate().responseData(completionHandler: { response in
             var data: NSData?
+            self.activityIndicator.stop()
 
             switch response.result {
             case .Success:
@@ -54,6 +57,7 @@ class HTTPClient: HTTPClientProtocol {
 
     func downloadFile(url: String, folderPath: String, completion: ((NSURL?) -> ())) {
         var destinationURL: NSURL?
+        self.activityIndicator.start()
 
         Alamofire.download(.GET, url) { temporaryURL, response in
             destinationURL = self.diskMaster.mediaURLForSongWithFilename(folderPath, filename: response.suggestedFilename!)
@@ -61,6 +65,8 @@ class HTTPClient: HTTPClientProtocol {
             return destinationURL!
         }.validate().response { _, _, _, error in
             var url: NSURL?
+            self.activityIndicator.stop()
+
             if error == nil {
                 url = destinationURL
             }
