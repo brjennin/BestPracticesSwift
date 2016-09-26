@@ -40,10 +40,6 @@ class ListViewController: UITableViewController {
     }
     
     func refresh(refreshControl: UIRefreshControl) {
-        fetchSongs()
-    }
-    
-    private func fetchSongs() {
         self.songCache.getSongsAndRefreshCache { songs in
             self.songs = songs
             self.dispatcher.dispatchToMainQueue {
