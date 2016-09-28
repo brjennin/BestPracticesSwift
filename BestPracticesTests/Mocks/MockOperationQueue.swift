@@ -1,10 +1,10 @@
 import Foundation
 @testable import BestPractices
 
-class MockOperationQueue: NSOperationQueue {
+class MockOperationQueue: OperationQueue {
     var completion: (() -> ())?
     
-    override func addOperationWithBlock(block: () -> Void) {
+    override func addOperation(_ block: @escaping () -> Void) {
         completion = block
     }
 }

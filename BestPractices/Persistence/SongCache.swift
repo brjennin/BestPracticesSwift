@@ -1,7 +1,7 @@
 protocol SongCacheProtocol: class {
-    func getSongs(completion: [Song] -> ())
+    func getSongs(completion: @escaping ([Song]) -> ())
 
-    func getSongsAndRefreshCache(completion: [Song] -> ())
+    func getSongsAndRefreshCache(completion: @escaping ([Song]) -> ())
 }
 
 class SongCache: SongCacheProtocol {
@@ -9,7 +9,7 @@ class SongCache: SongCacheProtocol {
     var songService: SongServiceProtocol! = SongService()
     var songPersistence: SongPersistenceProtocol! = SongPersistence()
 
-    func getSongs(completion: [Song] -> ()) {
+    func getSongs(completion: @escaping ([Song]) -> ()) {
         let persistedSongs = self.songPersistence.retrieve()
         if let songs = persistedSongs {
             completion(songs)
@@ -17,7 +17,7 @@ class SongCache: SongCacheProtocol {
             self.songService.getSongs { [weak self] songs, error in
                 var songsResult = [Song]()
                 if let songs = songs {
-                    self?.songPersistence.replace(songs)
+                    self?.songPersistence.replace(songs: songs)
                     songsResult = songs
                 }
 
@@ -26,11 +26,11 @@ class SongCache: SongCacheProtocol {
         }
     }
 
-    func getSongsAndRefreshCache(completion: [Song] -> ()) {
+    func getSongsAndRefreshCache(completion: @escaping ([Song]) -> ()) {
         self.songService.getSongs { [weak self] songs, error in
             var songsResult = [Song]()
             if let songs = songs {
-                self?.songPersistence.replace(songs)
+                self?.songPersistence.replace(songs: songs)
                 songsResult = songs
             } else {
                 let persistedSongs = self?.songPersistence.retrieve()

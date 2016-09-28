@@ -17,15 +17,15 @@ class HomeViewController: UIViewController {
         self.currentSongLabel.text = ""
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToListView" {
-            if let listViewController = segue.destinationViewController as? ListViewController {
+            if let listViewController = segue.destination as? ListViewController {
                 listViewController.songSelectionDelegate = self
             }
         }
     }
 
-    @IBAction func didTapPlay(sender: UIButton) {
+    @IBAction func didTapPlay(_ sender: UIButton) {
         self.player.play()
     }
 }
@@ -33,14 +33,14 @@ class HomeViewController: UIViewController {
 extension HomeViewController: SongSelectionDelegate {
 
     func songWasSelected(song: Song) {
-        self.navigationController?.popViewControllerAnimated(true)
+        _ = self.navigationController?.popViewController(animated: true)
         self.albumArtImageView.image = nil
         self.player.clearSong()
         self.currentSongLabel.text = song.name
 
-        self.songLoader.loadSongAssets(song, songCompletion: { [weak self] songWithSong in
+        self.songLoader.loadSongAssets(song: song, songCompletion: { [weak self] songWithSong in
             if let songPath = songWithSong.songLocalPath {
-                self?.player.loadSong(songPath)
+                self?.player.loadSong(filePath: songPath)
             }
         }, imageCompletion: { [weak self] songWithImage in
             if let imagePath = songWithImage.imageLocalPath {

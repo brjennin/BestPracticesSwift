@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 @testable import BestPractices
 
 class SongCacheSpec: QuickSpec {

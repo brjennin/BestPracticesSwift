@@ -1,3 +1,4 @@
+import Alamofire
 @testable import BestPractices
 
 class MockRequestProvider: RequestProviderProtocol {
@@ -5,6 +6,6 @@ class MockRequestProvider: RequestProviderProtocol {
     
     func getSongsListRequest() -> HTTPRequest {
         calledGetSongsListRequest = true
-        return HTTPRequest(urlString: "getSongsList", httpMethod: HTTPMethod.GET, params: nil, headers: nil)
+        return HTTPRequest(urlString: "getSongsList", httpMethod: HTTPMethod.get, params: nil, headers: nil)
     }
 }

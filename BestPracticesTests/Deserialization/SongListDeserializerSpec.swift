@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 import SwiftyJSON
 @testable import BestPractices
 
@@ -18,11 +17,12 @@ class SongListDeserializerSpec: QuickSpec {
 
             context("When there are songs to deserialize") {
                 beforeEach {
-                    let bundle = NSBundle(forClass: self.dynamicType)
-                    let path = bundle.pathForResource("getSongsListResponse", ofType: "json")!
-                    let jsonData = NSData(contentsOfFile: path)
-                    let json = JSON(data: jsonData!)
-                    returnedSongs = subject.deserialize(json)
+                    let bundle = Bundle(for: type(of: self))
+                    let path = bundle.path(forResource: "getSongsListResponse", ofType: "json")!
+                    let url = URL(fileURLWithPath: path)
+                    let jsonData = try! Data(contentsOf: url)
+                    let json = JSON(data: jsonData)
+                    returnedSongs = subject.deserialize(json: json)
                 }
 
                 it("deserializes song objects") {
@@ -44,9 +44,9 @@ class SongListDeserializerSpec: QuickSpec {
 
             context("When there are no songs") {
                 beforeEach {
-                    let jsonData = NSData(base64EncodedString: "[]", options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+                    let jsonData = Data(base64Encoded: "[]", options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
                     let json = JSON(data: jsonData!)
-                    returnedSongs = subject.deserialize(json)
+                    returnedSongs = subject.deserialize(json: json)
                 }
 
                 it("deserializes an empty array") {
@@ -56,7 +56,7 @@ class SongListDeserializerSpec: QuickSpec {
 
             context("When the server errors") {
                 beforeEach {
-                    returnedSongs = subject.deserialize(nil)
+                    returnedSongs = subject.deserialize(json: nil)
                 }
 
                 it("returns nil") {

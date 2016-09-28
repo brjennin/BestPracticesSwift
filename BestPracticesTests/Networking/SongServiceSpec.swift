@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 import SwiftyJSON
 @testable import BestPractices
 

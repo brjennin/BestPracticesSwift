@@ -3,7 +3,7 @@
 class MockDispatcher: DispatcherProtocol {
     var calledDispatch = false
     
-    func dispatchToMainQueue(completion: (() -> ())) {
+    func dispatchToMainQueue(completion: @escaping (() -> ())) {
         calledDispatch = true
         completion()
     }

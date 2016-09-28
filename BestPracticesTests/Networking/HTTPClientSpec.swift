@@ -1,8 +1,8 @@
 import Quick
 import Nimble
-import Fleet
 import SwiftyJSON
 import Mockingjay
+import Alamofire
 @testable import BestPractices
 
 class HTTPClientSpec: QuickSpec {
@@ -55,14 +55,14 @@ class HTTPClientSpec: QuickSpec {
                     returnedError = error
                 }
                 completionCalled = false
-                request = HTTPRequest(urlString: "urlstring", httpMethod: HTTPMethod.GET, params: nil, headers: nil)
+                request = HTTPRequest(urlString: "urlstring", httpMethod: HTTPMethod.get, params: nil, headers: nil)
             }
 
             context("When a 200 response code") {
                 context("With JSON") {
                     beforeEach {
-                        self.stub(uri("translatedURL"), builder: json(["key": "val"], status: 200))
-                        subject.makeJsonRequest(request, completion: completion)
+                        self.stub(uri("translatedURL"), json(["key": "val"], status: 200))
+                        subject.makeJsonRequest(request: request, completion: completion)
                     }
 
                     itBehavesLike("displaying network activity")
@@ -85,8 +85,8 @@ class HTTPClientSpec: QuickSpec {
 
                 context("Without JSON") {
                     beforeEach {
-                        self.stub(uri("translatedURL"), builder: http(200))
-                        subject.makeJsonRequest(request, completion: completion)
+                        self.stub(uri("translatedURL"), http(200))
+                        subject.makeJsonRequest(request: request, completion: completion)
                     }
 
                     itBehavesLike("displaying network activity")
@@ -109,8 +109,8 @@ class HTTPClientSpec: QuickSpec {
 
             context("When a non-200 response code") {
                 beforeEach {
-                    self.stub(uri("translatedURL"), builder: json(["key": "val"], status: 300))
-                    subject.makeJsonRequest(request, completion: completion)
+                    self.stub(uri("translatedURL"), json(["key": "val"], status: 300))
+                    subject.makeJsonRequest(request: request, completion: completion)
                 }
 
                 itBehavesLike("displaying network activity")
@@ -133,8 +133,8 @@ class HTTPClientSpec: QuickSpec {
             context("When there is a server error") {
                 beforeEach {
                     let error = NSError(domain: "com.error.thing", code: 500, userInfo: nil)
-                    self.stub(uri("translatedURL"), builder: failure(error))
-                    subject.makeJsonRequest(request, completion: completion)
+                    self.stub(uri("translatedURL"), failure(error))
+                    subject.makeJsonRequest(request: request, completion: completion)
                 }
 
                 itBehavesLike("displaying network activity")
@@ -156,31 +156,34 @@ class HTTPClientSpec: QuickSpec {
         }
 
         describe(".downloadFile") {
-            let bundle = NSBundle(forClass: self.dynamicType)
-            let path = bundle.pathForResource("maneater", ofType: "mp3")!
-            let sampleData = NSData(contentsOfFile: path)
-
-            let fileManager = NSFileManager.defaultManager()
-            let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-            let testFile = directoryURL.URLByAppendingPathComponent("tests/testfile.example")
+            let bundle = Bundle(for: type(of: self))
+            let path = bundle.path(forResource: "maneater", ofType: "mp3")!
+            let url = URL(fileURLWithPath: path)
+            let sampleData = try! Data(contentsOf: url)
+            let download = Download.content(sampleData)
+            
+            let fileManager = FileManager.default
+            let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let testFile = directoryURL.appendingPathComponent("tests/testfile.example")
 
             context("When a 200 response code") {
                 beforeEach {
-                    self.stub(uri("dataURL"), builder: http(200, data: sampleData))
+                    self.stub(uri("dataURL"), http(200, headers: nil, download: download))
                 }
 
                 it("returns a url") {
                     var completionCalled = false
 
                     waitUntil { done in
-                        subject.downloadFile("dataURL", folderPath: "something/or/other/", completion: {url in
+                        subject.downloadFile(url: "dataURL", folderPath: "something/or/other/", completion: { url in
                             completionCalled = true
+                        
                             expect(diskMaster.calledMediaURLForSongWithFilename).to(beTruthy())
                             expect(diskMaster.capturedFolderForMediaURL!).to(equal("something/or/other/"))
                             expect(diskMaster.capturedFilenameForMediaURL!).to(equal("dataURL.mp3"))
                             expect(url).to(equal(testFile))
-                            expect(fileManager.fileExistsAtPath(url!.path!)).to(beTruthy())
-                            expect(NSData(contentsOfURL: url!)).to(equal(sampleData))
+                            expect(fileManager.fileExists(atPath: url!.path)).to(beTruthy())
+                            expect(try! Data(contentsOf: url!)).to(equal(sampleData))
 
                             done()
                         })
@@ -195,14 +198,14 @@ class HTTPClientSpec: QuickSpec {
 
             context("When a non-200 response code") {
                 beforeEach {
-                    self.stub(uri("dataURL"), builder: http(300, data: sampleData))
+                    self.stub(uri("dataURL"), http(300, headers: nil, download: download))
                 }
 
                 it("returns nil for the URL") {
                     var completionCalled = false
 
                     waitUntil { done in
-                        subject.downloadFile("dataURL", folderPath: "something/or/other/", completion: {url in
+                        subject.downloadFile(url: "dataURL", folderPath: "something/or/other/", completion: {url in
                             completionCalled = true
                             expect(url).to(beNil())
                             done()
@@ -219,14 +222,14 @@ class HTTPClientSpec: QuickSpec {
             context("When there is a server error") {
                 beforeEach {
                     let error = NSError(domain: "com.error.thing", code: 500, userInfo: nil)
-                    self.stub(uri("dataURL"), builder: failure(error))
+                    self.stub(uri("dataURL"), failure(error))
                 }
 
                 it("returns nil for the URL") {
                     var completionCalled = false
 
                     waitUntil { done in
-                        subject.downloadFile("dataURL", folderPath: "something/or/other/", completion: {url in
+                        subject.downloadFile(url: "dataURL", folderPath: "something/or/other/", completion: {url in
                             completionCalled = true
                             expect(url).to(beNil())
                             done()

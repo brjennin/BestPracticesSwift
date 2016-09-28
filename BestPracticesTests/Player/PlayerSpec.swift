@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 import AVKit
 import AVFoundation
 @testable import BestPractices
@@ -10,9 +9,9 @@ class PlayerSpec: QuickSpec {
 
         var subject: Player!
 
-        let bundle = NSBundle(forClass: self.dynamicType)
-        let path = bundle.pathForResource("maneater", ofType: "mp3")!
-        let sampleFileURL = NSURL(fileURLWithPath: path)
+        let bundle = Bundle(for: type(of: self))
+        let path = bundle.path(forResource: "maneater", ofType: "mp3")!
+        let sampleFileURL = URL(fileURLWithPath: path)
         
         beforeEach {
             subject = Player()
@@ -25,7 +24,7 @@ class PlayerSpec: QuickSpec {
             
             context("With a good URL") {
                 beforeEach {
-                    subject.loadSong(path)
+                    subject.loadSong(filePath: path)
                 }
 
                 it("loads the song into the audio player") {
@@ -36,7 +35,7 @@ class PlayerSpec: QuickSpec {
 
             context("With a bad URL") {
                 beforeEach {
-                    subject.loadSong("")
+                    subject.loadSong(filePath: "")
                 }
 
                 it("does not initialize an audio player until we have a song file") {
@@ -48,7 +47,7 @@ class PlayerSpec: QuickSpec {
         describe(".clearSong") {
             context("When there is a song loaded") {
                 beforeEach {
-                    subject.audioPlayer = try! AVAudioPlayer(contentsOfURL: sampleFileURL)
+                    subject.audioPlayer = try! AVAudioPlayer(contentsOf: sampleFileURL)
                     
                     subject.clearSong()
                 }
@@ -73,10 +72,10 @@ class PlayerSpec: QuickSpec {
         
         describe(".play") {
             context("When there is a song loaded") {
-                let bundle = NSBundle(forClass: self.dynamicType)
-                let path = bundle.pathForResource("maneater", ofType: "mp3")!
-                let sampleFileURL = NSURL(fileURLWithPath: path)
-                let player = try! AVAudioPlayer(contentsOfURL: sampleFileURL)
+                let bundle = Bundle(for: type(of: self))
+                let path = bundle.path(forResource: "maneater", ofType: "mp3")!
+                let sampleFileURL = URL(fileURLWithPath: path)
+                let player = try! AVAudioPlayer(contentsOf: sampleFileURL)
 
                 beforeEach {
                     subject.audioPlayer = player
@@ -88,7 +87,7 @@ class PlayerSpec: QuickSpec {
                 }
 
                 it("plays the song") {
-                    expect(subject.audioPlayer!.playing).to(beTruthy())
+                    expect(subject.audioPlayer!.isPlaying).to(beTruthy())
                 }
             }
 

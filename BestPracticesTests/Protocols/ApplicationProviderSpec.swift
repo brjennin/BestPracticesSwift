@@ -1,7 +1,6 @@
 import UIKit
 import Quick
 import Nimble
-import Fleet
 @testable import BestPractices
 
 class ApplicationProviderSpec: QuickSpec {
@@ -15,7 +14,7 @@ class ApplicationProviderSpec: QuickSpec {
         
         describe(".sharedApplication") {
             it("returns the shared application") {
-                expect(subject.sharedApplication()).to(beIdenticalTo(UIApplication.sharedApplication()))
+                expect(subject.sharedApplication()).to(beIdenticalTo(UIApplication.shared))
             }
         }
     }

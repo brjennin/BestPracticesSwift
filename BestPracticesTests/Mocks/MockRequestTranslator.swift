@@ -6,10 +6,10 @@ class MockRequestTranslator: RequestTranslatorProtocol {
     var calledTranslate = false
     var capturedRequest: HTTPRequest?
     
-    func translateRequestForAlamofire(request: HTTPRequest) -> Request {
+    func translateRequestForAlamofire(request: HTTPRequest) -> DataRequest {
         calledTranslate = true
         capturedRequest = request
         
-        return Alamofire.request(.GET, "translatedURL")
+        return Alamofire.request("translatedURL")
     }
 }

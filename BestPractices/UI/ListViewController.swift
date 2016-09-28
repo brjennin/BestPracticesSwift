@@ -8,7 +8,7 @@ class ListViewController: UITableViewController {
 
     var songs: [Song] = []
 
-    var songsCompletion: ([Song] -> ())!
+    var songsCompletion: (([Song]) -> ())!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,7 +16,7 @@ class ListViewController: UITableViewController {
         self.title = "YACHTY"
 
         self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: #selector(refresh(_:)), forControlEvents: .ValueChanged)
+        self.refreshControl!.addTarget(self, action: #selector(refresh(refreshControl:)), for: .valueChanged)
 
         self.refreshControl!.beginRefreshing()
 
@@ -24,31 +24,31 @@ class ListViewController: UITableViewController {
             if self != nil {
                 self!.songs = songs
             }
-            self?.dispatcher.dispatchToMainQueue({
+            self?.dispatcher.dispatchToMainQueue {
                 self?.tableView.reloadData()
                 self?.refreshControl!.endRefreshing()
-            })
+            }
         }
 
-        self.songCache.getSongs(songsCompletion)
+        self.songCache.getSongs(completion: songsCompletion)
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.songs.count
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(SongTableViewCell.cellIdentifier, forIndexPath: indexPath) as! SongTableViewCell
-        cell.configureWithSong(self.songs[indexPath.row])
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SongTableViewCell.cellIdentifier, for: indexPath) as! SongTableViewCell
+        cell.configureWithSong(song: self.songs[(indexPath as NSIndexPath).row])
 
         return cell
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.songSelectionDelegate.songWasSelected(self.songs[indexPath.row])
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.songSelectionDelegate.songWasSelected(song: self.songs[(indexPath as NSIndexPath).row])
     }
 
     func refresh(refreshControl: UIRefreshControl) {
-        self.songCache.getSongsAndRefreshCache(songsCompletion)
+        self.songCache.getSongsAndRefreshCache(completion: songsCompletion)
     }
 }

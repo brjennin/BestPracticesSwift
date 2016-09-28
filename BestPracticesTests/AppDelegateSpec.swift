@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 import AVFoundation
 import AVKit
 @testable import BestPractices
@@ -24,18 +23,18 @@ class AppDelegateSpec: QuickSpec {
                 application = MockApplication()
                 applicationProvider.returnValueForSharedApplication = application
 
-                subject.application(UIApplication.sharedApplication(), didFinishLaunchingWithOptions: nil)
+                _ = subject.application(UIApplication.shared, didFinishLaunchingWithOptions: nil)
             }
 
             it("loads the view controller into the window") {
                 expect(subject.window).toNot(beNil())
-                expect(subject.window!.keyWindow).to(beTruthy())
-                expect(subject.window!.frame).to(equal(UIScreen.mainScreen().bounds))
+                expect(subject.window!.isKeyWindow).to(beTruthy())
+                expect(subject.window!.frame).to(equal(UIScreen.main.bounds))
                 expect(subject.window!.rootViewController).toNot(beNil())
-                expect(subject.window!.rootViewController!).to(beAKindOf(UINavigationController))
+                expect(subject.window!.rootViewController!).to(beAKindOf(UINavigationController.self))
                 let navController = subject.window!.rootViewController! as! UINavigationController
                 expect(navController.topViewController).toNot(beNil())
-                expect(navController.topViewController!).to(beAKindOf(HomeViewController))
+                expect(navController.topViewController!).to(beAKindOf(HomeViewController.self))
             }
 
             it("calls the application provider") {

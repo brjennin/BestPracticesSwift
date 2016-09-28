@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 @testable import BestPractices
 
 class ListViewControllerSpec: QuickSpec {
@@ -14,8 +13,7 @@ class ListViewControllerSpec: QuickSpec {
 
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-
-            subject = storyboard.instantiateViewControllerWithIdentifier("ListViewController") as! ListViewController
+            subject = storyboard.instantiateViewController(withIdentifier: "ListViewController") as! ListViewController
 
             dispatcher = MockDispatcher()
             subject.dispatcher = dispatcher
@@ -34,8 +32,8 @@ class ListViewControllerSpec: QuickSpec {
 
             it("has 2 song table view cells correctly configured") {
                 expect(subject.tableView.visibleCells.count).to(equal(2))
-                expect(subject.tableView.visibleCells.first).to(beAKindOf(SongTableViewCell))
-                expect(subject.tableView.visibleCells.last).to(beAKindOf(SongTableViewCell))
+                expect(subject.tableView.visibleCells.first).to(beAKindOf(SongTableViewCell.self))
+                expect(subject.tableView.visibleCells.last).to(beAKindOf(SongTableViewCell.self))
 
                 let cellOne = subject.tableView.visibleCells.first as! SongTableViewCell
                 let cellTwo = subject.tableView.visibleCells.last as! SongTableViewCell
@@ -44,13 +42,13 @@ class ListViewControllerSpec: QuickSpec {
             }
 
             it("should end refreshing") {
-                expect(subject.refreshControl!.refreshing).to(beFalsy())
+                expect(subject.refreshControl!.isRefreshing).to(beFalsy())
             }
 
             describe("As a UITableViewDataSource") {
                 describe(".numberOfSectionsInTableView") {
                     it("should have 1 section") {
-                        expect(subject.numberOfSectionsInTableView(subject.tableView)).to(equal(1))
+                        expect(subject.numberOfSections(in: subject.tableView)).to(equal(1))
                     }
                 }
 
@@ -63,8 +61,8 @@ class ListViewControllerSpec: QuickSpec {
 
             describe("Tapping on a cell") {
                 beforeEach {
-                    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                    subject.tableView(subject.tableView, didSelectRowAtIndexPath: indexPath)
+                    let indexPath = IndexPath(row: 0, section: 0)
+                    subject.tableView(subject.tableView, didSelectRowAt: indexPath)
                 }
 
                 it("calls the delegate with the correct song") {
@@ -81,7 +79,7 @@ class ListViewControllerSpec: QuickSpec {
             let songs = [songOne, songTwo]
 
             beforeEach {
-                Fleet.setApplicationWindowRootViewController(subject)
+                UIApplication.shared.keyWindow?.rootViewController = subject
             }
 
             it("gets the songs from the cache") {
@@ -102,17 +100,17 @@ class ListViewControllerSpec: QuickSpec {
 
             it("sets up a refresh control") {
                 expect(subject.refreshControl!).toNot(beNil())
-                expect(subject.tableView.subviews).to(contain(subject.refreshControl))
+                expect(subject.tableView.subviews).to(contain(subject.refreshControl!))
             }
 
             it("starts the spinner on the refresh control") {
-                expect(subject.refreshControl!.refreshing).to(beTruthy())
+                expect(subject.refreshControl!.isRefreshing).to(beTruthy())
             }
 
             describe("As a UITableViewDataSource") {
                 describe(".numberOfSectionsInTableView") {
                     it("should have 1 section") {
-                        expect(subject.numberOfSectionsInTableView(subject.tableView)).to(equal(1))
+                        expect(subject.numberOfSections(in: subject.tableView)).to(equal(1))
                     }
                 }
 
@@ -133,7 +131,7 @@ class ListViewControllerSpec: QuickSpec {
 
             describe("Pulling to refresh") {
                 beforeEach {
-                    subject.refreshControl!.sendActionsForControlEvents(.ValueChanged)
+                    subject.refreshControl!.sendActions(for: .valueChanged)
                     subject.refreshControl!.beginRefreshing()
                 }
 

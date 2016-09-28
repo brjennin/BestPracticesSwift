@@ -15,10 +15,10 @@ class HomeViewControllerSpec: QuickSpec {
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
-            listViewController = MockListViewController()
+            listViewController = MockListViewController()                                
             try! storyboard.bindViewController(listViewController, toIdentifier: "ListViewController")
 
-            subject = storyboard.instantiateViewControllerWithIdentifier("HomeViewController") as! HomeViewController
+            subject = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
 
             player = MockPlayer()
             subject.player = player
@@ -31,7 +31,7 @@ class HomeViewControllerSpec: QuickSpec {
 
         describe(".viewDidLoad") {
             beforeEach {
-                Fleet.setApplicationWindowRootViewController(navigationController)
+                UIApplication.shared.keyWindow?.rootViewController = navigationController
             }
 
             it("has a button to go to the list view") {
@@ -75,15 +75,15 @@ class HomeViewControllerSpec: QuickSpec {
                 }
 
                 describe("As a SongSelectionDelegate") {
-                    let bundle = NSBundle(forClass: self.dynamicType)
-                    let imagePath = bundle.pathForResource("hall_and_oates_cover", ofType: "jpeg")!
+                    let bundle = Bundle(for: type(of: self))
+                    let imagePath = bundle.path(forResource: "hall_and_oates_cover", ofType: "jpeg")!
                     
                     beforeEach {
                         subject.albumArtImageView.image = UIImage(contentsOfFile: imagePath)
                         subject.currentSongLabel.text = "something"
                         
                         let song = Song(value: ["identifier": 993, "name": "Hall and Oates"])
-                        subject.songWasSelected(song)
+                        subject.songWasSelected(song: song)
                     }
 
                     it("calls the song loader") {
@@ -137,7 +137,7 @@ class HomeViewControllerSpec: QuickSpec {
                     }
                     
                     describe("When the song asset has loaded") {
-                        let songAssetPath = bundle.pathForResource("maneater", ofType: "mp3")!
+                        let songAssetPath = bundle.path(forResource: "maneater", ofType: "mp3")!
                         
                         context("When the song asset exists") {
                             let songWithAssets = Song(value: ["songLocalPath": songAssetPath])

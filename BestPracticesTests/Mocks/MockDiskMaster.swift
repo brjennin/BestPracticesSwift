@@ -15,18 +15,18 @@ class MockDiskMaster: DiskMasterProtocol {
     var capturedFolderForMediaURL: String?
     var capturedFilenameForMediaURL: String?
 
-    func mediaURLForSongWithFilename(folder: String, filename: String) -> NSURL {
+    func mediaURLForSongWithFilename(folder: String, filename: String) -> URL {
         calledMediaURLForSongWithFilename = true
         capturedFolderForMediaURL = folder
         capturedFilenameForMediaURL = filename
 
-        let fileManager = NSFileManager.defaultManager()
-        let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-        let testDirectory = directoryURL.URLByAppendingPathComponent(MockDiskMaster.rootFolderName)
+        let fileManager = FileManager.default
+        let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let testDirectory = directoryURL.appendingPathComponent(MockDiskMaster.rootFolderName)
 
-        try! fileManager.createDirectoryAtURL(testDirectory, withIntermediateDirectories: true, attributes: nil)
+        try! fileManager.createDirectory(at: testDirectory, withIntermediateDirectories: true, attributes: nil)
 
-        return directoryURL.URLByAppendingPathComponent("\(MockDiskMaster.rootFolderName)/testfile.example")
+        return directoryURL.appendingPathComponent("\(MockDiskMaster.rootFolderName)/testfile.example")
     }
 
     var calledIsMediaFilePresent = false

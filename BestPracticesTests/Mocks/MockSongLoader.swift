@@ -7,7 +7,7 @@ class MockSongLoader: SongLoaderProtocol {
     var capturedSongCompletion: ((Song) -> ())?
     var capturedImageCompletion: ((Song) -> ())?
     
-    func loadSongAssets(song: Song, songCompletion: (Song) -> (), imageCompletion: (Song) -> ()) {
+    func loadSongAssets(song: Song, songCompletion: @escaping (Song) -> (), imageCompletion: @escaping (Song) -> ()) {
         calledLoadSongAssets = true
         capturedSong = song
         capturedSongCompletion = songCompletion

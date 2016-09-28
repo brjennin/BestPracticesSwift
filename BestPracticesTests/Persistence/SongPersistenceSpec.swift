@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 import RealmSwift
 @testable import BestPractices
 
@@ -42,7 +41,7 @@ class SongPersistenceSpec: QuickSpec {
                         Song(value: ["identifier": 256, "name": "Private Eyes", "artist": "Hall & Oates", "url": "url1", "albumArt": "album_art1"]),
                         Song(value: ["identifier": 257, "name": "Long Train Runnin", "artist": "Doobie Brothers", "url": "url2", "albumArt": "album_art2"]),
                     ]
-                    subject.replace(songs)
+                    subject.replace(songs: songs)
                 }
 
                 it("wipes the local storage of songs and images") {
@@ -78,7 +77,7 @@ class SongPersistenceSpec: QuickSpec {
                         songThree = Song(value: ["identifier": 259, "name": "Sara Smile", "artist": "Hall & Oates", "url": "url4", "albumArt": "album_art4"])
                         
                         let songs: [Song] = [songOne, songTwo, songThree]
-                        subject.replace(songs)
+                        subject.replace(songs: songs)
                     }
 
                     it("returns the songs when retrieving") {
@@ -113,7 +112,7 @@ class SongPersistenceSpec: QuickSpec {
                     
                     describe("Updating urls for songs") {
                         beforeEach {
-                            subject.updateLocalSongUrl(songTwo, url: "testurl")
+                            subject.updateLocalSongUrl(song: songTwo, url: "testurl")
                         }
                         
                         it("stores off the url for the song") {
@@ -126,7 +125,7 @@ class SongPersistenceSpec: QuickSpec {
                     
                     describe("Updating urls for images") {
                         beforeEach {
-                            subject.updateLocalImageUrl(songOne, url: "imageurl")
+                            subject.updateLocalImageUrl(song: songOne, url: "imageurl")
                         }
                         
                         it("stores off the url for the image") {

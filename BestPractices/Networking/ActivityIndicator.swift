@@ -8,10 +8,10 @@ protocol ActivityIndicatorProtocol: class {
 
 class ActivityIndicator: ActivityIndicatorProtocol {
     func start() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
 
     func stop() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
 }

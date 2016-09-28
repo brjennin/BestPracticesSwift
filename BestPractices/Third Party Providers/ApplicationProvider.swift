@@ -13,6 +13,6 @@ protocol ApplicationProviderProtocol: class {
 
 class ApplicationProvider: ApplicationProviderProtocol {
     func sharedApplication() -> ApplicationProtocol {
-        return UIApplication.sharedApplication()
+        return UIApplication.shared
     }
 }

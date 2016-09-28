@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 @testable import BestPractices
 
 class SongTableViewCellSpec: QuickSpec {
@@ -18,7 +17,7 @@ class SongTableViewCellSpec: QuickSpec {
         describe("Configuring a cell with a song") {
             beforeEach {
                 let song = Song(value: ["name": "title"])
-                subject.configureWithSong(song)
+                subject.configureWithSong(song: song)
             }
 
             it("sets the title label for the cell") {

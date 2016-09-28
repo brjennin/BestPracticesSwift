@@ -14,8 +14,8 @@ class Player: PlayerProtocol {
     var audioPlayer: AVAudioPlayer?
     
     func loadSong(filePath: String) {
-        let url = NSURL(fileURLWithPath: filePath)
-        self.audioPlayer = try? AVAudioPlayer(contentsOfURL: url)
+        let url = URL(fileURLWithPath: filePath)
+        self.audioPlayer = try? AVAudioPlayer(contentsOf: url)
     }
     
     func clearSong() {

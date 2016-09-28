@@ -39,7 +39,7 @@ class SongPersistence: SongPersistenceProtocol {
             return nil
         }
 
-        let songs = realm.objects(Song.self).sorted("identifier")
+        let songs = realm.objects(Song.self).sorted(byProperty: "identifier")
         if songs.count == 0 {
             return nil
         }
@@ -74,13 +74,13 @@ class SongPersistence: SongPersistenceProtocol {
         }
     }
 
-    private func establishConnection() throws {
+    fileprivate func establishConnection() throws {
         if self.realm == nil {
             self.realm = try Realm()
         }
     }
 
-    private func wipeDatabase() throws {
+    fileprivate func wipeDatabase() throws {
         try self.realm.write {
             self.realm.deleteAll()
         }

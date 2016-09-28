@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 @testable import BestPractices
 
 class SongLoaderSpec: QuickSpec {
@@ -27,7 +26,7 @@ class SongLoaderSpec: QuickSpec {
         describe(".loadSongAssets") {
             var song: Song!
 
-            let bundle = NSBundle(forClass: self.dynamicType)
+            let bundle = Bundle(for: type(of: self))
 
             var capturedSongFromSongCompletion: Song?
             var calledSongCompletion = false
@@ -51,8 +50,8 @@ class SongLoaderSpec: QuickSpec {
 
                 describe("When the song completion resolves") {
                     context("When there is a URL") {
-                        let path = bundle.pathForResource("maneater", ofType: "mp3")!
-                        let sampleFileURL = NSURL(fileURLWithPath: path)
+                        let path = bundle.path(forResource: "maneater", ofType: "mp3")!
+                        let sampleFileURL = URL(fileURLWithPath: path)
 
                         beforeEach {
                             httpClient.downloadCompletions.first!(sampleFileURL)
@@ -66,7 +65,7 @@ class SongLoaderSpec: QuickSpec {
                         it("persists the new song url") {
                             expect(songPersistence.calledUpdateSongUrl).to(beTruthy())
                             expect(songPersistence.capturedUpdateSongUrlSong!.identifier).to(equal(384))
-                            expect(songPersistence.capturedUpdateSongUrlUrl!).to(equal(sampleFileURL.path!))
+                            expect(songPersistence.capturedUpdateSongUrlUrl!).to(equal(sampleFileURL.path))
                         }
                     }
 
@@ -95,8 +94,8 @@ class SongLoaderSpec: QuickSpec {
 
                 describe("When the image completion resolves") {
                     context("When there is a URL") {
-                        let path = bundle.pathForResource("hall_and_oates_cover", ofType: "jpeg")!
-                        let sampleFileURL = NSURL(fileURLWithPath: path)
+                        let path = bundle.path(forResource: "hall_and_oates_cover", ofType: "jpeg")!
+                        let sampleFileURL = URL(fileURLWithPath: path)
 
                         beforeEach {
                             httpClient.downloadCompletions.last!(sampleFileURL)
@@ -110,7 +109,7 @@ class SongLoaderSpec: QuickSpec {
                         it("persists the new song url") {
                             expect(songPersistence.calledUpdateImageUrl).to(beTruthy())
                             expect(songPersistence.capturedUpdateImageUrlSong!.identifier).to(equal(384))
-                            expect(songPersistence.capturedUpdateImageUrlUrl!).to(equal(sampleFileURL.path!))
+                            expect(songPersistence.capturedUpdateImageUrlUrl!).to(equal(sampleFileURL.path))
                         }
                     }
 
@@ -166,7 +165,7 @@ class SongLoaderSpec: QuickSpec {
             context("When the song has no image and no sound file in the DB") {
                 beforeEach {
                     song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl"])
-                    subject.loadSongAssets(song, songCompletion: songCompletion, imageCompletion: imageCompletion)
+                    subject.loadSongAssets(song: song, songCompletion: songCompletion, imageCompletion: imageCompletion)
                 }
 
                 it("downloads 2 files") {
@@ -184,7 +183,7 @@ class SongLoaderSpec: QuickSpec {
                         diskMaster.returnValueForIsMediaFilePresent = true
 
                         song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "imageLocalPath": "existingImage"])
-                        subject.loadSongAssets(song, songCompletion: songCompletion, imageCompletion: imageCompletion)
+                        subject.loadSongAssets(song: song, songCompletion: songCompletion, imageCompletion: imageCompletion)
                     }
 
                     it("downloads 1 files") {
@@ -206,7 +205,7 @@ class SongLoaderSpec: QuickSpec {
                         diskMaster.returnValueForIsMediaFilePresent = false
 
                         song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "imageLocalPath": "existingImage"])
-                        subject.loadSongAssets(song, songCompletion: songCompletion, imageCompletion: imageCompletion)
+                        subject.loadSongAssets(song: song, songCompletion: songCompletion, imageCompletion: imageCompletion)
                     }
 
                     it("downloads 2 files") {
@@ -230,7 +229,7 @@ class SongLoaderSpec: QuickSpec {
                         diskMaster.returnValueForIsMediaFilePresent = true
 
                         song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong"])
-                        subject.loadSongAssets(song, songCompletion: songCompletion, imageCompletion: imageCompletion)
+                        subject.loadSongAssets(song: song, songCompletion: songCompletion, imageCompletion: imageCompletion)
                     }
 
                     it("downloads 1 files") {
@@ -252,7 +251,7 @@ class SongLoaderSpec: QuickSpec {
                         diskMaster.returnValueForIsMediaFilePresent = false
 
                         song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong"])
-                        subject.loadSongAssets(song, songCompletion: songCompletion, imageCompletion: imageCompletion)
+                        subject.loadSongAssets(song: song, songCompletion: songCompletion, imageCompletion: imageCompletion)
                     }
 
                     it("downloads 2 files") {
@@ -274,7 +273,7 @@ class SongLoaderSpec: QuickSpec {
                 beforeEach {
                     diskMaster.returnValueForIsMediaFilePresent = true
                     song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong", "imageLocalPath": "existingImage"])
-                    subject.loadSongAssets(song, songCompletion: songCompletion, imageCompletion: imageCompletion)
+                    subject.loadSongAssets(song: song, songCompletion: songCompletion, imageCompletion: imageCompletion)
                 }
 
                 it("downloads 0 files") {

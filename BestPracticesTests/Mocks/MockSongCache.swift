@@ -3,17 +3,17 @@
 class MockSongCache: SongCacheProtocol {
     
     var calledGetSongs = false
-    var capturedGetSongsCompletion: ([Song] -> ())?
+    var capturedGetSongsCompletion: (([Song]) -> ())?
     
-    func getSongs(completion: [Song] -> ()) {
+    func getSongs(completion: @escaping ([Song]) -> ()) {
         calledGetSongs = true
         capturedGetSongsCompletion = completion
     }
     
     var calledGetSongsAndRefreshCache = false
-    var capturedGetSongsAndRefreshCacheCompletion: ([Song] -> ())?
+    var capturedGetSongsAndRefreshCacheCompletion: (([Song]) -> ())?
     
-    func getSongsAndRefreshCache(completion: ([Song] -> ())) {
+    func getSongsAndRefreshCache(completion: @escaping (([Song]) -> ())) {
         calledGetSongsAndRefreshCache = true
         capturedGetSongsAndRefreshCacheCompletion = completion
     }
