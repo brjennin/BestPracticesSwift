@@ -41,7 +41,7 @@ class HTTPClientSpec: QuickSpec {
             }
         }
 
-        describe(".makeJsonRequest") {
+        xdescribe(".makeJsonRequest") {
             var returnedJSON: JSON?
             var returnedError: NSError?
             var completionCalled: Bool!
@@ -155,7 +155,7 @@ class HTTPClientSpec: QuickSpec {
             }
         }
 
-        describe(".downloadFile") {
+        xdescribe(".downloadFile") {
             let bundle = Bundle(for: type(of: self))
             let path = bundle.path(forResource: "maneater", ofType: "mp3")!
             let url = URL(fileURLWithPath: path)
