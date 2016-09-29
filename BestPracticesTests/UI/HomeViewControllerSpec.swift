@@ -52,12 +52,28 @@ class HomeViewControllerSpec: QuickSpec {
             }
 
             describe("Tapping on the play button") {
-                beforeEach {
-                    subject.playButton.tap()
+                context("With delay turned on") {
+                    beforeEach {
+                        subject.delaySwitch.setOn(true, animated: false)
+                        subject.playButton.tap()
+                    }
+                
+                    it("tells the player to play") {
+                        expect(player.playedSong).to(beTruthy())
+                        expect(player.capturedDelay).to(beTruthy())
+                    }
                 }
-
-                it("tells the player to play") {
-                    expect(player.playedSong).to(beTruthy())
+                
+                context("With delay turned off") {
+                    beforeEach {
+                        subject.delaySwitch.setOn(false, animated: false)
+                        subject.playButton.tap()
+                    }
+                    
+                    it("tells the player to play") {
+                        expect(player.playedSong).to(beTruthy())
+                        expect(player.capturedDelay).to(beFalsy())
+                    }
                 }
             }
 

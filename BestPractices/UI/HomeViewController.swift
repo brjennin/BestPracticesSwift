@@ -6,6 +6,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var currentSongLabel: UILabel!
     @IBOutlet weak var albumArtImageView: UIImageView!
     @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var delaySwitch: UISwitch!
 
     var player: PlayerProtocol! = Player()
     var songLoader: SongLoaderProtocol! = SongLoader()
@@ -26,7 +27,7 @@ class HomeViewController: UIViewController {
     }
 
     @IBAction func didTapPlay(_ sender: UIButton) {
-        self.player.play()
+        self.player.play(delay: delaySwitch.isOn)
     }
 }
 

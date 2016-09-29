@@ -33,6 +33,13 @@
 		AE304A7E1D885A03001F1D0C /* SongSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE304A7D1D885A03001F1D0C /* SongSpec.swift */; };
 		AE304A801D885CAD001F1D0C /* SongTableViewCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE304A7F1D885CAD001F1D0C /* SongTableViewCellSpec.swift */; };
 		AE304A821D888212001F1D0C /* SongSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE304A811D888212001F1D0C /* SongSelectionDelegate.swift */; };
+		AE319F411D9C613D00A65FB9 /* EngineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F401D9C613D00A65FB9 /* EngineBuilder.swift */; };
+		AE319F431D9C628000A65FB9 /* EngineBuilderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F421D9C628000A65FB9 /* EngineBuilderMock.swift */; };
+		AE319F451D9C65CB00A65FB9 /* EngineBuilderSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F441D9C65CB00A65FB9 /* EngineBuilderSpec.swift */; };
+		AE319F471D9D767900A65FB9 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F461D9D767900A65FB9 /* Audio.swift */; };
+		AE319F491D9D7CB700A65FB9 /* MockAVAudioPlayerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F481D9D7CB700A65FB9 /* MockAVAudioPlayerNode.swift */; };
+		AE319F4B1D9D7D6500A65FB9 /* MockAVAudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F4A1D9D7D6500A65FB9 /* MockAVAudioEngine.swift */; };
+		AE319F4D1D9D7E9C00A65FB9 /* MockAVAudioUnitDelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F4C1D9D7E9C00A65FB9 /* MockAVAudioUnitDelay.swift */; };
 		AEAACF061D8A0B6B007177CF /* MockSongService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF051D8A0B6B007177CF /* MockSongService.swift */; };
 		AEAACF081D8A0B89007177CF /* MockDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF071D8A0B89007177CF /* MockDispatcher.swift */; };
 		AEAACF0A1D8A0BA3007177CF /* MockSongSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF091D8A0BA3007177CF /* MockSongSelectionDelegate.swift */; };
@@ -115,6 +122,13 @@
 		AE304A7D1D885A03001F1D0C /* SongSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongSpec.swift; sourceTree = "<group>"; };
 		AE304A7F1D885CAD001F1D0C /* SongTableViewCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewCellSpec.swift; sourceTree = "<group>"; };
 		AE304A811D888212001F1D0C /* SongSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongSelectionDelegate.swift; sourceTree = "<group>"; };
+		AE319F401D9C613D00A65FB9 /* EngineBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngineBuilder.swift; sourceTree = "<group>"; };
+		AE319F421D9C628000A65FB9 /* EngineBuilderMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngineBuilderMock.swift; sourceTree = "<group>"; };
+		AE319F441D9C65CB00A65FB9 /* EngineBuilderSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngineBuilderSpec.swift; sourceTree = "<group>"; };
+		AE319F461D9D767900A65FB9 /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		AE319F481D9D7CB700A65FB9 /* MockAVAudioPlayerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAVAudioPlayerNode.swift; sourceTree = "<group>"; };
+		AE319F4A1D9D7D6500A65FB9 /* MockAVAudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAVAudioEngine.swift; sourceTree = "<group>"; };
+		AE319F4C1D9D7E9C00A65FB9 /* MockAVAudioUnitDelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAVAudioUnitDelay.swift; sourceTree = "<group>"; };
 		AEAACF051D8A0B6B007177CF /* MockSongService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSongService.swift; sourceTree = "<group>"; };
 		AEAACF071D8A0B89007177CF /* MockDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDispatcher.swift; sourceTree = "<group>"; };
 		AEAACF091D8A0BA3007177CF /* MockSongSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSongSelectionDelegate.swift; sourceTree = "<group>"; };
@@ -213,6 +227,7 @@
 			isa = PBXGroup;
 			children = (
 				AE1ABAB11D99E26400357DA5 /* ApplicationProvider.swift */,
+				AE319F461D9D767900A65FB9 /* Audio.swift */,
 			);
 			path = "Third Party Providers";
 			sourceTree = "<group>";
@@ -266,6 +281,10 @@
 				AE1ABAA01D99A31500357DA5 /* MockActivityIndicator.swift */,
 				AE1ABAAC1D99E07B00357DA5 /* MockApplication.swift */,
 				AE1ABAB61D99E33F00357DA5 /* MockApplicationProvider.swift */,
+				AE319F421D9C628000A65FB9 /* EngineBuilderMock.swift */,
+				AE319F481D9D7CB700A65FB9 /* MockAVAudioPlayerNode.swift */,
+				AE319F4A1D9D7D6500A65FB9 /* MockAVAudioEngine.swift */,
+				AE319F4C1D9D7E9C00A65FB9 /* MockAVAudioUnitDelay.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -306,6 +325,7 @@
 			children = (
 				AEAACF4E1D90B662007177CF /* Player.swift */,
 				AE1ABA981D9596C600357DA5 /* SongLoader.swift */,
+				AE319F401D9C613D00A65FB9 /* EngineBuilder.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -315,6 +335,7 @@
 			children = (
 				AEC6AE131D90B83B00933DCC /* PlayerSpec.swift */,
 				AE1ABA9A1D95976900357DA5 /* SongLoaderSpec.swift */,
+				AE319F441D9C65CB00A65FB9 /* EngineBuilderSpec.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -669,6 +690,7 @@
 				AE1ABA881D9330EA00357DA5 /* SongPersistence.swift in Sources */,
 				DE99C6A10D742ACFD3D52FA5 /* HomeViewController.swift in Sources */,
 				AEAACF4F1D90B662007177CF /* Player.swift in Sources */,
+				AE319F411D9C613D00A65FB9 /* EngineBuilder.swift in Sources */,
 				AE1ABA821D9305EF00357DA5 /* SongCache.swift in Sources */,
 				DE99C15018384EC0FA4D377B /* SongTableViewCell.swift in Sources */,
 				AEC6AE1E1D92EC1300933DCC /* SongListDeserializer.swift in Sources */,
@@ -681,6 +703,7 @@
 				AE1ABAB21D99E26400357DA5 /* ApplicationProvider.swift in Sources */,
 				AE1ABA9F1D99A2CE00357DA5 /* ActivityIndicator.swift in Sources */,
 				AE304A821D888212001F1D0C /* SongSelectionDelegate.swift in Sources */,
+				AE319F471D9D767900A65FB9 /* Audio.swift in Sources */,
 				DE99C1B1FCC8BB442521DA28 /* SongService.swift in Sources */,
 				DE99C9220822A0E8F854007A /* Dispatcher.swift in Sources */,
 			);
@@ -690,6 +713,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE319F431D9C628000A65FB9 /* EngineBuilderMock.swift in Sources */,
 				AE1ABAA11D99A31500357DA5 /* MockActivityIndicator.swift in Sources */,
 				AEAACF261D8B1442007177CF /* HTTPRequestSpec.swift in Sources */,
 				AE1ABA861D9330D200357DA5 /* MockSongPersistence.swift in Sources */,
@@ -699,8 +723,10 @@
 				AEAACF2C1D8B1B08007177CF /* MockHTTPClient.swift in Sources */,
 				AE1ABAB51D99E28F00357DA5 /* ApplicationProviderSpec.swift in Sources */,
 				DE99C358C42FCD188D5ECBC4 /* ListViewControllerSpec.swift in Sources */,
+				AE319F4D1D9D7E9C00A65FB9 /* MockAVAudioUnitDelay.swift in Sources */,
 				AEC6AE141D90B83B00933DCC /* PlayerSpec.swift in Sources */,
 				AE1ABA9D1D95A0A000357DA5 /* MockSongLoader.swift in Sources */,
+				AE319F451D9C65CB00A65FB9 /* EngineBuilderSpec.swift in Sources */,
 				AE1ABAA51D99CB6600357DA5 /* AppDelegateSpec.swift in Sources */,
 				AE304A7E1D885A03001F1D0C /* SongSpec.swift in Sources */,
 				AEAACF131D8B033C007177CF /* MockOperationQueue.swift in Sources */,
@@ -723,8 +749,10 @@
 				AEAACF0A1D8A0BA3007177CF /* MockSongSelectionDelegate.swift in Sources */,
 				AEAACF1E1D8B1161007177CF /* MockRequestProvider.swift in Sources */,
 				AE1ABA901D947ACF00357DA5 /* MockDiskMaster.swift in Sources */,
+				AE319F4B1D9D7D6500A65FB9 /* MockAVAudioEngine.swift in Sources */,
 				AEAACF4C1D90B595007177CF /* MockPlayer.swift in Sources */,
 				AE1ABA841D9308AA00357DA5 /* SongCacheSpec.swift in Sources */,
+				AE319F491D9D7CB700A65FB9 /* MockAVAudioPlayerNode.swift in Sources */,
 				AE304A801D885CAD001F1D0C /* SongTableViewCellSpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
