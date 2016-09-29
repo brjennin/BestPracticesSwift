@@ -22,4 +22,12 @@ class MockPlayer: PlayerProtocol {
     func clearSong() {
         calledClearSong = true
     }
+    
+    var calledPitchShift = false
+    var capturedPitchShiftAmount: Float?
+    
+    func pitchShift(amount: Float) {
+        calledPitchShift = true
+        capturedPitchShiftAmount = amount
+    }
 }

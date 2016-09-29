@@ -7,14 +7,19 @@ protocol PlayerProtocol: class {
     func clearSong()
 
     func play(delay: Bool)
+    
+    func pitchShift(amount: Float)
 }
 
 class Player: PlayerProtocol {
 
     var engineBuilder: EngineBuilderProtocol! = EngineBuilder()
+    var shiftTranslator: ShiftTranslatorProtocol! = ShiftTranslator()
+    
     var playerNode: AudioPlayerNodeProtocol?
     var delayNodes: [AudioDelayNodeProtocol]?
     var engine: AudioEngineProtocol!
+    var pitchShiftNode: AVAudioUnitVarispeed?
     var audioFile: AVAudioFile!
 
     func loadSong(filePath: String) {
@@ -25,7 +30,8 @@ class Player: PlayerProtocol {
             var audioPlayer: AudioPlayerNodeProtocol
             var audioEngine: AudioEngineProtocol
             var audioDelayNodes: [AudioDelayNodeProtocol]
-            (audioPlayer, audioEngine, audioDelayNodes) = engineBuilder.buildEngine(audioFile: file)
+            var audioShiftNode: AVAudioUnitVarispeed
+            (audioPlayer, audioEngine, audioDelayNodes, audioShiftNode) = engineBuilder.buildEngine(audioFile: file)
 
             audioEngine.prepare()
             do {
@@ -38,6 +44,7 @@ class Player: PlayerProtocol {
             engine = audioEngine
             delayNodes = audioDelayNodes
             audioFile = file
+            pitchShiftNode = audioShiftNode
         }
     }
 
@@ -49,6 +56,7 @@ class Player: PlayerProtocol {
         playerNode = nil
         delayNodes = nil
         audioFile = nil
+        pitchShiftNode = nil
     }
 
     func play(delay: Bool) {
@@ -57,6 +65,10 @@ class Player: PlayerProtocol {
             playerNode.scheduleFile(audioFile, at: nil, completionHandler: nil)
             playerNode.play()
         }
+    }
+    
+    func pitchShift(amount: Float) {
+        pitchShiftNode?.rate = shiftTranslator.translateSlider(value: amount)
     }
 
     fileprivate func setDelayBypass(delayUnits: [AudioDelayNodeProtocol], bypass: Bool) {

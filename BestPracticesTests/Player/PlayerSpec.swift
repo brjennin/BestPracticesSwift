@@ -9,25 +9,47 @@ class PlayerSpec: QuickSpec {
 
         var subject: Player!
         var engineBuilder: MockEngineBuilder!
+        var shiftTranslator: MockShiftTranslator!
 
         var playerNode: MockAVAudioPlayerNode!
         var engine: MockAVAudioEngine!
         var delayNodes: [MockAVAudioUnitDelay]!
+        var shiftNode: AVAudioUnitVarispeed!
 
         let bundle = Bundle(for: type(of: self))
         let path = bundle.path(forResource: "maneater", ofType: "mp3")!
         let sampleFileURL = URL(fileURLWithPath: path)
         let audioFile = try! AVAudioFile.init(forReading: sampleFileURL)
+        
+        let loadedSongCompletion = {
+            subject.engine = engine
+            subject.playerNode = playerNode
+            subject.delayNodes = delayNodes
+            subject.audioFile = audioFile
+            subject.pitchShiftNode = shiftNode
+        }
+        
+        let noSongLoadedCompletion = {
+            subject.engine = nil
+            subject.playerNode = nil
+            subject.delayNodes = nil
+            subject.audioFile = nil
+            subject.pitchShiftNode = nil
+        }
 
         beforeEach {
             subject = Player()
 
             engineBuilder = MockEngineBuilder()
             subject.engineBuilder = engineBuilder
+            
+            shiftTranslator = MockShiftTranslator()
+            subject.shiftTranslator = shiftTranslator
 
             playerNode = MockAVAudioPlayerNode()
             engine = MockAVAudioEngine()
             delayNodes = [MockAVAudioUnitDelay(), MockAVAudioUnitDelay()]
+            shiftNode = AVAudioUnitVarispeed()
         }
 
         describe(".loadSong") {
@@ -40,6 +62,7 @@ class PlayerSpec: QuickSpec {
                     engineBuilder.returnPlayerValueForBuildEngine = playerNode
                     engineBuilder.returnEngineValueForBuildEngine = engine
                     engineBuilder.returnDelaysValueForBuildEngine = delayNodes
+                    engineBuilder.returnShiftNodeValueForBuildEngine = shiftNode
                 }
 
                 sharedExamples("building an engine") {
@@ -80,6 +103,10 @@ class PlayerSpec: QuickSpec {
                     it("does not store the audio file") {
                         expect(subject.audioFile).to(beNil())
                     }
+                    
+                    it("does not store the shift node") {
+                        expect(subject.pitchShiftNode).to(beNil())
+                    }
                 }
 
                 context("When the engine starts successfully") {
@@ -105,9 +132,14 @@ class PlayerSpec: QuickSpec {
                         expect(subject.engine).to(beIdenticalTo(engine))
                     }
 
-                    it("does not store the audio file") {
+                    it("stores the audio file") {
                         expect(subject.audioFile).toNot(beNil())
                         expect(subject.audioFile.url).to(equal(sampleFileURL))
+                    }
+                    
+                    it("stores the pitch shift node") {
+                        expect(subject.pitchShiftNode).toNot(beNil())
+                        expect(subject.pitchShiftNode).to(beIdenticalTo(shiftNode))
                     }
                 }
             }
@@ -124,16 +156,17 @@ class PlayerSpec: QuickSpec {
                 it("does not store the audio file") {
                     expect(subject.audioFile).to(beNil())
                 }
+                
+                it("does not store the shift node") {
+                    expect(subject.pitchShiftNode).to(beNil())
+                }
             }
         }
 
         describe(".clearSong") {
             context("When a song has been loaded") {
                 beforeEach {
-                    subject.engine = engine
-                    subject.playerNode = playerNode
-                    subject.delayNodes = delayNodes
-                    subject.audioFile = audioFile
+                    loadedSongCompletion()
 
                     subject.clearSong()
                 }
@@ -147,15 +180,13 @@ class PlayerSpec: QuickSpec {
                     expect(subject.playerNode).to(beNil())
                     expect(subject.delayNodes).to(beNil())
                     expect(subject.audioFile).to(beNil())
+                    expect(subject.pitchShiftNode).to(beNil())
                 }
             }
 
             context("When a song has not been loaded") {
                 beforeEach {
-                    subject.engine = nil
-                    subject.playerNode = nil
-                    subject.delayNodes = nil
-                    subject.audioFile = nil
+                    noSongLoadedCompletion()
                 }
 
                 it("does not raise an exception") {
@@ -167,10 +198,7 @@ class PlayerSpec: QuickSpec {
         describe(".play") {
             context("When a song has been loaded") {
                 beforeEach {
-                    subject.engine = engine
-                    subject.playerNode = playerNode
-                    subject.delayNodes = delayNodes
-                    subject.audioFile = audioFile
+                    loadedSongCompletion()
                 }
 
                 context("With delay") {
@@ -223,10 +251,7 @@ class PlayerSpec: QuickSpec {
 
             context("When a song has not been loaded") {
                 beforeEach {
-                    subject.engine = nil
-                    subject.playerNode = nil
-                    subject.delayNodes = nil
-                    subject.audioFile = nil
+                    noSongLoadedCompletion()
                 }
 
                 it("does not raise an exception") {
@@ -235,5 +260,38 @@ class PlayerSpec: QuickSpec {
             }
         }
 
+        describe(".pitchShift") {
+            context("When a song is loaded") {
+                beforeEach {
+                    loadedSongCompletion()
+                    
+                    subject.pitchShiftNode!.rate = 1
+                    shiftTranslator.returnValueForTranslation = 3.5
+                    subject.pitchShift(amount: 1.2)
+                }
+                
+                it("calls the shift translator") {
+                    expect(shiftTranslator.calledTranslate).to(beTruthy())
+                    expect(shiftTranslator.capturedInputValue).to(equal(1.2))
+                }
+                
+                it("sets the shift node to the translated value") {
+                    expect(subject.pitchShiftNode!.rate).to(equal(3.5))
+                }
+            }
+            
+            context("When a song is not loaded") {
+                beforeEach {
+                    noSongLoadedCompletion()
+                    
+                    subject.pitchShift(amount: 1.2)
+                }
+                
+                it("does not call the shift translator") {
+                    expect(shiftTranslator.calledTranslate).to(beFalsy())
+                }
+            }
+            
+        }
     }
 }

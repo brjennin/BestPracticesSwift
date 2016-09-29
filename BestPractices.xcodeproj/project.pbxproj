@@ -40,6 +40,9 @@
 		AE319F491D9D7CB700A65FB9 /* MockAVAudioPlayerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F481D9D7CB700A65FB9 /* MockAVAudioPlayerNode.swift */; };
 		AE319F4B1D9D7D6500A65FB9 /* MockAVAudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F4A1D9D7D6500A65FB9 /* MockAVAudioEngine.swift */; };
 		AE319F4D1D9D7E9C00A65FB9 /* MockAVAudioUnitDelay.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F4C1D9D7E9C00A65FB9 /* MockAVAudioUnitDelay.swift */; };
+		AE319F4F1D9D9AED00A65FB9 /* ShiftTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F4E1D9D9AED00A65FB9 /* ShiftTranslator.swift */; };
+		AE319F511D9D9B3A00A65FB9 /* MockShiftTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F501D9D9B3A00A65FB9 /* MockShiftTranslator.swift */; };
+		AE319F531D9DA17000A65FB9 /* ShiftTranslatorSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F521D9DA17000A65FB9 /* ShiftTranslatorSpec.swift */; };
 		AEAACF061D8A0B6B007177CF /* MockSongService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF051D8A0B6B007177CF /* MockSongService.swift */; };
 		AEAACF081D8A0B89007177CF /* MockDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF071D8A0B89007177CF /* MockDispatcher.swift */; };
 		AEAACF0A1D8A0BA3007177CF /* MockSongSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF091D8A0BA3007177CF /* MockSongSelectionDelegate.swift */; };
@@ -129,6 +132,9 @@
 		AE319F481D9D7CB700A65FB9 /* MockAVAudioPlayerNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAVAudioPlayerNode.swift; sourceTree = "<group>"; };
 		AE319F4A1D9D7D6500A65FB9 /* MockAVAudioEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAVAudioEngine.swift; sourceTree = "<group>"; };
 		AE319F4C1D9D7E9C00A65FB9 /* MockAVAudioUnitDelay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAVAudioUnitDelay.swift; sourceTree = "<group>"; };
+		AE319F4E1D9D9AED00A65FB9 /* ShiftTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftTranslator.swift; sourceTree = "<group>"; };
+		AE319F501D9D9B3A00A65FB9 /* MockShiftTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockShiftTranslator.swift; sourceTree = "<group>"; };
+		AE319F521D9DA17000A65FB9 /* ShiftTranslatorSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShiftTranslatorSpec.swift; sourceTree = "<group>"; };
 		AEAACF051D8A0B6B007177CF /* MockSongService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSongService.swift; sourceTree = "<group>"; };
 		AEAACF071D8A0B89007177CF /* MockDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDispatcher.swift; sourceTree = "<group>"; };
 		AEAACF091D8A0BA3007177CF /* MockSongSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSongSelectionDelegate.swift; sourceTree = "<group>"; };
@@ -285,6 +291,7 @@
 				AE319F481D9D7CB700A65FB9 /* MockAVAudioPlayerNode.swift */,
 				AE319F4A1D9D7D6500A65FB9 /* MockAVAudioEngine.swift */,
 				AE319F4C1D9D7E9C00A65FB9 /* MockAVAudioUnitDelay.swift */,
+				AE319F501D9D9B3A00A65FB9 /* MockShiftTranslator.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -326,6 +333,7 @@
 				AEAACF4E1D90B662007177CF /* Player.swift */,
 				AE1ABA981D9596C600357DA5 /* SongLoader.swift */,
 				AE319F401D9C613D00A65FB9 /* EngineBuilder.swift */,
+				AE319F4E1D9D9AED00A65FB9 /* ShiftTranslator.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -336,6 +344,7 @@
 				AEC6AE131D90B83B00933DCC /* PlayerSpec.swift */,
 				AE1ABA9A1D95976900357DA5 /* SongLoaderSpec.swift */,
 				AE319F441D9C65CB00A65FB9 /* EngineBuilderSpec.swift */,
+				AE319F521D9DA17000A65FB9 /* ShiftTranslatorSpec.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -699,6 +708,7 @@
 				AE1ABA921D947B0D00357DA5 /* DiskMaster.swift in Sources */,
 				AE1ABA8C1D94429800357DA5 /* Song.swift in Sources */,
 				DE99CC8B9BF5F664B889EB45 /* ListViewController.swift in Sources */,
+				AE319F4F1D9D9AED00A65FB9 /* ShiftTranslator.swift in Sources */,
 				AEAACF2E1D8B1CC8007177CF /* HTTPClient.swift in Sources */,
 				AE1ABAB21D99E26400357DA5 /* ApplicationProvider.swift in Sources */,
 				AE1ABA9F1D99A2CE00357DA5 /* ActivityIndicator.swift in Sources */,
@@ -719,6 +729,7 @@
 				AE1ABA861D9330D200357DA5 /* MockSongPersistence.swift in Sources */,
 				AEAACF081D8A0B89007177CF /* MockDispatcher.swift in Sources */,
 				AEAACF371D8C4C01007177CF /* MockRequestTranslator.swift in Sources */,
+				AE319F511D9D9B3A00A65FB9 /* MockShiftTranslator.swift in Sources */,
 				AE1ABAB71D99E33F00357DA5 /* MockApplicationProvider.swift in Sources */,
 				AEAACF2C1D8B1B08007177CF /* MockHTTPClient.swift in Sources */,
 				AE1ABAB51D99E28F00357DA5 /* ApplicationProviderSpec.swift in Sources */,
@@ -741,6 +752,7 @@
 				AE1ABA9B1D95976900357DA5 /* SongLoaderSpec.swift in Sources */,
 				AE1ABA971D947E2200357DA5 /* DiskMasterSpec.swift in Sources */,
 				AEAACF351D8B6373007177CF /* HTTPClientSpec.swift in Sources */,
+				AE319F531D9DA17000A65FB9 /* ShiftTranslatorSpec.swift in Sources */,
 				AEAACF061D8A0B6B007177CF /* MockSongService.swift in Sources */,
 				AEAACF111D8B023F007177CF /* DispatcherSpec.swift in Sources */,
 				AEC6AE1B1D92EBC900933DCC /* MockSongListDeserializer.swift in Sources */,

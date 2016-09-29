@@ -22,15 +22,18 @@ class EngineBuilderSpec: QuickSpec {
             var player: AVAudioPlayerNode!
             var engine: AVAudioEngine!
             var delayNodes: [AVAudioUnitDelay]!
-
+            var pitchShift: AVAudioUnitVarispeed!
+            
             beforeEach {
                 var littleEngine: AudioEngineProtocol
                 var littlePlayer: AudioPlayerNodeProtocol
                 var littleDelayNodes: [AudioDelayNodeProtocol]
-                (littlePlayer, littleEngine, littleDelayNodes) = subject.buildEngine(audioFile: audioFile)
+                var littlePitchShift: AVAudioUnitVarispeed
+                (littlePlayer, littleEngine, littleDelayNodes, littlePitchShift) = subject.buildEngine(audioFile: audioFile)
                 player = littlePlayer as! AVAudioPlayerNode
                 engine = littleEngine as! AVAudioEngine
                 delayNodes = littleDelayNodes as! [AVAudioUnitDelay]
+                pitchShift = littlePitchShift
             }
 
             it("sets up an engine with 5 delays attached to a player") {
@@ -85,10 +88,17 @@ class EngineBuilderSpec: QuickSpec {
                 expect(delay5.lowPassCutoff).to(equal(20000))
                 expect(delay5.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
                 let delay5Connection = engine.inputConnectionPoint(for: delay5, inputBus: 0)!
-                expect(delay5Connection.node!).to(beAKindOf(AVAudioPlayerNode.self))
-                expect(delay5Connection.node!).to(beIdenticalTo(player))
-
-                let playerNode = delay5Connection.node! as! AVAudioPlayerNode
+                expect(delay5Connection.node!).to(beAKindOf(AVAudioUnitVarispeed.self))
+                expect(delay5Connection.node!).to(beIdenticalTo(pitchShift))
+                
+                let pitchShiftNode = delay5Connection.node! as! AVAudioUnitVarispeed
+                expect(pitchShiftNode.rate).to(equal(1))
+                expect(pitchShiftNode.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
+                let pitchShiftConnection = engine.inputConnectionPoint(for: pitchShiftNode, inputBus: 0)!
+                expect(pitchShiftConnection.node!).to(beAKindOf(AVAudioPlayerNode.self))
+                expect(pitchShiftConnection.node!).to(beIdenticalTo(player))
+                
+                let playerNode = pitchShiftConnection.node! as! AVAudioPlayerNode
                 expect(playerNode.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
 
                 expect(engine.outputNode.inputFormat(forBus: 0)).to(equal(audioFile.processingFormat))

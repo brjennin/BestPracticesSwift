@@ -7,6 +7,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var albumArtImageView: UIImageView!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var delaySwitch: UISwitch!
+    @IBOutlet weak var whammySlider: UISlider!
 
     var player: PlayerProtocol! = Player()
     var songLoader: SongLoaderProtocol! = SongLoader()
@@ -30,6 +31,15 @@ class HomeViewController: UIViewController {
                 listViewController.songSelectionDelegate = self
             }
         }
+    }
+
+    @IBAction func didWhammy(_ sender: UISlider) {
+        player.pitchShift(amount: sender.value)
+    }
+
+    @IBAction func didReleaseWhammy(_ sender: UISlider) {
+        sender.value = 0
+        player.pitchShift(amount: sender.value)
     }
 
     @IBAction func didTapPlay(_ sender: UIButton) {

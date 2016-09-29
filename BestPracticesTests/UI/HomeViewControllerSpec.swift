@@ -122,6 +122,12 @@ class HomeViewControllerSpec: QuickSpec {
             it("clears label text") {
                 expect(subject.currentSongLabel.text).to(equal(""))
             }
+            
+            it("has default whammy values between 0 and 2") {
+                expect(subject.whammySlider.minimumValue).to(equal(-0.2))
+                expect(subject.whammySlider.maximumValue).to(equal(0.2))
+                expect(subject.whammySlider.value).to(equal(0))
+            }
 
             describe("When the cache resolves with songs") {
                 context("When there are songs") {
@@ -234,6 +240,34 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     itBehavesLike("downloading song assets")
+                }
+            }
+            
+            describe("Sliding the whammy bar") {
+                beforeEach {
+                    subject.whammySlider.value = 0.11
+                    subject.didWhammy(subject.whammySlider)
+                }
+                
+                it("calls the player with the whammy value") {
+                    expect(player.calledPitchShift).to(beTruthy())
+                    expect(player.capturedPitchShiftAmount).to(equal(0.11))
+                }
+            }
+            
+            describe("releasing the whammy bar") {
+                beforeEach {
+                    subject.whammySlider.value = 0.11
+                    subject.didReleaseWhammy(subject.whammySlider)
+                }
+                
+                it("calls the player with the whammy value 0") {
+                    expect(player.calledPitchShift).to(beTruthy())
+                    expect(player.capturedPitchShiftAmount).to(equal(0))
+                }
+                
+                it("resets the bar to the center") {
+                    expect(subject.whammySlider.value).to(equal(0))
                 }
             }
         }

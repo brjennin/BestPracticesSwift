@@ -44,9 +44,17 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-0.20000000000000001" maxValue="0.20000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="yHf-ql-tBh" userLabel="Whammy">
+                                <connections>
+                                    <action selector="didReleaseWhammy:" destination="BYZ-38-t0r" eventType="touchUpOutside" id="838-Mg-GCZ"/>
+                                    <action selector="didReleaseWhammy:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GNa-XA-k3C"/>
+                                    <action selector="didWhammy:" destination="BYZ-38-t0r" eventType="valueChanged" id="sj1-SZ-rLH"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="yHf-ql-tBh" secondAttribute="trailing" constant="10" id="AiN-yU-g2y"/>
                             <constraint firstItem="qcZ-Sj-h7c" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CXb-fJ-xPf"/>
                             <constraint firstItem="qcZ-Sj-h7c" firstAttribute="top" secondItem="PER-4W-yur" secondAttribute="bottom" constant="15" id="Dis-K2-Sgr"/>
                             <constraint firstItem="Bg5-RO-Cu9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Fhg-Vc-7E8"/>
@@ -59,8 +67,10 @@
                             <constraint firstAttribute="trailingMargin" secondItem="wNz-Dd-EiX" secondAttribute="trailing" constant="20" id="eud-HC-8aj"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bg5-RO-Cu9" secondAttribute="bottom" id="iSx-DS-7RK"/>
                             <constraint firstItem="Bg5-RO-Cu9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="kZr-Im-xdW"/>
+                            <constraint firstItem="wNz-Dd-EiX" firstAttribute="top" secondItem="yHf-ql-tBh" secondAttribute="bottom" constant="30" id="oug-mq-DrW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Bg5-RO-Cu9" secondAttribute="trailing" id="qym-sh-O7h"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NVg-wo-ubL" secondAttribute="bottom" constant="20" id="uK5-5I-9f2"/>
+                            <constraint firstItem="yHf-ql-tBh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="ztF-Fo-RDF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fQz-4l-7U3"/>
@@ -70,6 +80,7 @@
                         <outlet property="delaySwitch" destination="wNz-Dd-EiX" id="Tq8-YU-Xid"/>
                         <outlet property="looseButton" destination="qcZ-Sj-h7c" id="bhK-o6-dVy"/>
                         <outlet property="playButton" destination="NVg-wo-ubL" id="sog-xO-J6M"/>
+                        <outlet property="whammySlider" destination="yHf-ql-tBh" id="laU-jB-H67"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -89,7 +100,7 @@
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="idi-UU-MD0" id="d0D-Rm-Hdu">
-                                    <frame key="frameInset" width="375" height="44"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1E-l9-61Q" userLabel="Title Label">
