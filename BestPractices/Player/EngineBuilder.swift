@@ -2,12 +2,12 @@ import AVKit
 import AVFoundation
 
 protocol EngineBuilderProtocol: class {
-    func buildEngine(audioFile: AVAudioFile) -> (AudioPlayerNodeProtocol, AudioEngineProtocol, [AudioDelayNodeProtocol], AVAudioUnitVarispeed)
+    func buildEngine(audioFile: AVAudioFile) -> (AudioBoxProtocol)
 }
 
 class EngineBuilder: EngineBuilderProtocol {
 
-    func buildEngine(audioFile: AVAudioFile) -> (AudioPlayerNodeProtocol, AudioEngineProtocol, [AudioDelayNodeProtocol], AVAudioUnitVarispeed) {
+    func buildEngine(audioFile: AVAudioFile) -> (AudioBoxProtocol) {
         let engine = AVAudioEngine()
         let playerNode = AVAudioPlayerNode()
         let pitchShiftNode = AVAudioUnitVarispeed()
@@ -35,7 +35,7 @@ class EngineBuilder: EngineBuilderProtocol {
         }
         engine.connect(nodes.last!, to: engine.outputNode, format: audioFile.processingFormat)
 
-        return (playerNode, engine, delayNodes, pitchShiftNode)
+        return AudioBox(file: audioFile, engine: engine, player: playerNode, pitchShift: pitchShiftNode, delays: delayNodes)
     }
 
 }

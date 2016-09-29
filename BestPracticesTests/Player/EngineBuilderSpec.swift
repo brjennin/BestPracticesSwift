@@ -23,96 +23,91 @@ class EngineBuilderSpec: QuickSpec {
             var engine: AVAudioEngine!
             var delayNodes: [AVAudioUnitDelay]!
             var pitchShift: AVAudioUnitVarispeed!
-            
+
+            var audioBox: AudioBox!
+
             beforeEach {
-                var littleEngine: AudioEngineProtocol
-                var littlePlayer: AudioPlayerNodeProtocol
-                var littleDelayNodes: [AudioDelayNodeProtocol]
-                var littlePitchShift: AVAudioUnitVarispeed
-                (littlePlayer, littleEngine, littleDelayNodes, littlePitchShift) = subject.buildEngine(audioFile: audioFile)
-                player = littlePlayer as! AVAudioPlayerNode
-                engine = littleEngine as! AVAudioEngine
-                delayNodes = littleDelayNodes as! [AVAudioUnitDelay]
-                pitchShift = littlePitchShift
+                audioBox = subject.buildEngine(audioFile: audioFile) as! AudioBox
+                player = audioBox.player as! AVAudioPlayerNode
+                engine = audioBox.engine as! AVAudioEngine
+                delayNodes = audioBox.delays as! [AVAudioUnitDelay]
+                pitchShift = audioBox.pitchShift
             }
 
-            it("sets up an engine with 5 delays attached to a player") {
-                let outputConnectionPoint = engine.inputConnectionPoint(for: engine.outputNode, inputBus: 0)!
-                expect(outputConnectionPoint.node!).to(beAKindOf(AVAudioUnitDelay.self))
+            it("returns a fully hydrated audio box") {
+                expect(audioBox.file).toNot(beNil())
+                expect(audioBox.engine).toNot(beNil())
+                expect(audioBox.player).toNot(beNil())
+                expect(audioBox.pitchShift).toNot(beNil())
+                expect(audioBox.delays.count).to(equal(5))
+            }
 
-                let delay1 = outputConnectionPoint.node! as! AVAudioUnitDelay
-                expect(delayNodes).to(contain(delay1))
-                expect(delay1.delayTime).to(equal(2))
-                expect(delay1.feedback).to(equal(0))
-                expect(delay1.wetDryMix).to(equal(100))
-                expect(delay1.lowPassCutoff).to(equal(20000))
-                expect(delay1.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
-                let delay1Connection = engine.inputConnectionPoint(for: delay1, inputBus: 0)!
-                expect(delay1Connection.node!).to(beAKindOf(AVAudioUnitDelay.self))
+            it("correctly sets up each delay node") {
+                for node in delayNodes {
+                    expect(node.delayTime).to(equal(2))
+                    expect(node.feedback).to(equal(0))
+                    expect(node.wetDryMix).to(equal(100))
+                    expect(node.lowPassCutoff).to(equal(20000))
+                    expect(node.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
+                }
+            }
 
-                let delay2 = delay1Connection.node! as! AVAudioUnitDelay
-                expect(delayNodes).to(contain(delay2))
-                expect(delay2.delayTime).to(equal(2))
-                expect(delay2.feedback).to(equal(0))
-                expect(delay2.wetDryMix).to(equal(100))
-                expect(delay2.lowPassCutoff).to(equal(20000))
-                expect(delay2.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
-                let delay2Connection = engine.inputConnectionPoint(for: delay2, inputBus: 0)!
-                expect(delay2Connection.node!).to(beAKindOf(AVAudioUnitDelay.self))
+            it("correctly sets up the pitch shift node") {
+                expect(pitchShift.rate).to(equal(1))
+                expect(pitchShift.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
+            }
 
-                let delay3 = delay2Connection.node! as! AVAudioUnitDelay
-                expect(delayNodes).to(contain(delay3))
-                expect(delay3.delayTime).to(equal(2))
-                expect(delay3.feedback).to(equal(0))
-                expect(delay3.wetDryMix).to(equal(100))
-                expect(delay3.lowPassCutoff).to(equal(20000))
-                expect(delay3.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
-                let delay3Connection = engine.inputConnectionPoint(for: delay3, inputBus: 0)!
-                expect(delay3Connection.node!).to(beAKindOf(AVAudioUnitDelay.self))
-
-                let delay4 = delay3Connection.node! as! AVAudioUnitDelay
-                expect(delayNodes).to(contain(delay4))
-                expect(delay4.delayTime).to(equal(2))
-                expect(delay4.feedback).to(equal(0))
-                expect(delay4.wetDryMix).to(equal(100))
-                expect(delay4.lowPassCutoff).to(equal(20000))
-                expect(delay4.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
-                let delay4Connection = engine.inputConnectionPoint(for: delay4, inputBus: 0)!
-                expect(delay4Connection.node!).to(beAKindOf(AVAudioUnitDelay.self))
-
-                let delay5 = delay4Connection.node! as! AVAudioUnitDelay
-                expect(delayNodes).to(contain(delay5))
-                expect(delay5.delayTime).to(equal(2))
-                expect(delay5.feedback).to(equal(0))
-                expect(delay5.wetDryMix).to(equal(100))
-                expect(delay5.lowPassCutoff).to(equal(20000))
-                expect(delay5.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
-                let delay5Connection = engine.inputConnectionPoint(for: delay5, inputBus: 0)!
-                expect(delay5Connection.node!).to(beAKindOf(AVAudioUnitVarispeed.self))
-                expect(delay5Connection.node!).to(beIdenticalTo(pitchShift))
-                
-                let pitchShiftNode = delay5Connection.node! as! AVAudioUnitVarispeed
-                expect(pitchShiftNode.rate).to(equal(1))
-                expect(pitchShiftNode.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
-                let pitchShiftConnection = engine.inputConnectionPoint(for: pitchShiftNode, inputBus: 0)!
-                expect(pitchShiftConnection.node!).to(beAKindOf(AVAudioPlayerNode.self))
-                expect(pitchShiftConnection.node!).to(beIdenticalTo(player))
-                
-                let playerNode = pitchShiftConnection.node! as! AVAudioPlayerNode
-                expect(playerNode.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
-
+            it("correctly sets up the player") {
+                expect(player.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
                 expect(engine.outputNode.inputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
-
-                expect(delayNodes.count).to(equal(5))
             }
 
             it("does not start the engine") {
                 expect(engine.isRunning).to(beFalsy())
             }
+
+            it("stores off the file") {
+                expect(audioBox.file).to(beIdenticalTo(audioFile))
+            }
+
+            it("sets up an engine with 5 delays and a pitch shift attached to a player") {
+                let outputConnectionPoint = engine.inputConnectionPoint(for: engine.outputNode, inputBus: 0)!
+                expect(outputConnectionPoint.node!).to(beAKindOf(AVAudioUnitDelay.self))
+
+                let delay1 = outputConnectionPoint.node! as! AVAudioUnitDelay
+                expect(delayNodes).to(contain(delay1))
+                let delay1Connection = engine.inputConnectionPoint(for: delay1, inputBus: 0)!
+                expect(delay1Connection.node!).to(beAKindOf(AVAudioUnitDelay.self))
+
+                let delay2 = delay1Connection.node! as! AVAudioUnitDelay
+                expect(delayNodes).to(contain(delay2))
+                let delay2Connection = engine.inputConnectionPoint(for: delay2, inputBus: 0)!
+                expect(delay2Connection.node!).to(beAKindOf(AVAudioUnitDelay.self))
+
+                let delay3 = delay2Connection.node! as! AVAudioUnitDelay
+                expect(delayNodes).to(contain(delay3))
+                let delay3Connection = engine.inputConnectionPoint(for: delay3, inputBus: 0)!
+                expect(delay3Connection.node!).to(beAKindOf(AVAudioUnitDelay.self))
+
+                let delay4 = delay3Connection.node! as! AVAudioUnitDelay
+                expect(delayNodes).to(contain(delay4))
+                let delay4Connection = engine.inputConnectionPoint(for: delay4, inputBus: 0)!
+                expect(delay4Connection.node!).to(beAKindOf(AVAudioUnitDelay.self))
+
+                let delay5 = delay4Connection.node! as! AVAudioUnitDelay
+                expect(delayNodes).to(contain(delay5))
+                let delay5Connection = engine.inputConnectionPoint(for: delay5, inputBus: 0)!
+                expect(delay5Connection.node!).to(beAKindOf(AVAudioUnitVarispeed.self))
+
+                let pitchShiftNode = delay5Connection.node! as! AVAudioUnitVarispeed
+                expect(pitchShiftNode).to(beIdenticalTo(pitchShift))
+                let pitchShiftConnection = engine.inputConnectionPoint(for: pitchShiftNode, inputBus: 0)!
+                expect(pitchShiftConnection.node!).to(beAKindOf(AVAudioPlayerNode.self))
+
+                let playerNode = pitchShiftConnection.node! as! AVAudioPlayerNode
+                expect(playerNode).to(beIdenticalTo(player))
+            }
         }
 
     }
 }
-
-
-
