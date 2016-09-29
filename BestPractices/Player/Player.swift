@@ -15,6 +15,7 @@ class Player: PlayerProtocol {
     var playerNode: AudioPlayerNodeProtocol?
     var delayNodes: [AudioDelayNodeProtocol]?
     var engine: AudioEngineProtocol!
+    var audioFile: AVAudioFile!
 
     func loadSong(filePath: String) {
         let url = URL(fileURLWithPath: filePath)
@@ -26,7 +27,6 @@ class Player: PlayerProtocol {
             var audioDelayNodes: [AudioDelayNodeProtocol]
             (audioPlayer, audioEngine, audioDelayNodes) = engineBuilder.buildEngine(audioFile: file)
 
-            audioPlayer.scheduleFile(file, at: nil, completionHandler: nil)
             audioEngine.prepare()
             do {
                 try audioEngine.start()
@@ -37,6 +37,7 @@ class Player: PlayerProtocol {
             playerNode = audioPlayer
             engine = audioEngine
             delayNodes = audioDelayNodes
+            audioFile = file
         }
     }
 
@@ -47,11 +48,13 @@ class Player: PlayerProtocol {
         engine = nil
         playerNode = nil
         delayNodes = nil
+        audioFile = nil
     }
 
     func play(delay: Bool) {
         if let playerNode = playerNode {
             setDelayBypass(delayUnits: delayNodes!, bypass: !delay)
+            playerNode.scheduleFile(audioFile, at: nil, completionHandler: nil)
             playerNode.play()
         }
     }
