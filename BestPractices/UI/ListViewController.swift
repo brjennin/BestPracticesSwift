@@ -4,7 +4,7 @@ class ListViewController: UITableViewController {
 
     var dispatcher: DispatcherProtocol! = Dispatcher()
     var songCache: SongCacheProtocol! = SongCache()
-    var songSelectionDelegate: SongSelectionDelegate!
+    weak var songSelectionDelegate: SongSelectionDelegate!
 
     var songs: [Song] = []
 
