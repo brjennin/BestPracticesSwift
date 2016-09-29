@@ -540,6 +540,11 @@
 					AECA4A431D8311EF00EBB222 = {
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					AECA4A571D8311EF00EBB222 = {
 						CreatedOnToolsVersion = 7.3.1;
