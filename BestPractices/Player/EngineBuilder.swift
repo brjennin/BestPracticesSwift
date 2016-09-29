@@ -27,6 +27,7 @@ class EngineBuilder: EngineBuilderProtocol {
                 delayNode.feedback = 0
                 delayNode.delayTime = 2
                 delayNode.wetDryMix = 100
+                delayNode.lowPassCutoff = 20000
             }
             previousNode = node
         }
