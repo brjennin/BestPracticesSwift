@@ -25,26 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         }
 
-        let sharedCenter = MPRemoteCommandCenter.shared()
-        sharedCenter.seekBackwardCommand.isEnabled = false
-        sharedCenter.seekForwardCommand.isEnabled = false
-        sharedCenter.skipBackwardCommand.isEnabled = false
-        sharedCenter.skipForwardCommand.isEnabled = false
-        sharedCenter.previousTrackCommand.isEnabled = false
-        sharedCenter.nextTrackCommand.isEnabled = false
-        sharedCenter.bookmarkCommand.isEnabled = false
-        sharedCenter.changePlaybackPositionCommand.isEnabled = false
-        sharedCenter.changePlaybackRateCommand.isEnabled = false
-        sharedCenter.changeRepeatModeCommand.isEnabled = false
-        sharedCenter.changeShuffleModeCommand.isEnabled = false
-        sharedCenter.dislikeCommand.isEnabled = false
-        sharedCenter.likeCommand.isEnabled = false
-        sharedCenter.pauseCommand.isEnabled = false
-        sharedCenter.ratingCommand.isEnabled = false
-        sharedCenter.togglePlayPauseCommand.isEnabled = false
-        sharedCenter.disableLanguageOptionCommand.isEnabled = false
-        sharedCenter.enableLanguageOptionCommand.isEnabled = false
-        sharedCenter.stopCommand.isEnabled = false
+        let sc = MPRemoteCommandCenter.shared()
+        let unusedCommands = [sc.seekForwardCommand, sc.seekForwardCommand, sc.skipBackwardCommand, sc.skipForwardCommand, sc.previousTrackCommand, sc.nextTrackCommand, sc.bookmarkCommand, sc.changePlaybackPositionCommand, sc.changePlaybackRateCommand, sc.changeRepeatModeCommand, sc.changeShuffleModeCommand, sc.dislikeCommand, sc.likeCommand, sc.pauseCommand, sc.ratingCommand, sc.togglePlayPauseCommand, sc.disableLanguageOptionCommand, sc.enableLanguageOptionCommand, sc.stopCommand]
+        for command in unusedCommands {
+            command.isEnabled = false
+        }
 
         return true
     }
