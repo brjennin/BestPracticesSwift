@@ -11,10 +11,12 @@ class MockPlayer: PlayerProtocol {
     
     var playedSong = false
     var capturedDelay: Bool?
+    var capturedReverb: Bool?
     
-    func play(delay: Bool) {
+    func play(delay: Bool, reverb: Bool) {
         playedSong = true
         capturedDelay = delay
+        capturedReverb = reverb
     }
     
     var calledClearSong = false

@@ -174,24 +174,64 @@ class HomeViewControllerSpec: QuickSpec {
                 context("With delay turned on") {
                     beforeEach {
                         subject.delaySwitch.setOn(true, animated: false)
-                        subject.playButton.tap()
                     }
-
-                    it("tells the player to play") {
-                        expect(player.playedSong).to(beTruthy())
-                        expect(player.capturedDelay).to(beTruthy())
+                    
+                    context("With reverb turned on") {
+                        beforeEach {
+                            subject.reverbNation.setOn(true, animated: false)
+                            subject.playButton.tap()
+                        }
+                        
+                        it("tells the player to play") {
+                            expect(player.playedSong).to(beTruthy())
+                            expect(player.capturedDelay).to(beTruthy())
+                            expect(player.capturedReverb).to(beTruthy())
+                        }
+                    }
+                    
+                    context("With reverb turned off") {
+                        beforeEach {
+                            subject.reverbNation.setOn(false, animated: false)
+                            subject.playButton.tap()
+                        }
+                        
+                        it("tells the player to play") {
+                            expect(player.playedSong).to(beTruthy())
+                            expect(player.capturedDelay).to(beTruthy())
+                            expect(player.capturedReverb).to(beFalsy())
+                        }
                     }
                 }
 
                 context("With delay turned off") {
                     beforeEach {
                         subject.delaySwitch.setOn(false, animated: false)
-                        subject.playButton.tap()
                     }
-
-                    it("tells the player to play") {
-                        expect(player.playedSong).to(beTruthy())
-                        expect(player.capturedDelay).to(beFalsy())
+                    
+                    context("With reverb turned on") {
+                        beforeEach {
+                            subject.reverbNation.setOn(true, animated: false)
+                            subject.playButton.tap()
+                        }
+                        
+                        it("tells the player to play") {
+                            expect(player.playedSong).to(beTruthy())
+                            expect(player.capturedDelay).to(beFalsy())
+                            expect(player.capturedReverb).to(beTruthy())
+                        }
+                    }
+                    
+                    context("With reverb turned off") {
+                        beforeEach {
+                            subject.reverbNation.setOn(false, animated: false)
+                            subject.playButton.tap()
+                        }
+                        
+                        it("tells the player to play") {
+                            expect(player.playedSong).to(beTruthy())
+                            expect(player.capturedDelay).to(beFalsy())
+                            expect(player.capturedReverb).to(beFalsy())
+                        }
                     }
                 }
             }

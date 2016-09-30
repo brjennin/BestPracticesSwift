@@ -8,6 +8,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var delaySwitch: UISwitch!
     @IBOutlet weak var whammySlider: UISlider!
+    @IBOutlet weak var reverbNation: UISwitch!
 
     var player: PlayerProtocol! = Player()
     var songLoader: SongLoaderProtocol! = SongLoader()
@@ -43,7 +44,7 @@ class HomeViewController: UIViewController {
     }
 
     @IBAction func didTapPlay(_ sender: UIButton) {
-        self.player.play(delay: delaySwitch.isOn)
+        self.player.play(delay: delaySwitch.isOn, reverb: reverbNation.isOn)
     }
 }
 

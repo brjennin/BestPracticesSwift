@@ -3,7 +3,7 @@ import AVFoundation
 @testable import BestPractices
 
 class MockAudioBox: AudioBoxProtocol {
-    required init(file: AVAudioFile, engine: AudioEngineProtocol, player: AudioPlayerNodeProtocol, pitchShift: AVAudioUnitVarispeed, delays: [AudioDelayNodeProtocol]) {
+    required init(file: AVAudioFile, engine: AudioEngineProtocol, player: AudioPlayerNodeProtocol, pitchShift: AVAudioUnitVarispeed, delays: [AudioDelayNodeProtocol], reverb: AVAudioUnitReverb) {
     }
 
     var calledStart = false
@@ -22,9 +22,11 @@ class MockAudioBox: AudioBoxProtocol {
 
     var calledPlay = false
     var capturedDelay: Bool?
-    func play(delay: Bool) {
+    var capturedReverb: Bool?
+    func play(delay: Bool, reverb: Bool) {
         calledPlay = true
         capturedDelay = delay
+        capturedReverb = reverb
     }
 
     var calledPitchShift = false

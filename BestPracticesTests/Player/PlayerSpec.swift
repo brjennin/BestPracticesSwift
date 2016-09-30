@@ -27,7 +27,7 @@ class PlayerSpec: QuickSpec {
             shiftTranslator = MockShiftTranslator()
             subject.shiftTranslator = shiftTranslator
 
-            audioBox = MockAudioBox(file: audioFile, engine: MockAVAudioEngine(), player: MockAVAudioPlayerNode(), pitchShift: AVAudioUnitVarispeed(), delays: [])
+            audioBox = MockAudioBox(file: audioFile, engine: MockAVAudioEngine(), player: MockAVAudioPlayerNode(), pitchShift: AVAudioUnitVarispeed(), delays: [], reverb: AVAudioUnitReverb())
         }
 
         describe(".loadSong") {
@@ -127,24 +127,54 @@ class PlayerSpec: QuickSpec {
                 }
 
                 context("With delay") {
-                    beforeEach {
-                        subject.play(delay: true)
+                    context("With reverb") {
+                        beforeEach {
+                            subject.play(delay: true, reverb: true)
+                        }
+                        
+                        it("plays the audio box with delay") {
+                            expect(audioBox.calledPlay).to(beTruthy())
+                            expect(audioBox.capturedDelay).to(beTruthy())
+                            expect(audioBox.capturedReverb).to(beTruthy())
+                        }
                     }
-
-                    it("plays the audio box with delay") {
-                        expect(audioBox.calledPlay).to(beTruthy())
-                        expect(audioBox.capturedDelay).to(beTruthy())
+                    
+                    context("Without reverb") {
+                        beforeEach {
+                            subject.play(delay: true, reverb: false)
+                        }
+                        
+                        it("plays the audio box with delay") {
+                            expect(audioBox.calledPlay).to(beTruthy())
+                            expect(audioBox.capturedDelay).to(beTruthy())
+                            expect(audioBox.capturedReverb).to(beFalsy())
+                        }
                     }
                 }
 
                 context("Without delay") {
-                    beforeEach {
-                        subject.play(delay: false)
+                    context("With reverb") {
+                        beforeEach {
+                            subject.play(delay: false, reverb: true)
+                        }
+                        
+                        it("plays the audio box with delay") {
+                            expect(audioBox.calledPlay).to(beTruthy())
+                            expect(audioBox.capturedDelay).to(beFalsy())
+                            expect(audioBox.capturedReverb).to(beTruthy())
+                        }
                     }
-
-                    it("plays the audio box with delay") {
-                        expect(audioBox.calledPlay).to(beTruthy())
-                        expect(audioBox.capturedDelay).to(beFalsy())
+                    
+                    context("Without reverb") {
+                        beforeEach {
+                            subject.play(delay: false, reverb: false)
+                        }
+                        
+                        it("plays the audio box with delay") {
+                            expect(audioBox.calledPlay).to(beTruthy())
+                            expect(audioBox.capturedDelay).to(beFalsy())
+                            expect(audioBox.capturedReverb).to(beFalsy())
+                        }
                     }
                 }
             }
@@ -155,7 +185,7 @@ class PlayerSpec: QuickSpec {
                 }
 
                 it("does not raise an exception") {
-                    expect(subject.play(delay: true)).toNot(throwError())
+                    expect(subject.play(delay: true, reverb: true)).toNot(throwError())
                 }
             }
         }

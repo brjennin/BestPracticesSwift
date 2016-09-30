@@ -6,7 +6,7 @@ protocol PlayerProtocol: class {
 
     func clearSong()
 
-    func play(delay: Bool)
+    func play(delay: Bool, reverb: Bool)
 
     func pitchShift(amount: Float)
 }
@@ -37,8 +37,8 @@ class Player: PlayerProtocol {
         audioBox = nil
     }
 
-    func play(delay: Bool) {
-        audioBox?.play(delay: delay)
+    func play(delay: Bool, reverb: Bool) {
+        audioBox?.play(delay: delay, reverb: reverb)
     }
 
     func pitchShift(amount: Float) {

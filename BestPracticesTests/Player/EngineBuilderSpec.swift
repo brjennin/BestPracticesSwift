@@ -22,6 +22,7 @@ class EngineBuilderSpec: QuickSpec {
             var player: AVAudioPlayerNode!
             var engine: AVAudioEngine!
             var delayNodes: [AVAudioUnitDelay]!
+            var reverb: AVAudioUnitReverb!
             var pitchShift: AVAudioUnitVarispeed!
 
             var audioBox: AudioBox!
@@ -32,6 +33,7 @@ class EngineBuilderSpec: QuickSpec {
                 engine = audioBox.engine as! AVAudioEngine
                 delayNodes = audioBox.delays as! [AVAudioUnitDelay]
                 pitchShift = audioBox.pitchShift
+                reverb = audioBox.reverb
             }
 
             it("returns a fully hydrated audio box") {
@@ -40,6 +42,7 @@ class EngineBuilderSpec: QuickSpec {
                 expect(audioBox.player).toNot(beNil())
                 expect(audioBox.pitchShift).toNot(beNil())
                 expect(audioBox.delays.count).to(equal(5))
+                expect(audioBox.reverb).toNot(beNil())
             }
 
             it("correctly sets up each delay node") {
@@ -56,6 +59,11 @@ class EngineBuilderSpec: QuickSpec {
                 expect(pitchShift.rate).to(equal(1))
                 expect(pitchShift.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
             }
+            
+            it("correctly sets up the reverb node") {
+                expect(reverb.wetDryMix).to(equal(0))
+            }
+            
 
             it("correctly sets up the player") {
                 expect(player.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
@@ -97,9 +105,14 @@ class EngineBuilderSpec: QuickSpec {
                 let delay5 = delay4Connection.node! as! AVAudioUnitDelay
                 expect(delayNodes).to(contain(delay5))
                 let delay5Connection = engine.inputConnectionPoint(for: delay5, inputBus: 0)!
-                expect(delay5Connection.node!).to(beAKindOf(AVAudioUnitVarispeed.self))
+                expect(delay5Connection.node!).to(beAKindOf(AVAudioUnitReverb.self))
+                
+                let reverbNode = delay5Connection.node! as! AVAudioUnitReverb
+                expect(reverbNode).to(beIdenticalTo(reverb))
+                let reverbConnection = engine.inputConnectionPoint(for: reverbNode, inputBus: 0)!
+                expect(reverbConnection.node!).to(beAKindOf(AVAudioUnitVarispeed.self))
 
-                let pitchShiftNode = delay5Connection.node! as! AVAudioUnitVarispeed
+                let pitchShiftNode = reverbConnection.node! as! AVAudioUnitVarispeed
                 expect(pitchShiftNode).to(beIdenticalTo(pitchShift))
                 let pitchShiftConnection = engine.inputConnectionPoint(for: pitchShiftNode, inputBus: 0)!
                 expect(pitchShiftConnection.node!).to(beAKindOf(AVAudioPlayerNode.self))

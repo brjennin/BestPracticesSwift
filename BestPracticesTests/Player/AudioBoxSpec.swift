@@ -14,6 +14,7 @@ class AudioBoxSpec: QuickSpec {
         var player: MockAVAudioPlayerNode!
         var pitchShift: AVAudioUnitVarispeed!
         var delays: [MockAVAudioUnitDelay]!
+        var reverb: AVAudioUnitReverb!
 
         let bundle = Bundle(for: type(of: self))
         let path = bundle.path(forResource: "maneater", ofType: "mp3")!
@@ -25,8 +26,9 @@ class AudioBoxSpec: QuickSpec {
             player = MockAVAudioPlayerNode()
             pitchShift = AVAudioUnitVarispeed()
             delays = [MockAVAudioUnitDelay(), MockAVAudioUnitDelay()]
+            reverb = AVAudioUnitReverb()
 
-            subject = AudioBox(file: audioFile, engine: engine, player: player, pitchShift: pitchShift, delays: delays)
+            subject = AudioBox(file: audioFile, engine: engine, player: player, pitchShift: pitchShift, delays: delays, reverb: reverb)
         }
 
         it("stores off the values it is initialized with in properties") {
@@ -36,6 +38,7 @@ class AudioBoxSpec: QuickSpec {
             expect(subject.delays[0]).to(beIdenticalTo(delays[0]))
             expect(subject.delays[1]).to(beIdenticalTo(delays[1]))
             expect(subject.file).to(beIdenticalTo(audioFile))
+            expect(subject.reverb).to(beIdenticalTo(reverb))
         }
 
         describe(".start") {
@@ -89,21 +92,53 @@ class AudioBoxSpec: QuickSpec {
                     for delayNode in delays {
                         delayNode.bypass = true
                     }
-                    subject.play(delay: true)
                 }
-
-                it("schedules playing the file") {
-                    expect(player.calledScheduleFile).to(beTruthy())
-                    expect(player.capturedFile!).to(beIdenticalTo(audioFile))
+                
+                sharedExamples("playing a song") {
+                    it("schedules playing the file") {
+                        expect(player.calledScheduleFile).to(beTruthy())
+                        expect(player.capturedFile!).to(beIdenticalTo(audioFile))
+                    }
+                    
+                    it("plays the song") {
+                        expect(player.calledPlay).to(beTruthy())
+                    }
                 }
+                
+                context("With reverb") {
+                    beforeEach {
+                        reverb.wetDryMix = 0
+                        subject.play(delay: true, reverb: true)
+                    }
 
-                it("plays the song") {
-                    expect(player.calledPlay).to(beTruthy())
+                    itBehavesLike("playing a song")
+                    
+                    it("turns on delay nodes") {
+                        expect(delays[0].bypass).to(beFalsy())
+                        expect(delays[1].bypass).to(beFalsy())
+                    }
+                    
+                    it("turns on reverb") {
+                        expect(reverb.wetDryMix).to(equal(AudioBox.reverbAmount))
+                    }
                 }
-
-                it("turns on delay nodes") {
-                    expect(delays[0].bypass).to(beFalsy())
-                    expect(delays[1].bypass).to(beFalsy())
+                
+                context("Without reverb") {
+                    beforeEach {
+                        reverb.wetDryMix = AudioBox.reverbAmount
+                        subject.play(delay: true, reverb: false)
+                    }
+                    
+                    itBehavesLike("playing a song")
+                    
+                    it("turns on delay nodes") {
+                        expect(delays[0].bypass).to(beFalsy())
+                        expect(delays[1].bypass).to(beFalsy())
+                    }
+                    
+                    it("turns off reverb") {
+                        expect(reverb.wetDryMix).to(equal(0))
+                    }
                 }
             }
 
@@ -112,24 +147,44 @@ class AudioBoxSpec: QuickSpec {
                     for delayNode in delays {
                         delayNode.bypass = false
                     }
-                    subject.play(delay: false)
                 }
 
-                it("schedules playing the file") {
-                    expect(player.calledScheduleFile).to(beTruthy())
-                    expect(player.capturedFile!).to(beIdenticalTo(audioFile))
+                context("With reverb") {
+                    beforeEach {
+                        reverb.wetDryMix = 0
+                        subject.play(delay: false, reverb: true)
+                    }
+                    
+                    itBehavesLike("playing a song")
+                    
+                    it("turns off delay nodes") {
+                        expect(delays[0].bypass).to(beTruthy())
+                        expect(delays[1].bypass).to(beTruthy())
+                    }
+                    
+                    it("turns on reverb") {
+                        expect(reverb.wetDryMix).to(equal(AudioBox.reverbAmount))
+                    }
                 }
-
-                it("plays the song") {
-                    expect(player.calledPlay).to(beTruthy())
-                }
-
-                it("turns off delay nodes") {
-                    expect(delays[0].bypass).to(beTruthy())
-                    expect(delays[1].bypass).to(beTruthy())
+                
+                context("Without reverb") {
+                    beforeEach {
+                        reverb.wetDryMix = AudioBox.reverbAmount
+                        subject.play(delay: false, reverb: false)
+                    }
+                    
+                    itBehavesLike("playing a song")
+                    
+                    it("turns off delay nodes") {
+                        expect(delays[0].bypass).to(beTruthy())
+                        expect(delays[1].bypass).to(beTruthy())
+                    }
+                    
+                    it("turns off reverb") {
+                        expect(reverb.wetDryMix).to(equal(0))
+                    }
                 }
             }
-
         }
 
         describe(".pitchShift") {
