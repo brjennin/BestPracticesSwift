@@ -1,4 +1,6 @@
 import UIKit
+import AVFoundation
+import AVKit
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -8,14 +10,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let homeViewController = storyboard.instantiateViewController(withIdentifier: "NavigationController")
-        
+
         window = UIWindow.init(frame: UIScreen.main.bounds)
         window!.rootViewController = homeViewController
         window!.makeKeyAndVisible()
-        
+
         let sharedApplication = applicationProvider.sharedApplication()
         sharedApplication.beginReceivingRemoteControlEvents()
-        
+
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+        } catch {
+
+        }
+
         return true
     }
 
