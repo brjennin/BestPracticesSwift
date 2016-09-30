@@ -1,6 +1,7 @@
 import UIKit
 import AVFoundation
 import AVKit
+import MediaPlayer
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -23,6 +24,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
 
         }
+
+        let sharedCenter = MPRemoteCommandCenter.shared()
+        sharedCenter.seekBackwardCommand.isEnabled = false
+        sharedCenter.seekForwardCommand.isEnabled = false
+        sharedCenter.skipBackwardCommand.isEnabled = false
+        sharedCenter.skipForwardCommand.isEnabled = false
+        sharedCenter.previousTrackCommand.isEnabled = false
+        sharedCenter.nextTrackCommand.isEnabled = false
+        sharedCenter.bookmarkCommand.isEnabled = false
+        sharedCenter.changePlaybackPositionCommand.isEnabled = false
+        sharedCenter.changePlaybackRateCommand.isEnabled = false
+        sharedCenter.changeRepeatModeCommand.isEnabled = false
+        sharedCenter.changeShuffleModeCommand.isEnabled = false
+        sharedCenter.dislikeCommand.isEnabled = false
+        sharedCenter.likeCommand.isEnabled = false
+        sharedCenter.pauseCommand.isEnabled = false
+        sharedCenter.ratingCommand.isEnabled = false
+        sharedCenter.togglePlayPauseCommand.isEnabled = false
+        sharedCenter.disableLanguageOptionCommand.isEnabled = false
+        sharedCenter.enableLanguageOptionCommand.isEnabled = false
+        sharedCenter.stopCommand.isEnabled = false
 
         return true
     }

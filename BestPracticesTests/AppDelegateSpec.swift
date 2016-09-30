@@ -2,6 +2,8 @@ import Quick
 import Nimble
 import AVFoundation
 import AVKit
+import MediaPlayer
+
 @testable import BestPractices
 
 class AppDelegateSpec: QuickSpec {
@@ -48,6 +50,14 @@ class AppDelegateSpec: QuickSpec {
             it("sets the audio session category") {
                 expect(AVAudioSession.sharedInstance()).toNot(beNil())
                 expect(AVAudioSession.sharedInstance().category).to(equal(AVAudioSessionCategoryPlayback))
+            }
+
+            fit("Hides unused remote media center commands") {
+                let sc = MPRemoteCommandCenter.shared()
+                let unused = [sc.seekForwardCommand, sc.seekForwardCommand, sc.skipBackwardCommand, sc.skipForwardCommand, sc.previousTrackCommand, sc.nextTrackCommand, sc.bookmarkCommand, sc.changePlaybackPositionCommand, sc.changePlaybackRateCommand, sc.changeRepeatModeCommand, sc.changeShuffleModeCommand, sc.dislikeCommand, sc.likeCommand, sc.pauseCommand, sc.ratingCommand, sc.togglePlayPauseCommand, sc.disableLanguageOptionCommand, sc.enableLanguageOptionCommand, sc.stopCommand]
+                for command in unused {
+                    expect(command.isEnabled).to(beFalsy())
+                }
             }
         }
     }
