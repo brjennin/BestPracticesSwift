@@ -15,9 +15,11 @@ class EngineBuilder: EngineBuilderProtocol {
         reverbNode.wetDryMix = 0
         reverbNode.loadFactoryPreset(AVAudioUnitReverbPreset.cathedral)
         let delayNodes = [AVAudioUnitDelay(), AVAudioUnitDelay(), AVAudioUnitDelay(), AVAudioUnitDelay(), AVAudioUnitDelay()]
+        let eqNode = AVAudioUnitEQ()
         var nodes: [AVAudioNode] = [playerNode]
+        nodes.append(eqNode)
         nodes.append(pitchShiftNode)
-        nodes.append(reverbNode)        
+        nodes.append(reverbNode)
         for node in delayNodes {
             nodes.append(node)
         }
@@ -39,7 +41,7 @@ class EngineBuilder: EngineBuilderProtocol {
         }
         engine.connect(nodes.last!, to: engine.outputNode, format: audioFile.processingFormat)
 
-        return AudioBox(file: audioFile, engine: engine, player: playerNode, pitchShift: pitchShiftNode, delays: delayNodes, reverb: reverbNode)
+        return AudioBox(file: audioFile, engine: engine, player: playerNode, pitchShift: pitchShiftNode, delays: delayNodes, reverb: reverbNode, eq: eqNode)
     }
 
 }

@@ -3,7 +3,7 @@ import AVFoundation
 @testable import BestPractices
 
 class MockAudioBox: AudioBoxProtocol {
-    required init(file: AVAudioFile, engine: AudioEngineProtocol, player: AudioPlayerNodeProtocol, pitchShift: AVAudioUnitVarispeed, delays: [AudioDelayNodeProtocol], reverb: AVAudioUnitReverb) {
+    required init(file: AVAudioFile, engine: AudioEngineProtocol, player: AudioPlayerNodeProtocol, pitchShift: AVAudioUnitVarispeed, delays: [AudioDelayNodeProtocol], reverb: AVAudioUnitReverb, eq: AVAudioUnitEQ) {
     }
 
     var calledStart = false

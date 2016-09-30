@@ -24,6 +24,7 @@ class EngineBuilderSpec: QuickSpec {
             var delayNodes: [AVAudioUnitDelay]!
             var reverb: AVAudioUnitReverb!
             var pitchShift: AVAudioUnitVarispeed!
+            var eq: AVAudioUnitEQ!
 
             var audioBox: AudioBox!
 
@@ -34,6 +35,7 @@ class EngineBuilderSpec: QuickSpec {
                 delayNodes = audioBox.delays as! [AVAudioUnitDelay]
                 pitchShift = audioBox.pitchShift
                 reverb = audioBox.reverb
+                eq = audioBox.eq
             }
 
             it("returns a fully hydrated audio box") {
@@ -43,6 +45,7 @@ class EngineBuilderSpec: QuickSpec {
                 expect(audioBox.pitchShift).toNot(beNil())
                 expect(audioBox.delays.count).to(equal(5))
                 expect(audioBox.reverb).toNot(beNil())
+                expect(audioBox.eq).toNot(beNil())
             }
 
             it("correctly sets up each delay node") {
@@ -59,11 +62,15 @@ class EngineBuilderSpec: QuickSpec {
                 expect(pitchShift.rate).to(equal(1))
                 expect(pitchShift.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
             }
-            
+
             it("correctly sets up the reverb node") {
                 expect(reverb.wetDryMix).to(equal(0))
+                expect(reverb.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
             }
-            
+
+            it("correctly sets up the eq node") {
+                expect(eq.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
+            }
 
             it("correctly sets up the player") {
                 expect(player.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
@@ -78,7 +85,7 @@ class EngineBuilderSpec: QuickSpec {
                 expect(audioBox.file).to(beIdenticalTo(audioFile))
             }
 
-            it("sets up an engine with 5 delays and a pitch shift attached to a player") {
+            it("sets up an engine with 5 delays, pitch shift, reverb and eq attached to a player") {
                 let outputConnectionPoint = engine.inputConnectionPoint(for: engine.outputNode, inputBus: 0)!
                 expect(outputConnectionPoint.node!).to(beAKindOf(AVAudioUnitDelay.self))
 
@@ -106,7 +113,7 @@ class EngineBuilderSpec: QuickSpec {
                 expect(delayNodes).to(contain(delay5))
                 let delay5Connection = engine.inputConnectionPoint(for: delay5, inputBus: 0)!
                 expect(delay5Connection.node!).to(beAKindOf(AVAudioUnitReverb.self))
-                
+
                 let reverbNode = delay5Connection.node! as! AVAudioUnitReverb
                 expect(reverbNode).to(beIdenticalTo(reverb))
                 let reverbConnection = engine.inputConnectionPoint(for: reverbNode, inputBus: 0)!
@@ -115,9 +122,14 @@ class EngineBuilderSpec: QuickSpec {
                 let pitchShiftNode = reverbConnection.node! as! AVAudioUnitVarispeed
                 expect(pitchShiftNode).to(beIdenticalTo(pitchShift))
                 let pitchShiftConnection = engine.inputConnectionPoint(for: pitchShiftNode, inputBus: 0)!
-                expect(pitchShiftConnection.node!).to(beAKindOf(AVAudioPlayerNode.self))
+                expect(pitchShiftConnection.node!).to(beAKindOf(AVAudioUnitEQ.self))
 
-                let playerNode = pitchShiftConnection.node! as! AVAudioPlayerNode
+                let eqNode = pitchShiftConnection.node! as! AVAudioUnitEQ
+                expect(eqNode).to(beIdenticalTo(eq))
+                let eqConnection = engine.inputConnectionPoint(for: eqNode, inputBus: 0)!
+                expect(eqConnection.node!).to(beAKindOf(AVAudioPlayerNode.self))
+
+                let playerNode = eqConnection.node! as! AVAudioPlayerNode
                 expect(playerNode).to(beIdenticalTo(player))
             }
         }

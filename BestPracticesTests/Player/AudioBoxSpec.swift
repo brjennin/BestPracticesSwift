@@ -15,6 +15,7 @@ class AudioBoxSpec: QuickSpec {
         var pitchShift: AVAudioUnitVarispeed!
         var delays: [MockAVAudioUnitDelay]!
         var reverb: AVAudioUnitReverb!
+        var eq: AVAudioUnitEQ!
 
         let bundle = Bundle(for: type(of: self))
         let path = bundle.path(forResource: "maneater", ofType: "mp3")!
@@ -27,8 +28,9 @@ class AudioBoxSpec: QuickSpec {
             pitchShift = AVAudioUnitVarispeed()
             delays = [MockAVAudioUnitDelay(), MockAVAudioUnitDelay()]
             reverb = AVAudioUnitReverb()
+            eq = AVAudioUnitEQ()
 
-            subject = AudioBox(file: audioFile, engine: engine, player: player, pitchShift: pitchShift, delays: delays, reverb: reverb)
+            subject = AudioBox(file: audioFile, engine: engine, player: player, pitchShift: pitchShift, delays: delays, reverb: reverb, eq: eq)
         }
 
         it("stores off the values it is initialized with in properties") {
@@ -39,6 +41,7 @@ class AudioBoxSpec: QuickSpec {
             expect(subject.delays[1]).to(beIdenticalTo(delays[1]))
             expect(subject.file).to(beIdenticalTo(audioFile))
             expect(subject.reverb).to(beIdenticalTo(reverb))
+            expect(subject.eq).to(beIdenticalTo(eq))
         }
 
         describe(".start") {
@@ -89,22 +92,23 @@ class AudioBoxSpec: QuickSpec {
         describe(".play") {
             context("With delay") {
                 beforeEach {
+                    eq.globalGain = -10.0
                     for delayNode in delays {
                         delayNode.bypass = true
                     }
                 }
-                
+
                 sharedExamples("playing a song") {
                     it("schedules playing the file") {
                         expect(player.calledScheduleFile).to(beTruthy())
                         expect(player.capturedFile!).to(beIdenticalTo(audioFile))
                     }
-                    
+
                     it("plays the song") {
                         expect(player.calledPlay).to(beTruthy())
                     }
                 }
-                
+
                 context("With reverb") {
                     beforeEach {
                         reverb.wetDryMix = 0
@@ -112,38 +116,41 @@ class AudioBoxSpec: QuickSpec {
                     }
 
                     itBehavesLike("playing a song")
-                    
+
                     it("turns on delay nodes") {
                         expect(delays[0].bypass).to(beFalsy())
                         expect(delays[1].bypass).to(beFalsy())
                     }
-                    
-                    it("turns on reverb") {
+
+                    it("turns on reverb with additional gain") {
                         expect(reverb.wetDryMix).to(equal(AudioBox.reverbAmount))
+                        expect(eq.globalGain).to(equal(AudioBox.reverbGain))
                     }
                 }
-                
+
                 context("Without reverb") {
                     beforeEach {
                         reverb.wetDryMix = AudioBox.reverbAmount
                         subject.play(delay: true, reverb: false)
                     }
-                    
+
                     itBehavesLike("playing a song")
-                    
+
                     it("turns on delay nodes") {
                         expect(delays[0].bypass).to(beFalsy())
                         expect(delays[1].bypass).to(beFalsy())
                     }
-                    
-                    it("turns off reverb") {
+
+                    it("turns off reverb with no additional gain") {
                         expect(reverb.wetDryMix).to(equal(0))
+                        expect(eq.globalGain).to(equal(0))
                     }
                 }
             }
 
             context("Without delay") {
                 beforeEach {
+                    eq.globalGain = -10.0
                     for delayNode in delays {
                         delayNode.bypass = false
                     }
@@ -154,34 +161,36 @@ class AudioBoxSpec: QuickSpec {
                         reverb.wetDryMix = 0
                         subject.play(delay: false, reverb: true)
                     }
-                    
+
                     itBehavesLike("playing a song")
-                    
+
                     it("turns off delay nodes") {
                         expect(delays[0].bypass).to(beTruthy())
                         expect(delays[1].bypass).to(beTruthy())
                     }
-                    
-                    it("turns on reverb") {
+
+                    it("turns on reverb with additional gain") {
                         expect(reverb.wetDryMix).to(equal(AudioBox.reverbAmount))
+                        expect(eq.globalGain).to(equal(AudioBox.reverbGain))
                     }
                 }
-                
+
                 context("Without reverb") {
                     beforeEach {
                         reverb.wetDryMix = AudioBox.reverbAmount
                         subject.play(delay: false, reverb: false)
                     }
-                    
+
                     itBehavesLike("playing a song")
-                    
+
                     it("turns off delay nodes") {
                         expect(delays[0].bypass).to(beTruthy())
                         expect(delays[1].bypass).to(beTruthy())
                     }
-                    
-                    it("turns off reverb") {
+
+                    it("turns off reverb with no additional gain") {
                         expect(reverb.wetDryMix).to(equal(0))
+                        expect(eq.globalGain).to(equal(0))
                     }
                 }
             }

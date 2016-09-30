@@ -27,7 +27,7 @@ class PlayerSpec: QuickSpec {
             shiftTranslator = MockShiftTranslator()
             subject.shiftTranslator = shiftTranslator
 
-            audioBox = MockAudioBox(file: audioFile, engine: MockAVAudioEngine(), player: MockAVAudioPlayerNode(), pitchShift: AVAudioUnitVarispeed(), delays: [], reverb: AVAudioUnitReverb())
+            audioBox = MockAudioBox(file: audioFile, engine: MockAVAudioEngine(), player: MockAVAudioPlayerNode(), pitchShift: AVAudioUnitVarispeed(), delays: [], reverb: AVAudioUnitReverb(), eq: AVAudioUnitEQ())
         }
 
         describe(".loadSong") {
@@ -131,19 +131,19 @@ class PlayerSpec: QuickSpec {
                         beforeEach {
                             subject.play(delay: true, reverb: true)
                         }
-                        
+
                         it("plays the audio box with delay") {
                             expect(audioBox.calledPlay).to(beTruthy())
                             expect(audioBox.capturedDelay).to(beTruthy())
                             expect(audioBox.capturedReverb).to(beTruthy())
                         }
                     }
-                    
+
                     context("Without reverb") {
                         beforeEach {
                             subject.play(delay: true, reverb: false)
                         }
-                        
+
                         it("plays the audio box with delay") {
                             expect(audioBox.calledPlay).to(beTruthy())
                             expect(audioBox.capturedDelay).to(beTruthy())
@@ -157,19 +157,19 @@ class PlayerSpec: QuickSpec {
                         beforeEach {
                             subject.play(delay: false, reverb: true)
                         }
-                        
+
                         it("plays the audio box with delay") {
                             expect(audioBox.calledPlay).to(beTruthy())
                             expect(audioBox.capturedDelay).to(beFalsy())
                             expect(audioBox.capturedReverb).to(beTruthy())
                         }
                     }
-                    
+
                     context("Without reverb") {
                         beforeEach {
                             subject.play(delay: false, reverb: false)
                         }
-                        
+
                         it("plays the audio box with delay") {
                             expect(audioBox.calledPlay).to(beTruthy())
                             expect(audioBox.capturedDelay).to(beFalsy())
