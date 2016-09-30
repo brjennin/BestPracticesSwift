@@ -20,7 +20,7 @@ class HomeViewControllerSpec: QuickSpec {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
 
             listViewController = MockListViewController()
-            try! storyboard.bindViewController(listViewController, toIdentifier: "ListViewController")
+            try! storyboard.bind(viewController: listViewController, toIdentifier: "ListViewController")
 
             subject = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
 

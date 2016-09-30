@@ -12,7 +12,7 @@ target 'BestPractices' do
     pod 'Quick', '~> 0.10'
     pod 'Nimble', '~> 5.0'
     pod 'Mockingjay', branch: 'kylef/swift-3.0', git: 'git@github.com:kylef/Mockingjay.git'
-    pod 'Fleet', branch: 'swift3', git: 'git@github.com:brjennin/Fleet.git'
+    pod 'Fleet', '~> 1.0'
   end
 end
 
