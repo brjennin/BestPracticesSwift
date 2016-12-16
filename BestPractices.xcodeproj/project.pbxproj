@@ -493,8 +493,8 @@
 				AECA4A401D8311EF00EBB222 /* Sources */,
 				AECA4A411D8311EF00EBB222 /* Frameworks */,
 				AECA4A421D8311EF00EBB222 /* Resources */,
-				EDF4146498AE8482D8A809DD /* 📦 Embed Pods Frameworks */,
-				D38BEA74069E36DB7411FE7F /* 📦 Copy Pods Resources */,
+				EDF4146498AE8482D8A809DD /* [CP] Embed Pods Frameworks */,
+				D38BEA74069E36DB7411FE7F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -513,8 +513,8 @@
 				AECA4A541D8311EF00EBB222 /* Sources */,
 				AECA4A551D8311EF00EBB222 /* Frameworks */,
 				AECA4A561D8311EF00EBB222 /* Resources */,
-				23ED64B48A27F053EA3CB340 /* 📦 Embed Pods Frameworks */,
-				A7723798C9D796ED062C57C0 /* 📦 Copy Pods Resources */,
+				23ED64B48A27F053EA3CB340 /* [CP] Embed Pods Frameworks */,
+				A7723798C9D796ED062C57C0 /* [CP] Copy Pods Resources */,
 				AE304A6A1D831986001F1D0C /* ShellScript */,
 			);
 			buildRules = (
@@ -611,14 +611,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		23ED64B48A27F053EA3CB340 /* 📦 Embed Pods Frameworks */ = {
+		23ED64B48A27F053EA3CB340 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -626,14 +626,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BestPracticesTests/Pods-BestPracticesTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A7723798C9D796ED062C57C0 /* 📦 Copy Pods Resources */ = {
+		A7723798C9D796ED062C57C0 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -669,14 +669,14 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Fleet/Fleet/Script/copy_storyboard_info_files.sh\"";
 		};
-		D38BEA74069E36DB7411FE7F /* 📦 Copy Pods Resources */ = {
+		D38BEA74069E36DB7411FE7F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -684,14 +684,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BestPractices/Pods-BestPractices-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EDF4146498AE8482D8A809DD /* 📦 Embed Pods Frameworks */ = {
+		EDF4146498AE8482D8A809DD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -917,7 +917,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FB5D658DE51C8BC1AD7FB586 /* Pods-BestPractices.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BestPractices/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -931,7 +931,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6A276F38FC1726A8C7E937B7 /* Pods-BestPractices.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = BestPractices/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -945,7 +945,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A68A29476DAABD3F71D1B900 /* Pods-BestPracticesTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Brian Jennings (SHM8QM64Z6)";
@@ -964,7 +964,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0AC07C5D20B35015417D7DA0 /* Pods-BestPracticesTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Brian Jennings (SHM8QM64Z6)";
