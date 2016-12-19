@@ -1,4 +1,5 @@
 import UIKit
+import MediaPlayer
 
 class HomeViewController: UIViewController {
 
@@ -27,6 +28,13 @@ class HomeViewController: UIViewController {
                 self?.soundWasSelected(sound: soundGroups.first!.sounds.first!)
             }
         }
+
+//        let sharedCenter = MPRemoteCommandCenter.shared()
+//        sharedCenter.playCommand.isEnabled = true
+//        sharedCenter.playCommand.addTarget { [weak self] event -> MPRemoteCommandHandlerStatus in
+//            self?.play()
+//            return MPRemoteCommandHandlerStatus.success
+//        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -47,6 +55,10 @@ class HomeViewController: UIViewController {
     }
 
     @IBAction func didTapPlay(_ sender: UIButton) {
+        self.play()
+    }
+
+    fileprivate func play() {
         self.player.play(delay: delaySwitch.isOn, reverb: reverbNation.isOn)
     }
 }
@@ -65,7 +77,12 @@ extension HomeViewController: SoundSelectionDelegate {
             }
         }, imageCompletion: { [weak self] soundWithImage in
             if let imagePath = soundWithImage.imageLocalPath {
-                self?.albumArtImageView.image = UIImage(contentsOfFile: imagePath)
+                let image = UIImage(contentsOfFile: imagePath)
+                if let image = image {
+                    self?.albumArtImageView.image = image
+                    //                    let artwork = MPMediaItemArtwork(image: image)
+                    //                    MPNowPlayingInfoCenter.default().nowPlayingInfo = [MPMediaItemPropertyTitle: song.name, MPMediaItemPropertyArtist: song.artist, MPMediaItemPropertyArtwork: artwork]
+                }
             }
         })
     }
