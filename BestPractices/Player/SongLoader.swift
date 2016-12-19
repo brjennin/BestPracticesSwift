@@ -5,13 +5,13 @@ protocol SongLoaderProtocol: class {
 class SongLoader: SongLoaderProtocol {
 
     var httpClient: HTTPClientProtocol! = HTTPClient()
-    var songPersistence: SongPersistenceProtocol! = SongPersistence()
+    var soundPersistence: SoundPersistenceProtocol! = SoundPersistence()
     var diskMaster: DiskMasterProtocol! = DiskMaster()
 
     func loadSongAssets(song: Song, songCompletion: @escaping (Song) -> (), imageCompletion: @escaping (Song) -> ()) {
-        fetchAssetAtPath(song: song, folderName: "songs", path: song.songLocalPath, downloadURL: song.url, completion: songCompletion, updateFunction: self.songPersistence.updateLocalSongUrl)
+        fetchAssetAtPath(song: song, folderName: "songs", path: song.songLocalPath, downloadURL: song.url, completion: songCompletion, updateFunction: self.soundPersistence.updateLocalSongUrl)
 
-        fetchAssetAtPath(song: song, folderName: "images", path: song.imageLocalPath, downloadURL: song.albumArt, completion: imageCompletion, updateFunction: self.songPersistence.updateLocalImageUrl)
+        fetchAssetAtPath(song: song, folderName: "images", path: song.imageLocalPath, downloadURL: song.albumArt, completion: imageCompletion, updateFunction: self.soundPersistence.updateLocalImageUrl)
     }
 
     fileprivate func fetchAssetAtPath(song: Song, folderName: String, path: String?, downloadURL: String, completion: @escaping (Song) -> (), updateFunction: @escaping (Song, String) -> ()) {

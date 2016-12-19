@@ -7,17 +7,17 @@ protocol SoundCacheProtocol: class {
 class SoundCache: SoundCacheProtocol {
 
     var soundService: SoundServiceProtocol! = SoundService()
-    var songPersistence: SongPersistenceProtocol! = SongPersistence()
+    var soundPersistence: SoundPersistenceProtocol! = SoundPersistence()
 
     func getSongs(completion: @escaping ([Song]) -> ()) {
-        let persistedSongs = self.songPersistence.retrieve()
+        let persistedSongs = self.soundPersistence.retrieve()
         if let songs = persistedSongs {
             completion(songs)
         } else {
             self.soundService.getSongs { [weak self] songs, error in
                 var songsResult = [Song]()
                 if let songs = songs {
-                    self?.songPersistence.replace(songs: songs)
+                    self?.soundPersistence.replace(songs: songs)
                     songsResult = songs
                 }
 
@@ -30,10 +30,10 @@ class SoundCache: SoundCacheProtocol {
         self.soundService.getSongs { [weak self] songs, error in
             var songsResult = [Song]()
             if let songs = songs {
-                self?.songPersistence.replace(songs: songs)
+                self?.soundPersistence.replace(songs: songs)
                 songsResult = songs
             } else {
-                let persistedSongs = self?.songPersistence.retrieve()
+                let persistedSongs = self?.soundPersistence.retrieve()
                 if let persistedSongs = persistedSongs {
                     songsResult = persistedSongs
                 }

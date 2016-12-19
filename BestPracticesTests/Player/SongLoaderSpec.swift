@@ -7,7 +7,7 @@ class SongLoaderSpec: QuickSpec {
 
         var subject: SongLoader!
         var httpClient: MockHTTPClient!
-        var songPersistence: MockSongPersistence!
+        var soundPersistence: MockSoundPersistence!
         var diskMaster: MockDiskMaster!
 
         beforeEach {
@@ -16,8 +16,8 @@ class SongLoaderSpec: QuickSpec {
             httpClient = MockHTTPClient()
             subject.httpClient = httpClient
 
-            songPersistence = MockSongPersistence()
-            subject.songPersistence = songPersistence
+            soundPersistence = MockSoundPersistence()
+            subject.soundPersistence = soundPersistence
 
             diskMaster = MockDiskMaster()
             subject.diskMaster = diskMaster
@@ -63,9 +63,9 @@ class SongLoaderSpec: QuickSpec {
                         }
 
                         it("persists the new song url") {
-                            expect(songPersistence.calledUpdateSongUrl).to(beTruthy())
-                            expect(songPersistence.capturedUpdateSongUrlSong!.identifier).to(equal(384))
-                            expect(songPersistence.capturedUpdateSongUrlUrl!).to(equal(sampleFileURL.path))
+                            expect(soundPersistence.calledUpdateSongUrl).to(beTruthy())
+                            expect(soundPersistence.capturedUpdateSongUrlSong!.identifier).to(equal(384))
+                            expect(soundPersistence.capturedUpdateSongUrlUrl!).to(equal(sampleFileURL.path))
                         }
                     }
 
@@ -80,7 +80,7 @@ class SongLoaderSpec: QuickSpec {
                         }
 
                         it("does not persist the new song url") {
-                            expect(songPersistence.calledUpdateSongUrl).to(beFalsy())
+                            expect(soundPersistence.calledUpdateSongUrl).to(beFalsy())
                         }
                     }
                 }
@@ -107,9 +107,9 @@ class SongLoaderSpec: QuickSpec {
                         }
 
                         it("persists the new song url") {
-                            expect(songPersistence.calledUpdateImageUrl).to(beTruthy())
-                            expect(songPersistence.capturedUpdateImageUrlSong!.identifier).to(equal(384))
-                            expect(songPersistence.capturedUpdateImageUrlUrl!).to(equal(sampleFileURL.path))
+                            expect(soundPersistence.calledUpdateImageUrl).to(beTruthy())
+                            expect(soundPersistence.capturedUpdateImageUrlSong!.identifier).to(equal(384))
+                            expect(soundPersistence.capturedUpdateImageUrlUrl!).to(equal(sampleFileURL.path))
                         }
                     }
 
@@ -124,7 +124,7 @@ class SongLoaderSpec: QuickSpec {
                         }
 
                         it("does not persist the new image url") {
-                            expect(songPersistence.calledUpdateImageUrl).to(beFalsy())
+                            expect(soundPersistence.calledUpdateImageUrl).to(beFalsy())
                         }
                     }
                 }
@@ -142,7 +142,7 @@ class SongLoaderSpec: QuickSpec {
                 }
 
                 it("does not persist the image url") {
-                    expect(songPersistence.calledUpdateImageUrl).to(beFalsy())
+                    expect(soundPersistence.calledUpdateImageUrl).to(beFalsy())
                 }
             })
 
@@ -158,7 +158,7 @@ class SongLoaderSpec: QuickSpec {
                 }
 
                 it("does not persist the song url") {
-                    expect(songPersistence.calledUpdateSongUrl).to(beFalsy())
+                    expect(soundPersistence.calledUpdateSongUrl).to(beFalsy())
                 }
             })
 

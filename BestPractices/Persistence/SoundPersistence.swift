@@ -1,6 +1,6 @@
 import RealmSwift
 
-protocol SongPersistenceProtocol: class {
+protocol SoundPersistenceProtocol: class {
     func replace(songs: [Song])
 
     func retrieve() -> [Song]?
@@ -10,7 +10,7 @@ protocol SongPersistenceProtocol: class {
     func updateLocalImageUrl(song: Song, url: String)
 }
 
-class SongPersistence: SongPersistenceProtocol {
+class SoundPersistence: SoundPersistenceProtocol {
 
     var realm: Realm!
     var diskMaster: DiskMasterProtocol! = DiskMaster()

@@ -3,16 +3,16 @@ import Nimble
 import RealmSwift
 @testable import BestPractices
 
-class SongPersistenceSpec: QuickSpec {
+class SoundPersistenceSpec: QuickSpec {
 
     override func spec() {
 
-        var subject: SongPersistence!
+        var subject: SoundPersistence!
         var diskMaster: MockDiskMaster!
         let realm = try! Realm()
         
         beforeEach {
-            subject = SongPersistence()
+            subject = SoundPersistence()
             
             diskMaster = MockDiskMaster()
             subject.diskMaster = diskMaster            

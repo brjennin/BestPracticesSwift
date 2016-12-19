@@ -1,6 +1,6 @@
 @testable import BestPractices
 
-class MockSongPersistence: SongPersistenceProtocol {
+class MockSoundPersistence: SoundPersistenceProtocol {
     
     var calledReplace = false
     var capturedReplaceSongs: [Song]?
