@@ -1,7 +1,7 @@
 import SwiftyJSON
 @testable import BestPractices
 
-class MockSongListDeserializer: SongListDeserializerProtocol {
+class MockSoundListDeserializer: SoundListDeserializerProtocol {
     var calledDeserialize = false
     var capturedJSON: JSON?
     var returnValueForDeserialize: [Song]?

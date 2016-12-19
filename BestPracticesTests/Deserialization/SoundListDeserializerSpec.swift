@@ -3,13 +3,13 @@ import Nimble
 import SwiftyJSON
 @testable import BestPractices
 
-class SongListDeserializerSpec: QuickSpec {
+class SoundListDeserializerSpec: QuickSpec {
     override func spec() {
 
-        var subject: SongListDeserializer!
+        var subject: SoundListDeserializer!
 
         beforeEach {
-            subject = SongListDeserializer()
+            subject = SoundListDeserializer()
         }
 
         describe(".deserialize") {

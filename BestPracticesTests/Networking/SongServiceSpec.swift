@@ -9,7 +9,7 @@ class SongServiceSpec: QuickSpec {
         var subject: SongService!
         var requestProvider: MockRequestProvider!
         var httpClient: MockHTTPClient!
-        var songListDeserializer: MockSongListDeserializer!
+        var soundListDeserializer: MockSoundListDeserializer!
 
         beforeEach {
             subject = SongService()
@@ -20,8 +20,8 @@ class SongServiceSpec: QuickSpec {
             httpClient = MockHTTPClient()
             subject.httpClient = httpClient
 
-            songListDeserializer = MockSongListDeserializer()
-            subject.songListDeserializer = songListDeserializer
+            soundListDeserializer = MockSoundListDeserializer()
+            subject.soundListDeserializer = soundListDeserializer
         }
 
         describe(".getSongs") {
@@ -49,7 +49,7 @@ class SongServiceSpec: QuickSpec {
                     var error: NSError!
 
                     beforeEach {
-                        songListDeserializer.returnValueForDeserialize = [
+                        soundListDeserializer.returnValueForDeserialize = [
                             Song(value: ["identifier": 123]),
                             Song(value: ["identifier": 456])
                         ]
@@ -60,8 +60,8 @@ class SongServiceSpec: QuickSpec {
                     }
 
                     it("calls the deserializer") {
-                        expect(songListDeserializer.calledDeserialize).to(beTruthy())
-                        expect(songListDeserializer.capturedJSON!).to(equal(json))
+                        expect(soundListDeserializer.calledDeserialize).to(beTruthy())
+                        expect(soundListDeserializer.capturedJSON!).to(equal(json))
                     }
 
                     it("calls the completion with song objects from the deserializer") {
@@ -76,14 +76,14 @@ class SongServiceSpec: QuickSpec {
 
                 context("When there are no songs") {
                     beforeEach {
-                        songListDeserializer.returnValueForDeserialize = nil
+                        soundListDeserializer.returnValueForDeserialize = nil
 
                         httpClient.capturedJSONCompletion!(nil, nil)
                     }
 
                     it("calls the deserializer") {
-                        expect(songListDeserializer.calledDeserialize).to(beTruthy())
-                        expect(songListDeserializer.capturedJSON).to(beNil())
+                        expect(soundListDeserializer.calledDeserialize).to(beTruthy())
+                        expect(soundListDeserializer.capturedJSON).to(beNil())
                     }
 
                     it("doesn't have any returned songs") {

@@ -1,10 +1,10 @@
 import SwiftyJSON
 
-protocol SongListDeserializerProtocol: class {
+protocol SoundListDeserializerProtocol: class {
     func deserialize(json: JSON?) -> [Song]?
 }
 
-class SongListDeserializer: SongListDeserializerProtocol {
+class SoundListDeserializer: SoundListDeserializerProtocol {
     func deserialize(json: JSON?) -> [Song]? {
         var songs: [Song]?
 
