@@ -1,6 +1,6 @@
 @testable import BestPractices
 
-class MockSongCache: SongCacheProtocol {
+class MockSoundCache: SoundCacheProtocol {
     
     var calledGetSongs = false
     var capturedGetSongsCompletion: (([Song]) -> ())?

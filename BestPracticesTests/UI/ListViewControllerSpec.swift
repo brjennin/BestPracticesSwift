@@ -9,7 +9,7 @@ class ListViewControllerSpec: QuickSpec {
         var subject: ListViewController!
         var dispatcher: MockDispatcher!
         var songSelectionDelegate: MockSongSelectionDelegate!
-        var songCache: MockSongCache!
+        var soundCache: MockSoundCache!
 
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -21,8 +21,8 @@ class ListViewControllerSpec: QuickSpec {
             songSelectionDelegate = MockSongSelectionDelegate()
             subject.songSelectionDelegate = songSelectionDelegate
 
-            songCache = MockSongCache()
-            subject.songCache = songCache
+            soundCache = MockSoundCache()
+            subject.soundCache = soundCache
         }
 
         sharedExamples("reloading songs") {
@@ -83,7 +83,7 @@ class ListViewControllerSpec: QuickSpec {
             }
 
             it("gets the songs from the cache") {
-                expect(songCache.calledGetSongs).to(beTruthy())
+                expect(soundCache.calledGetSongs).to(beTruthy())
             }
 
             it("sets the title") {
@@ -123,7 +123,7 @@ class ListViewControllerSpec: QuickSpec {
 
             describe("When the cache resolves with songs") {
                 beforeEach {
-                    songCache.capturedGetSongsCompletion!(songs)
+                    soundCache.capturedGetSongsCompletion!(songs)
                 }
 
                 itBehavesLike("reloading songs")
@@ -136,12 +136,12 @@ class ListViewControllerSpec: QuickSpec {
                 }
 
                 it("gets the songs from the cache and refreashes the cache") {
-                    expect(songCache.calledGetSongsAndRefreshCache).to(beTruthy())
+                    expect(soundCache.calledGetSongsAndRefreshCache).to(beTruthy())
                 }
 
                 describe("When the cache resolves with songs") {
                     beforeEach {
-                        songCache.capturedGetSongsAndRefreshCacheCompletion!(songs)
+                        soundCache.capturedGetSongsAndRefreshCacheCompletion!(songs)
                     }
 
                     itBehavesLike("reloading songs")

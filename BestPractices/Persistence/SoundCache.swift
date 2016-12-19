@@ -1,10 +1,10 @@
-protocol SongCacheProtocol: class {
+protocol SoundCacheProtocol: class {
     func getSongs(completion: @escaping ([Song]) -> ())
 
     func getSongsAndRefreshCache(completion: @escaping ([Song]) -> ())
 }
 
-class SongCache: SongCacheProtocol {
+class SoundCache: SoundCacheProtocol {
 
     var soundService: SoundServiceProtocol! = SoundService()
     var songPersistence: SongPersistenceProtocol! = SongPersistence()

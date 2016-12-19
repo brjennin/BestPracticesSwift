@@ -11,7 +11,7 @@ class HomeViewControllerSpec: QuickSpec {
         var listViewController: ListViewController!
         var player: MockPlayer!
         var songLoader: MockSongLoader!
-        var songCache: MockSongCache!
+        var soundCache: MockSoundCache!
 
         let bundle = Bundle(for: type(of: self))
         let imagePath = bundle.path(forResource: "hall_and_oates_cover", ofType: "jpeg")!
@@ -30,8 +30,8 @@ class HomeViewControllerSpec: QuickSpec {
             songLoader = MockSongLoader()
             subject.songLoader = songLoader
 
-            songCache = MockSongCache()
-            subject.songCache = songCache
+            soundCache = MockSoundCache()
+            subject.soundCache = soundCache
 
             navigationController = UINavigationController(rootViewController: subject)
         }
@@ -111,7 +111,7 @@ class HomeViewControllerSpec: QuickSpec {
             }
 
             it("gets the songs from the cache") {
-                expect(songCache.calledGetSongs).to(beTruthy())
+                expect(soundCache.calledGetSongs).to(beTruthy())
             }
 
             it("does not load the song") {
@@ -136,7 +136,7 @@ class HomeViewControllerSpec: QuickSpec {
                     let songs = [songOne, songTwo]
 
                     beforeEach {
-                        songCache.capturedGetSongsCompletion!(songs)
+                        soundCache.capturedGetSongsCompletion!(songs)
                     }
 
                     it("calls the song loader") {
@@ -153,7 +153,7 @@ class HomeViewControllerSpec: QuickSpec {
 
                 context("When there are no songs") {
                     beforeEach {
-                        songCache.capturedGetSongsCompletion!([])
+                        soundCache.capturedGetSongsCompletion!([])
                     }
 
                     it("does not load a song") {

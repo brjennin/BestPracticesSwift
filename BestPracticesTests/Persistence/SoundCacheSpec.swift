@@ -2,18 +2,18 @@ import Quick
 import Nimble
 @testable import BestPractices
 
-class SongCacheSpec: QuickSpec {
+class SoundCacheSpec: QuickSpec {
 
     override func spec() {
 
-        var subject: SongCache!
+        var subject: SoundCache!
         var soundService: MockSoundService!
         var songPersistence: MockSongPersistence!
 
         var result: [Song]!
 
         beforeEach {
-            subject = SongCache()
+            subject = SoundCache()
 
             soundService = MockSoundService()
             subject.soundService = soundService

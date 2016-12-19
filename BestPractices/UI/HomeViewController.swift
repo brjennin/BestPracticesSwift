@@ -12,14 +12,14 @@ class HomeViewController: UIViewController {
 
     var player: PlayerProtocol! = Player()
     var songLoader: SongLoaderProtocol! = SongLoader()
-    var songCache: SongCacheProtocol! = SongCache()
+    var soundCache: SoundCacheProtocol! = SoundCache()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = "YACHTY"
         self.currentSongLabel.text = ""
-        songCache.getSongs { [weak self] songs in
+        soundCache.getSongs { [weak self] songs in
             if songs.count > 0 {
                 self?.songWasSelected(song: songs.first!)
             }

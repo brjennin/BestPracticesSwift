@@ -3,7 +3,7 @@ import UIKit
 class ListViewController: UITableViewController {
 
     var dispatcher: DispatcherProtocol! = Dispatcher()
-    var songCache: SongCacheProtocol! = SongCache()
+    var soundCache: SoundCacheProtocol! = SoundCache()
     weak var songSelectionDelegate: SongSelectionDelegate!
 
     var songs: [Song] = []
@@ -30,7 +30,7 @@ class ListViewController: UITableViewController {
             }
         }
 
-        self.songCache.getSongs(completion: songsCompletion)
+        self.soundCache.getSongs(completion: songsCompletion)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -49,6 +49,6 @@ class ListViewController: UITableViewController {
     }
 
     func refresh(refreshControl: UIRefreshControl) {
-        self.songCache.getSongsAndRefreshCache(completion: songsCompletion)
+        self.soundCache.getSongsAndRefreshCache(completion: songsCompletion)
     }
 }
