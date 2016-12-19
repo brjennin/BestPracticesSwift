@@ -7,7 +7,7 @@ class SongCacheSpec: QuickSpec {
     override func spec() {
 
         var subject: SongCache!
-        var songService: MockSongService!
+        var soundService: MockSoundService!
         var songPersistence: MockSongPersistence!
 
         var result: [Song]!
@@ -15,8 +15,8 @@ class SongCacheSpec: QuickSpec {
         beforeEach {
             subject = SongCache()
 
-            songService = MockSongService()
-            subject.songService = songService
+            soundService = MockSoundService()
+            subject.soundService = soundService
 
             songPersistence = MockSongPersistence()
             subject.songPersistence = songPersistence
@@ -29,8 +29,8 @@ class SongCacheSpec: QuickSpec {
                 }
             }
 
-            it("calls the SongService") {
-                expect(songService.calledService).to(beTruthy())
+            it("calls the SoundService") {
+                expect(soundService.calledService).to(beTruthy())
             }
 
             describe("When the service resolves") {
@@ -44,7 +44,7 @@ class SongCacheSpec: QuickSpec {
                         songTwo = Song(value: ["identifier": 222])
                         songs = [songOne, songTwo]
 
-                        songService.completion!(songs, nil)
+                        soundService.completion!(songs, nil)
                     }
 
                     it("calls the completion with the song list") {
@@ -70,7 +70,7 @@ class SongCacheSpec: QuickSpec {
                                 Song(value: ["identifier": 821]),
                             ]
 
-                            songService.completion!(nil, error)
+                            soundService.completion!(nil, error)
                         }
 
                         it("does not replace the songs in the persistence layer") {
@@ -90,7 +90,7 @@ class SongCacheSpec: QuickSpec {
                     context("When there are no songs persisted") {
                         beforeEach {
                             songPersistence.songsThatGetRetrieved = nil
-                            songService.completion!(nil, error)
+                            soundService.completion!(nil, error)
                         }
 
                         it("does not replace the songs in the persistence layer") {
@@ -115,7 +115,7 @@ class SongCacheSpec: QuickSpec {
             var result: [Song]!
 
             beforeEach {
-                songService.reset()
+                soundService.reset()
             }
 
             context("When the persistence layer has songs") {
@@ -135,7 +135,7 @@ class SongCacheSpec: QuickSpec {
                 }
 
                 it("does not call the service") {
-                    expect(songService.calledService).to(beFalsy())
+                    expect(soundService.calledService).to(beFalsy())
                 }
 
                 it("calls the completion with the result from the persistence layer") {
@@ -157,8 +157,8 @@ class SongCacheSpec: QuickSpec {
                     expect(songPersistence.calledRetrieve).to(beTruthy())
                 }
 
-                it("calls the SongService") {
-                    expect(songService.calledService).to(beTruthy())
+                it("calls the SoundService") {
+                    expect(soundService.calledService).to(beTruthy())
                 }
 
                 describe("When the service resolves") {
@@ -172,7 +172,7 @@ class SongCacheSpec: QuickSpec {
                             songTwo = Song(value: ["identifier": 222])
                             songs = [songOne, songTwo]
 
-                            songService.completion!(songs, nil)
+                            soundService.completion!(songs, nil)
                         }
 
                         it("calls the completion with the song list") {
@@ -193,7 +193,7 @@ class SongCacheSpec: QuickSpec {
 
                         beforeEach {
                             songPersistence.songsThatGetRetrieved = nil
-                            songService.completion!(nil, error)
+                            soundService.completion!(nil, error)
                         }
 
                         it("does not replace the songs in the persistence layer") {

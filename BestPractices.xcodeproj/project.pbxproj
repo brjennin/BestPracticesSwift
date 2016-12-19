@@ -46,13 +46,13 @@
 		AE319F551D9DB9D900A65FB9 /* AudioBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F541D9DB9D900A65FB9 /* AudioBox.swift */; };
 		AE319F571D9DBAE600A65FB9 /* AudioBoxSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F561D9DBAE600A65FB9 /* AudioBoxSpec.swift */; };
 		AE319F591D9DBE5B00A65FB9 /* MockAudioBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE319F581D9DBE5B00A65FB9 /* MockAudioBox.swift */; };
-		AEAACF061D8A0B6B007177CF /* MockSongService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF051D8A0B6B007177CF /* MockSongService.swift */; };
+		AEAACF061D8A0B6B007177CF /* MockSoundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF051D8A0B6B007177CF /* MockSoundService.swift */; };
 		AEAACF081D8A0B89007177CF /* MockDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF071D8A0B89007177CF /* MockDispatcher.swift */; };
 		AEAACF0A1D8A0BA3007177CF /* MockSongSelectionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF091D8A0BA3007177CF /* MockSongSelectionDelegate.swift */; };
 		AEAACF0C1D8A10AE007177CF /* MockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF0B1D8A10AE007177CF /* MockListViewController.swift */; };
 		AEAACF111D8B023F007177CF /* DispatcherSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF101D8B023F007177CF /* DispatcherSpec.swift */; };
 		AEAACF131D8B033C007177CF /* MockOperationQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF121D8B033C007177CF /* MockOperationQueue.swift */; };
-		AEAACF161D8B0697007177CF /* SongServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF151D8B0697007177CF /* SongServiceSpec.swift */; };
+		AEAACF161D8B0697007177CF /* SoundServiceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF151D8B0697007177CF /* SoundServiceSpec.swift */; };
 		AEAACF1E1D8B1161007177CF /* MockRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF1D1D8B1161007177CF /* MockRequestProvider.swift */; };
 		AEAACF221D8B11E2007177CF /* HTTPRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF211D8B11E2007177CF /* HTTPRequest.swift */; };
 		AEAACF241D8B1277007177CF /* RequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEAACF231D8B1277007177CF /* RequestProvider.swift */; };
@@ -79,7 +79,7 @@
 		DE99C1335A796E593C63906B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE99CC9A954DB67DE294D516 /* Main.storyboard */; };
 		DE99C15018384EC0FA4D377B /* SongTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99CC4F898A2362F204A72A /* SongTableViewCell.swift */; };
 		DE99C16832E147A8C83CC18E /* HomeViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99C828047E9E250097ADBA /* HomeViewControllerSpec.swift */; };
-		DE99C1B1FCC8BB442521DA28 /* SongService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99CC904ED4FA75FBF3CAB0 /* SongService.swift */; };
+		DE99C1B1FCC8BB442521DA28 /* SoundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99CC904ED4FA75FBF3CAB0 /* SoundService.swift */; };
 		DE99C1E47D042B0C3DCE0A23 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE99C0DAE7295CBE17D7A118 /* LaunchScreen.storyboard */; };
 		DE99C358C42FCD188D5ECBC4 /* ListViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99C5A73B9BE85B8658A01F /* ListViewControllerSpec.swift */; };
 		DE99C6A10D742ACFD3D52FA5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE99CA91A46C3662361D8EB2 /* HomeViewController.swift */; };
@@ -141,13 +141,13 @@
 		AE319F541D9DB9D900A65FB9 /* AudioBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioBox.swift; sourceTree = "<group>"; };
 		AE319F561D9DBAE600A65FB9 /* AudioBoxSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioBoxSpec.swift; sourceTree = "<group>"; };
 		AE319F581D9DBE5B00A65FB9 /* MockAudioBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockAudioBox.swift; sourceTree = "<group>"; };
-		AEAACF051D8A0B6B007177CF /* MockSongService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSongService.swift; sourceTree = "<group>"; };
+		AEAACF051D8A0B6B007177CF /* MockSoundService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSoundService.swift; sourceTree = "<group>"; };
 		AEAACF071D8A0B89007177CF /* MockDispatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDispatcher.swift; sourceTree = "<group>"; };
 		AEAACF091D8A0BA3007177CF /* MockSongSelectionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSongSelectionDelegate.swift; sourceTree = "<group>"; };
 		AEAACF0B1D8A10AE007177CF /* MockListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockListViewController.swift; sourceTree = "<group>"; };
 		AEAACF101D8B023F007177CF /* DispatcherSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DispatcherSpec.swift; sourceTree = "<group>"; };
 		AEAACF121D8B033C007177CF /* MockOperationQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockOperationQueue.swift; sourceTree = "<group>"; };
-		AEAACF151D8B0697007177CF /* SongServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongServiceSpec.swift; sourceTree = "<group>"; };
+		AEAACF151D8B0697007177CF /* SoundServiceSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundServiceSpec.swift; sourceTree = "<group>"; };
 		AEAACF1D1D8B1161007177CF /* MockRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRequestProvider.swift; sourceTree = "<group>"; };
 		AEAACF211D8B11E2007177CF /* HTTPRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPRequest.swift; sourceTree = "<group>"; };
 		AEAACF231D8B1277007177CF /* RequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestProvider.swift; sourceTree = "<group>"; };
@@ -181,7 +181,7 @@
 		DE99C8ED98E4A323BF3EA4ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = BestPractices/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		DE99CA91A46C3662361D8EB2 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DE99CC4F898A2362F204A72A /* SongTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTableViewCell.swift; sourceTree = "<group>"; };
-		DE99CC904ED4FA75FBF3CAB0 /* SongService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongService.swift; sourceTree = "<group>"; };
+		DE99CC904ED4FA75FBF3CAB0 /* SoundService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundService.swift; sourceTree = "<group>"; };
 		DE99CE28388A469DF3F78E4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = BestPractices/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		FB5D658DE51C8BC1AD7FB586 /* Pods-BestPractices.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestPractices.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestPractices/Pods-BestPractices.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -276,7 +276,7 @@
 		AEAACF041D8A0B43007177CF /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				AEAACF051D8A0B6B007177CF /* MockSongService.swift */,
+				AEAACF051D8A0B6B007177CF /* MockSoundService.swift */,
 				AEAACF071D8A0B89007177CF /* MockDispatcher.swift */,
 				AEAACF091D8A0BA3007177CF /* MockSongSelectionDelegate.swift */,
 				AEAACF0B1D8A10AE007177CF /* MockListViewController.swift */,
@@ -314,7 +314,7 @@
 		AEAACF141D8B0671007177CF /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				AEAACF151D8B0697007177CF /* SongServiceSpec.swift */,
+				AEAACF151D8B0697007177CF /* SoundServiceSpec.swift */,
 				AEAACF251D8B1442007177CF /* HTTPRequestSpec.swift */,
 				AEAACF2F1D8B2586007177CF /* RequestProviderSpec.swift */,
 				AEAACF341D8B6373007177CF /* HTTPClientSpec.swift */,
@@ -454,7 +454,7 @@
 		DE99CCE1FDA328572421D3CC /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				DE99CC904ED4FA75FBF3CAB0 /* SongService.swift */,
+				DE99CC904ED4FA75FBF3CAB0 /* SoundService.swift */,
 				AEAACF211D8B11E2007177CF /* HTTPRequest.swift */,
 				AEAACF231D8B1277007177CF /* RequestProvider.swift */,
 				AEAACF2D1D8B1CC8007177CF /* HTTPClient.swift */,
@@ -729,7 +729,7 @@
 				AE1ABA9F1D99A2CE00357DA5 /* ActivityIndicator.swift in Sources */,
 				AE304A821D888212001F1D0C /* SongSelectionDelegate.swift in Sources */,
 				AE319F471D9D767900A65FB9 /* Audio.swift in Sources */,
-				DE99C1B1FCC8BB442521DA28 /* SongService.swift in Sources */,
+				DE99C1B1FCC8BB442521DA28 /* SoundService.swift in Sources */,
 				DE99C9220822A0E8F854007A /* Dispatcher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -757,7 +757,7 @@
 				AE304A7E1D885A03001F1D0C /* SongSpec.swift in Sources */,
 				AEAACF131D8B033C007177CF /* MockOperationQueue.swift in Sources */,
 				AEAACF421D8C7A9B007177CF /* RequestTranslatorSpec.swift in Sources */,
-				AEAACF161D8B0697007177CF /* SongServiceSpec.swift in Sources */,
+				AEAACF161D8B0697007177CF /* SoundServiceSpec.swift in Sources */,
 				DE99C16832E147A8C83CC18E /* HomeViewControllerSpec.swift in Sources */,
 				AEAACF0C1D8A10AE007177CF /* MockListViewController.swift in Sources */,
 				AE1ABA7E1D93059700357DA5 /* MockSongCache.swift in Sources */,
@@ -768,7 +768,7 @@
 				AE1ABA971D947E2200357DA5 /* DiskMasterSpec.swift in Sources */,
 				AEAACF351D8B6373007177CF /* HTTPClientSpec.swift in Sources */,
 				AE319F531D9DA17000A65FB9 /* ShiftTranslatorSpec.swift in Sources */,
-				AEAACF061D8A0B6B007177CF /* MockSongService.swift in Sources */,
+				AEAACF061D8A0B6B007177CF /* MockSoundService.swift in Sources */,
 				AEAACF111D8B023F007177CF /* DispatcherSpec.swift in Sources */,
 				AEC6AE1B1D92EBC900933DCC /* MockSoundListDeserializer.swift in Sources */,
 				AEC6AE211D92EE8500933DCC /* SoundListDeserializerSpec.swift in Sources */,

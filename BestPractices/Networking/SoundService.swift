@@ -1,10 +1,10 @@
 import SwiftyJSON
 
-protocol SongServiceProtocol: class {
+protocol SoundServiceProtocol: class {
     func getSongs(completion: @escaping (([Song]?, NSError?) -> ()))
 }
 
-class SongService: SongServiceProtocol {
+class SoundService: SoundServiceProtocol {
 
     var requestProvider: RequestProviderProtocol! = RequestProvider()
     var httpClient: HTTPClientProtocol! = HTTPClient()

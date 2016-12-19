@@ -6,7 +6,7 @@ protocol SongCacheProtocol: class {
 
 class SongCache: SongCacheProtocol {
 
-    var songService: SongServiceProtocol! = SongService()
+    var soundService: SoundServiceProtocol! = SoundService()
     var songPersistence: SongPersistenceProtocol! = SongPersistence()
 
     func getSongs(completion: @escaping ([Song]) -> ()) {
@@ -14,7 +14,7 @@ class SongCache: SongCacheProtocol {
         if let songs = persistedSongs {
             completion(songs)
         } else {
-            self.songService.getSongs { [weak self] songs, error in
+            self.soundService.getSongs { [weak self] songs, error in
                 var songsResult = [Song]()
                 if let songs = songs {
                     self?.songPersistence.replace(songs: songs)
@@ -27,7 +27,7 @@ class SongCache: SongCacheProtocol {
     }
 
     func getSongsAndRefreshCache(completion: @escaping ([Song]) -> ()) {
-        self.songService.getSongs { [weak self] songs, error in
+        self.soundService.getSongs { [weak self] songs, error in
             var songsResult = [Song]()
             if let songs = songs {
                 self?.songPersistence.replace(songs: songs)

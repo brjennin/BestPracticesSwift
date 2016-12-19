@@ -1,7 +1,7 @@
 import Foundation
 @testable import BestPractices
 
-class MockSongService: SongServiceProtocol {
+class MockSoundService: SoundServiceProtocol {
     var calledService = false
     var completion: (([Song]?, NSError?) -> ())?
 

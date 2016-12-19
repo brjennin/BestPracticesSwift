@@ -3,16 +3,16 @@ import Nimble
 import SwiftyJSON
 @testable import BestPractices
 
-class SongServiceSpec: QuickSpec {
+class SoundServiceSpec: QuickSpec {
     override func spec() {
 
-        var subject: SongService!
+        var subject: SoundService!
         var requestProvider: MockRequestProvider!
         var httpClient: MockHTTPClient!
         var soundListDeserializer: MockSoundListDeserializer!
 
         beforeEach {
-            subject = SongService()
+            subject = SoundService()
 
             requestProvider = MockRequestProvider()
             subject.requestProvider = requestProvider
