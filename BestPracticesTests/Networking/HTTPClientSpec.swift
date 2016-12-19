@@ -14,6 +14,8 @@ class HTTPClientSpec: QuickSpec {
         var diskMaster: MockDiskMaster!
         var activityIndicator: MockActivityIndicator!
 
+        var completionCalled: Bool!
+        
         beforeEach {
             subject = HTTPClient()
 
@@ -30,38 +32,50 @@ class HTTPClientSpec: QuickSpec {
         sharedExamples("displaying network activity") {
             it("started the activity indicator") {
                 expect(activityIndicator.calledStart).to(beTruthy())
-            }
-
-            it("stopped the activity indicator") {
                 expect(activityIndicator.calledStop).toEventually(beTruthy())
-            }
-
-            it("is not currently spinning") {
                 expect(activityIndicator.spinning).toEventually(beFalsy())
+                expect(completionCalled).toEventually(beTruthy())
             }
         }
 
         describe(".makeJsonRequest") {
-            var returnedJSON: JSON?
-            var returnedError: NSError?
-            var completionCalled: Bool!
+            var expectedJSON: JSON?
+            var expectedError: NSError?
+            
             var request: HTTPRequest!
             var completion: ((JSON?, NSError?) -> ())!
 
             beforeEach {
+                expectedJSON = nil
+                expectedError = nil
+                completionCalled = false
+                
                 completion = { json, error in
                     completionCalled = true
-                    returnedJSON = json
-                    returnedError = error
+
+                    if let expJSON = expectedJSON {
+                        expect(json).to(equal(expJSON));
+                    } else {
+                        expect(json).to(beNil());
+                    }
+                    if let expError = expectedError {
+                        expect(error).to(equal(expError));
+                    } else {
+                        expect(error).to(beNil());
+                    }
                 }
-                completionCalled = false
                 request = HTTPRequest(urlString: "urlstring", httpMethod: HTTPMethod.get, params: nil, headers: nil)
             }
 
             context("When a 200 response code") {
                 context("With JSON") {
                     beforeEach {
-                        self.stub(uri("translatedURL"), json(["key": "val"], status: 200))
+                        requestTranslator.returnValueForRequestTranslation = "translatedURL1"
+                        self.stub(uri("translatedURL1"), json(["key": "val"], status: 200))
+                        
+                        expectedJSON = JSON(["key": "val"])
+                        expectedError = nil
+                        
                         subject.makeJsonRequest(request: request, completion: completion)
                     }
 
@@ -70,22 +84,18 @@ class HTTPClientSpec: QuickSpec {
                     it("translates the request into an Alamofire request") {
                         expect(requestTranslator.calledTranslate).to(beTruthy())
                         expect(requestTranslator.capturedRequest!.urlString).to(equal("urlstring"))
-                    }
-
-                    it("returns json") {
                         expect(completionCalled).toEventually(beTruthy())
-                        expect(returnedJSON).toEventuallyNot(beNil())
-                        expect(returnedJSON).toEventually(equal(JSON(["key": "val"])))
-                    }
-
-                    it("does not send an error") {
-                        expect(returnedError).to(beNil())
                     }
                 }
 
                 context("Without JSON") {
                     beforeEach {
-                        self.stub(uri("translatedURL"), http(200))
+                        requestTranslator.returnValueForRequestTranslation = "translatedURL2"
+                        self.stub(uri("translatedURL2"), http(200))
+                        
+                        expectedJSON = nil
+                        expectedError = NSError(domain: "Alamofire.AFError", code: 4, userInfo: nil);
+                        
                         subject.makeJsonRequest(request: request, completion: completion)
                     }
 
@@ -94,22 +104,19 @@ class HTTPClientSpec: QuickSpec {
                     it("translates the request into an Alamofire request") {
                         expect(requestTranslator.calledTranslate).to(beTruthy())
                         expect(requestTranslator.capturedRequest!.urlString).to(equal("urlstring"))
-                    }
-
-                    it("returns nil for json") {
                         expect(completionCalled).toEventually(beTruthy())
-                        expect(returnedJSON).toEventually(beNil())
-                    }
-
-                    it("sends along the error") {
-                        expect(returnedError).toNot(beNil())
                     }
                 }
             }
 
             context("When a non-200 response code") {
                 beforeEach {
-                    self.stub(uri("translatedURL"), json(["key": "val"], status: 300))
+                    requestTranslator.returnValueForRequestTranslation = "translatedURL3"
+                    self.stub(uri("translatedURL3"), json(["key": "val"], status: 300))
+                    
+                    expectedJSON = nil
+                    expectedError = NSError(domain: "Alamofire.AFError", code: 3, userInfo: nil);
+                    
                     subject.makeJsonRequest(request: request, completion: completion)
                 }
 
@@ -118,22 +125,19 @@ class HTTPClientSpec: QuickSpec {
                 it("translates the request into an Alamofire request") {
                     expect(requestTranslator.calledTranslate).to(beTruthy())
                     expect(requestTranslator.capturedRequest!.urlString).to(equal("urlstring"))
-                }
-
-                it("returns nil for the json") {
                     expect(completionCalled).toEventually(beTruthy())
-                    expect(returnedJSON).toEventually(beNil())
-                }
-
-                it("returns the error") {
-                    expect(returnedError).toNot(beNil())
                 }
             }
 
             context("When there is a server error") {
                 beforeEach {
+                    requestTranslator.returnValueForRequestTranslation = "translatedURL4"
                     let error = NSError(domain: "com.error.thing", code: 500, userInfo: nil)
-                    self.stub(uri("translatedURL"), failure(error))
+                    self.stub(uri("translatedURL4"), failure(error))
+                    
+                    expectedJSON = nil
+                    expectedError = error
+                    
                     subject.makeJsonRequest(request: request, completion: completion)
                 }
 
@@ -142,15 +146,7 @@ class HTTPClientSpec: QuickSpec {
                 it("translates the request into an Alamofire request") {
                     expect(requestTranslator.calledTranslate).to(beTruthy())
                     expect(requestTranslator.capturedRequest!.urlString).to(equal("urlstring"))
-                }
-
-                it("returns nil for the json") {
                     expect(completionCalled).toEventually(beTruthy())
-                    expect(returnedJSON).toEventually(beNil())
-                }
-
-                it("returns the error") {
-                    expect(returnedError!.code).to(equal(500))
                 }
             }
         }
@@ -189,10 +185,10 @@ class HTTPClientSpec: QuickSpec {
                         })
                     }
 
-                    expect(completionCalled).toEventually(beTruthy())
                     expect(activityIndicator.calledStart).to(beTruthy())
                     expect(activityIndicator.calledStop).toEventually(beTruthy())
                     expect(activityIndicator.spinning).toEventually(beFalsy())
+                    expect(completionCalled).toEventually(beTruthy())
                 }
             }
 
@@ -211,11 +207,11 @@ class HTTPClientSpec: QuickSpec {
                             done()
                         })
                     }
-
-                    expect(completionCalled).toEventually(beTruthy())
+                    
                     expect(activityIndicator.calledStart).to(beTruthy())
                     expect(activityIndicator.calledStop).toEventually(beTruthy())
                     expect(activityIndicator.spinning).toEventually(beFalsy())
+                    expect(completionCalled).toEventually(beTruthy())
                 }
             }
 
@@ -236,10 +232,10 @@ class HTTPClientSpec: QuickSpec {
                         })
                     }
 
-                    expect(completionCalled).toEventually(beTruthy())
                     expect(activityIndicator.calledStart).to(beTruthy())
                     expect(activityIndicator.calledStop).toEventually(beTruthy())
                     expect(activityIndicator.spinning).toEventually(beFalsy())
+                    expect(completionCalled).toEventually(beTruthy())
                 }
             }
         }

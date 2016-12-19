@@ -2,7 +2,7 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'BestPractices' do
-  pod 'Alamofire', '~> 4.0'
+  pod 'Alamofire', '~> 4.2'
   pod 'SwiftyJSON', '~> 3.1'  
   pod 'RealmSwift', '~> 1.1'
 
@@ -11,8 +11,8 @@ target 'BestPractices' do
 
     pod 'Quick', '~> 0.10'
     pod 'Nimble', '~> 5.0'
-    pod 'Mockingjay', branch: 'kylef/swift-3.0', git: 'git@github.com:kylef/Mockingjay.git'
-    pod 'Fleet', '~> 1.0'
+    pod 'Mockingjay', '~> 2.0'
+    pod 'Fleet', '~> 2.0'
   end
 end
 

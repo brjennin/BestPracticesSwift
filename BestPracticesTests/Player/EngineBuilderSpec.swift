@@ -74,7 +74,9 @@ class EngineBuilderSpec: QuickSpec {
 
             it("correctly sets up the player") {
                 expect(player.outputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
-                expect(engine.outputNode.inputFormat(forBus: 0)).to(equal(audioFile.processingFormat))
+                let outputNodeInputFormat = engine.outputNode.inputFormat(forBus: 0)
+                expect(outputNodeInputFormat.channelCount).to(equal(audioFile.processingFormat.channelCount))
+                expect(outputNodeInputFormat.sampleRate).to(equal(audioFile.processingFormat.sampleRate))
             }
 
             it("does not start the engine") {

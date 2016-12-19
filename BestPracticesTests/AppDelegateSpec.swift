@@ -52,7 +52,7 @@ class AppDelegateSpec: QuickSpec {
                 expect(AVAudioSession.sharedInstance().category).to(equal(AVAudioSessionCategoryPlayback))
             }
 
-            fit("Hides unused remote media center commands") {
+            it("Hides unused remote media center commands") {
                 let sc = MPRemoteCommandCenter.shared()
                 let unused = [sc.seekForwardCommand, sc.seekForwardCommand, sc.skipBackwardCommand, sc.skipForwardCommand, sc.previousTrackCommand, sc.nextTrackCommand, sc.bookmarkCommand, sc.changePlaybackPositionCommand, sc.changePlaybackRateCommand, sc.changeRepeatModeCommand, sc.changeShuffleModeCommand, sc.dislikeCommand, sc.likeCommand, sc.pauseCommand, sc.ratingCommand, sc.togglePlayPauseCommand, sc.disableLanguageOptionCommand, sc.enableLanguageOptionCommand, sc.stopCommand]
                 for command in unused {

@@ -46,7 +46,11 @@ class HTTPClient: HTTPClientProtocol {
         
         Alamofire.download(url, to: destination).validate().response { [weak self] response in
             self?.activityIndicator.stop()
-            completion(response.destinationURL)
+            if response.error == nil {
+                completion(response.destinationURL)
+            } else {
+                completion(nil)
+            }
         }
     }
 }
