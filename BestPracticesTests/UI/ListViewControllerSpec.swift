@@ -30,13 +30,14 @@ class ListViewControllerSpec: QuickSpec {
                 expect(dispatcher.calledDispatch).to(beTruthy())
             }
 
-            it("has 2 sound table view cells correctly configured") {
-                expect(subject.tableView.visibleCells.count).to(equal(2))
-                expect(subject.tableView.visibleCells.first).to(beAKindOf(SoundTableViewCell.self))
-                expect(subject.tableView.visibleCells.last).to(beAKindOf(SoundTableViewCell.self))
-
-                let cellOne = subject.tableView.visibleCells.first as! SoundTableViewCell
-                let cellTwo = subject.tableView.visibleCells.last as! SoundTableViewCell
+            it("has 2 sound table view cells correctly configured and one refresh cell") {
+                expect(subject.tableView.visibleCells.count).to(equal(3))
+                expect(subject.tableView.visibleCells[0]).to(beAKindOf(PullToRefreshTableViewCell.self))
+                expect(subject.tableView.visibleCells[1]).to(beAKindOf(SoundTableViewCell.self))
+                expect(subject.tableView.visibleCells[2]).to(beAKindOf(SoundTableViewCell.self))
+                
+                let cellOne = subject.tableView.visibleCells[1] as! SoundTableViewCell
+                let cellTwo = subject.tableView.visibleCells[2] as! SoundTableViewCell
                 expect(cellOne.titleLabel.text).to(equal("Sound One"))
                 expect(cellTwo.titleLabel.text).to(equal("Sound Two"))
             }
@@ -47,28 +48,45 @@ class ListViewControllerSpec: QuickSpec {
 
             describe("As a UITableViewDataSource") {
                 describe(".numberOfSectionsInTableView") {
-                    it("should have 1 section") {
-                        expect(subject.numberOfSections(in: subject.tableView)).to(equal(1))
+                    it("should have 2 sections") {
+                        expect(subject.numberOfSections(in: subject.tableView)).to(equal(2))
                     }
                 }
 
                 describe(".tableView:numberOfRowsInSection:") {
-                    it("should have 2 rows in the first section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 0)).to(equal(2))
+                    it("should have 1 row in the first section") {
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 0)).to(equal(1))
+                    }
+                    
+                    it("should have 2 rows in the second section") {
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 1)).to(equal(2))
                     }
                 }
             }
 
             describe("Tapping on a cell") {
-                beforeEach {
-                    let indexPath = IndexPath(row: 0, section: 0)
-                    subject.tableView(subject.tableView, didSelectRowAt: indexPath)
+                context("In the first section") {
+                    beforeEach {
+                        let indexPath = IndexPath(row: 0, section: 0)
+                        subject.tableView(subject.tableView, didSelectRowAt: indexPath)
+                    }
+                    
+                    it("does not call the delegate") {
+                        expect(soundSelectionDelegate.calledDelegate).to(beFalsy())
+                    }
                 }
-
-                it("calls the delegate with the correct sound") {
-                    expect(soundSelectionDelegate.calledDelegate).to(beTruthy())
-                    expect(soundSelectionDelegate.capturedSound).toNot(beNil())
-                    expect(soundSelectionDelegate.capturedSound!.identifier).to(equal(123))
+                
+                context("In the second section") {
+                    beforeEach {
+                        let indexPath = IndexPath(row: 0, section: 1)
+                        subject.tableView(subject.tableView, didSelectRowAt: indexPath)
+                    }
+                    
+                    it("calls the delegate with the correct sound") {
+                        expect(soundSelectionDelegate.calledDelegate).to(beTruthy())
+                        expect(soundSelectionDelegate.capturedSound).toNot(beNil())
+                        expect(soundSelectionDelegate.capturedSound!.identifier).to(equal(123))
+                    }
                 }
             }
         }
@@ -87,7 +105,7 @@ class ListViewControllerSpec: QuickSpec {
             }
 
             it("sets the title") {
-                expect(subject.title).to(equal("YACHTY"))
+                expect(subject.title).to(equal("Choose a Sound"))
             }
 
             it("sets itself as the data source for the table view") {
@@ -106,17 +124,26 @@ class ListViewControllerSpec: QuickSpec {
             it("starts the spinner on the refresh control") {
                 expect(subject.refreshControl!.isRefreshing).to(beTruthy())
             }
+            
+            it("Sets the title for the table sections") {
+                expect(subject.tableView(subject.tableView, titleForHeaderInSection: 0)).to(beNil())
+                expect(subject.tableView(subject.tableView, titleForHeaderInSection: 1)).to(equal("Available Sounds"))
+            }
 
             describe("As a UITableViewDataSource") {
                 describe(".numberOfSectionsInTableView") {
-                    it("should have 1 section") {
-                        expect(subject.numberOfSections(in: subject.tableView)).to(equal(1))
+                    it("should have 2 sections") {
+                        expect(subject.numberOfSections(in: subject.tableView)).to(equal(2))
                     }
                 }
 
                 describe(".tableView:numberOfRowsInSection:") {
-                    it("should start with 0 rows in the first section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 0)).to(equal(0))
+                    it("should start with 1 row in the first section") {
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 0)).to(equal(1))
+                    }
+                    
+                    it("should start with 0 rows in the second section") {
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 1)).to(equal(0))
                     }
                 }
             }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		08F8128CA9ECC2978D2DABFA /* Pods_BestPracticesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EAC0E99A6C92352273C8513 /* Pods_BestPracticesTests.framework */; };
+		AE10EF761E099BD2000309F4 /* PullToRefreshTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE10EF751E099BD2000309F4 /* PullToRefreshTableViewCell.swift */; };
 		AE1ABA7E1D93059700357DA5 /* MockSoundCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA7D1D93059700357DA5 /* MockSoundCache.swift */; };
 		AE1ABA821D9305EF00357DA5 /* SoundCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA811D9305EF00357DA5 /* SoundCache.swift */; };
 		AE1ABA841D9308AA00357DA5 /* SoundCacheSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA831D9308AA00357DA5 /* SoundCacheSpec.swift */; };
@@ -103,6 +104,7 @@
 		9EAC0E99A6C92352273C8513 /* Pods_BestPracticesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestPracticesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A68A29476DAABD3F71D1B900 /* Pods-BestPracticesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestPracticesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestPracticesTests/Pods-BestPracticesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A960EF264F74121529805475 /* Pods_BestPractices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestPractices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE10EF751E099BD2000309F4 /* PullToRefreshTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullToRefreshTableViewCell.swift; sourceTree = "<group>"; };
 		AE1ABA7D1D93059700357DA5 /* MockSoundCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSoundCache.swift; sourceTree = "<group>"; };
 		AE1ABA811D9305EF00357DA5 /* SoundCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundCache.swift; sourceTree = "<group>"; };
 		AE1ABA831D9308AA00357DA5 /* SoundCacheSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundCacheSpec.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				DE99C0DAE7295CBE17D7A118 /* LaunchScreen.storyboard */,
 				DE99CC9A954DB67DE294D516 /* Main.storyboard */,
 				AE304A811D888212001F1D0C /* SoundSelectionDelegate.swift */,
+				AE10EF751E099BD2000309F4 /* PullToRefreshTableViewCell.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -716,6 +719,7 @@
 				AEAACF4F1D90B662007177CF /* Player.swift in Sources */,
 				AE319F411D9C613D00A65FB9 /* EngineBuilder.swift in Sources */,
 				AE1ABA821D9305EF00357DA5 /* SoundCache.swift in Sources */,
+				AE10EF761E099BD2000309F4 /* PullToRefreshTableViewCell.swift in Sources */,
 				DE99C15018384EC0FA4D377B /* SoundTableViewCell.swift in Sources */,
 				AEC6AE1E1D92EC1300933DCC /* SoundListDeserializer.swift in Sources */,
 				AE1ABAA91D99CF9C00357DA5 /* main.swift in Sources */,

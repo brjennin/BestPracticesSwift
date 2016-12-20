@@ -13,7 +13,7 @@ class ListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "YACHTY"
+        self.title = "Choose a Sound"
 
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: #selector(refresh(refreshControl:)), for: .valueChanged)
@@ -33,19 +33,38 @@ class ListViewController: UITableViewController {
         self.soundCache.getSounds(completion: soundsCompletion)
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.sounds.count
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
-
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 1 {
+            return "Available Sounds"
+        }
+        return nil
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? 1 : self.sounds.count
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SoundTableViewCell.cellIdentifier, for: indexPath) as! SoundTableViewCell
-        cell.configureWithSound(sound: self.sounds[(indexPath as NSIndexPath).row])
-
-        return cell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PullToRefreshTableViewCell.cellIdentifier, for: indexPath)
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: SoundTableViewCell.cellIdentifier, for: indexPath) as! SoundTableViewCell
+            cell.configureWithSound(sound: self.sounds[(indexPath as NSIndexPath).row])
+            
+            return cell
+        }
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.soundSelectionDelegate.soundWasSelected(sound: self.sounds[(indexPath as NSIndexPath).row])
+        if indexPath.section > 0 {
+            self.soundSelectionDelegate.soundWasSelected(sound: self.sounds[(indexPath as NSIndexPath).row])
+        }
     }
 
     func refresh(refreshControl: UIRefreshControl) {
