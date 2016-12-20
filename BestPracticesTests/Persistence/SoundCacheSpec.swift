@@ -10,7 +10,7 @@ class SoundCacheSpec: QuickSpec {
         var soundService: MockSoundService!
         var soundPersistence: MockSoundPersistence!
 
-        var result: [Song]!
+        var result: [Sound]!
 
         beforeEach {
             subject = SoundCache()
@@ -22,10 +22,10 @@ class SoundCacheSpec: QuickSpec {
             subject.soundPersistence = soundPersistence
         }
 
-        describe(".getSongsAndRefreshCache") {
+        describe(".getSoundsAndRefreshCache") {
             beforeEach {
-                subject.getSoundsAndRefreshCache { returnedSongs in
-                    result = returnedSongs
+                subject.getSoundsAndRefreshCache { returnedSounds in
+                    result = returnedSounds
                 }
             }
 
@@ -34,50 +34,50 @@ class SoundCacheSpec: QuickSpec {
             }
 
             describe("When the service resolves") {
-                context("When it resolves with songs") {
-                    var soundOne: Song!
-                    var soundTwo: Song!
-                    var sounds: [Song]!
+                context("When it resolves with sounds") {
+                    var soundOne: Sound!
+                    var soundTwo: Sound!
+                    var sounds: [Sound]!
 
                     beforeEach {
-                        soundOne = Song(value: ["identifier": 111])
-                        soundTwo = Song(value: ["identifier": 222])
+                        soundOne = Sound(value: ["identifier": 111])
+                        soundTwo = Sound(value: ["identifier": 222])
                         sounds = [soundOne, soundTwo]
 
                         soundService.completion!(sounds, nil)
                     }
 
-                    it("calls the completion with the song list") {
+                    it("calls the completion with the sound list") {
                         expect(result.count).to(equal(2))
                         expect(result.first!.identifier).to(equal(111))
                         expect(result.last!.identifier).to(equal(222))
                     }
 
-                    it("persists the songs") {
+                    it("persists the sounds") {
                         expect(soundPersistence.calledReplace).to(beTruthy())
                         expect(soundPersistence.capturedReplaceSounds!.first!.identifier).to(equal(111))
                         expect(soundPersistence.capturedReplaceSounds!.last!.identifier).to(equal(222))
                     }
                 }
 
-                context("When it resolves without songs") {
+                context("When it resolves without sounds") {
                     let error = NSError(domain: "com.example", code: 213, userInfo: nil)
 
-                    context("When there are songs persisted") {
+                    context("When there are sounds persisted") {
                         beforeEach {
                             soundPersistence.soundsThatGetRetrieved = [
-                                Song(value: ["identifier": 831]),
-                                Song(value: ["identifier": 821]),
+                                    Sound(value: ["identifier": 831]),
+                                    Sound(value: ["identifier": 821]),
                             ]
 
                             soundService.completion!(nil, error)
                         }
 
-                        it("does not replace the songs in the persistence layer") {
+                        it("does not replace the sounds in the persistence layer") {
                             expect(soundPersistence.calledReplace).to(beFalsy())
                         }
 
-                        it("retrieves songs from the persistence layer") {
+                        it("retrieves sounds from the persistence layer") {
                             expect(soundPersistence.calledRetrieve).to(beTruthy())
                         }
 
@@ -87,17 +87,17 @@ class SoundCacheSpec: QuickSpec {
                         }
                     }
 
-                    context("When there are no songs persisted") {
+                    context("When there are no sounds persisted") {
                         beforeEach {
                             soundPersistence.soundsThatGetRetrieved = nil
                             soundService.completion!(nil, error)
                         }
 
-                        it("does not replace the songs in the persistence layer") {
+                        it("does not replace the sounds in the persistence layer") {
                             expect(soundPersistence.calledReplace).to(beFalsy())
                         }
 
-                        it("retrieves songs from the persistence layer") {
+                        it("retrieves sounds from the persistence layer") {
                             expect(soundPersistence.calledRetrieve).to(beTruthy())
                         }
 
@@ -111,26 +111,26 @@ class SoundCacheSpec: QuickSpec {
 
         }
 
-        describe(".getSongs") {
-            var result: [Song]!
+        describe(".getSounds") {
+            var result: [Sound]!
 
             beforeEach {
                 soundService.reset()
             }
 
-            context("When the persistence layer has songs") {
+            context("When the persistence layer has sounds") {
                 beforeEach {
                     soundPersistence.soundsThatGetRetrieved = [
-                        Song(value: ["identifier": 831]),
-                        Song(value: ["identifier": 821]),
+                            Sound(value: ["identifier": 831]),
+                            Sound(value: ["identifier": 821]),
                     ]
 
-                    subject.getSounds { returnedSongs in
-                        result = returnedSongs
+                    subject.getSounds { returnedSounds in
+                        result = returnedSounds
                     }
                 }
 
-                it("retrieves songs from the persistence layer") {
+                it("retrieves sounds from the persistence layer") {
                     expect(soundPersistence.calledRetrieve).to(beTruthy())
                 }
 
@@ -144,16 +144,16 @@ class SoundCacheSpec: QuickSpec {
                 }
             }
 
-            context("When the persistence layer has no songs") {
+            context("When the persistence layer has no sounds") {
                 beforeEach {
                     soundPersistence.soundsThatGetRetrieved = nil
 
-                    subject.getSounds { returnedSongs in
-                        result = returnedSongs
+                    subject.getSounds { returnedSounds in
+                        result = returnedSounds
                     }
                 }
 
-                it("tries to retrieve songs from the persistence layer") {
+                it("tries to retrieve sounds from the persistence layer") {
                     expect(soundPersistence.calledRetrieve).to(beTruthy())
                 }
 
@@ -162,33 +162,33 @@ class SoundCacheSpec: QuickSpec {
                 }
 
                 describe("When the service resolves") {
-                    context("When it resolves with songs") {
-                        var songOne: Song!
-                        var songTwo: Song!
-                        var songs: [Song]!
+                    context("When it resolves with sounds") {
+                        var soundOne: Sound!
+                        var soundTwo: Sound!
+                        var sounds: [Sound]!
 
                         beforeEach {
-                            songOne = Song(value: ["identifier": 111])
-                            songTwo = Song(value: ["identifier": 222])
-                            songs = [songOne, songTwo]
+                            soundOne = Sound(value: ["identifier": 111])
+                            soundTwo = Sound(value: ["identifier": 222])
+                            sounds = [soundOne, soundTwo]
 
-                            soundService.completion!(songs, nil)
+                            soundService.completion!(sounds, nil)
                         }
 
-                        it("calls the completion with the song list") {
+                        it("calls the completion with the sound list") {
                             expect(result.count).to(equal(2))
                             expect(result.first!.identifier).to(equal(111))
                             expect(result.last!.identifier).to(equal(222))
                         }
 
-                        it("persists the songs") {
+                        it("persists the sounds") {
                             expect(soundPersistence.calledReplace).to(beTruthy())
                             expect(soundPersistence.capturedReplaceSounds!.first!.identifier).to(equal(111))
                             expect(soundPersistence.capturedReplaceSounds!.last!.identifier).to(equal(222))
                         }
                     }
 
-                    context("When it resolves without songs") {
+                    context("When it resolves without sounds") {
                         let error = NSError(domain: "com.example", code: 213, userInfo: nil)
 
                         beforeEach {
@@ -196,7 +196,7 @@ class SoundCacheSpec: QuickSpec {
                             soundService.completion!(nil, error)
                         }
 
-                        it("does not replace the songs in the persistence layer") {
+                        it("does not replace the sounds in the persistence layer") {
                             expect(soundPersistence.calledReplace).to(beFalsy())
                         }
 

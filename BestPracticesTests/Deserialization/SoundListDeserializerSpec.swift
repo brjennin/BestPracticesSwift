@@ -13,54 +13,54 @@ class SoundListDeserializerSpec: QuickSpec {
         }
 
         describe(".deserialize") {
-            var returnedSongs: [Song]!
+            var returnedSounds: [Sound]!
 
-            context("When there are songs to deserialize") {
+            context("When there are sounds to deserialize") {
                 beforeEach {
                     let bundle = Bundle(for: type(of: self))
-                    let path = bundle.path(forResource: "getSongsListResponse", ofType: "json")!
+                    let path = bundle.path(forResource: "getSoundsListResponse", ofType: "json")!
                     let url = URL(fileURLWithPath: path)
                     let jsonData = try! Data(contentsOf: url)
                     let json = JSON(data: jsonData)
-                    returnedSongs = subject.deserialize(json: json)
+                    returnedSounds = subject.deserialize(json: json)
                 }
 
-                it("deserializes song objects") {
-                    expect(returnedSongs.count).to(equal(2))
+                it("deserializes sound objects") {
+                    expect(returnedSounds.count).to(equal(2))
 
-                    expect(returnedSongs.first!.identifier).to(equal(1))
-                    expect(returnedSongs.first!.name).to(equal("Maneater"))
-                    expect(returnedSongs.first!.artist).to(equal("Hall & Oates"))
-                    expect(returnedSongs.first!.url).to(equal("https://p.scdn.co/mp3-preview/85538cf6e2a89e0fe2c85049cff9eece282b7151"))
-                    expect(returnedSongs.first!.albumArt).to(equal("https://i.scdn.co/image/02208eaf815fff1e5820380bbefa957f38148ea8"))
+                    expect(returnedSounds.first!.identifier).to(equal(1))
+                    expect(returnedSounds.first!.name).to(equal("Maneater"))
+                    expect(returnedSounds.first!.artist).to(equal("Hall & Oates"))
+                    expect(returnedSounds.first!.url).to(equal("https://p.scdn.co/mp3-preview/85538cf6e2a89e0fe2c85049cff9eece282b7151"))
+                    expect(returnedSounds.first!.albumArt).to(equal("https://i.scdn.co/image/02208eaf815fff1e5820380bbefa957f38148ea8"))
 
-                    expect(returnedSongs.last!.identifier).to(equal(2))
-                    expect(returnedSongs.last!.name).to(equal("Private Eyes"))
-                    expect(returnedSongs.last!.artist).to(equal("Hall & Oates"))
-                    expect(returnedSongs.last!.url).to(equal("https://p.scdn.co/mp3-preview/4a558e1144aba588135ba366ea5a705a3f653b94"))
-                    expect(returnedSongs.last!.albumArt).to(equal("https://i.scdn.co/image/7c270ba6ca0991b05079aed0460628857270e7b2"))
+                    expect(returnedSounds.last!.identifier).to(equal(2))
+                    expect(returnedSounds.last!.name).to(equal("Private Eyes"))
+                    expect(returnedSounds.last!.artist).to(equal("Hall & Oates"))
+                    expect(returnedSounds.last!.url).to(equal("https://p.scdn.co/mp3-preview/4a558e1144aba588135ba366ea5a705a3f653b94"))
+                    expect(returnedSounds.last!.albumArt).to(equal("https://i.scdn.co/image/7c270ba6ca0991b05079aed0460628857270e7b2"))
                 }
             }
 
-            context("When there are no songs") {
+            context("When there are no sounds") {
                 beforeEach {
                     let jsonData = Data(base64Encoded: "[]", options: Data.Base64DecodingOptions.ignoreUnknownCharacters)
                     let json = JSON(data: jsonData!)
-                    returnedSongs = subject.deserialize(json: json)
+                    returnedSounds = subject.deserialize(json: json)
                 }
 
                 it("deserializes an empty array") {
-                    expect(returnedSongs.count).to(equal(0))
+                    expect(returnedSounds.count).to(equal(0))
                 }
             }
 
             context("When the server errors") {
                 beforeEach {
-                    returnedSongs = subject.deserialize(json: nil)
+                    returnedSounds = subject.deserialize(json: nil)
                 }
 
                 it("returns nil") {
-                    expect(returnedSongs).to(beNil())
+                    expect(returnedSounds).to(beNil())
                 }
             }
         }

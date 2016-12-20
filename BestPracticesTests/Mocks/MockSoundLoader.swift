@@ -3,11 +3,11 @@
 class MockSoundLoader: SoundLoaderProtocol {
     
     var calledLoadSoundAssets = false
-    var capturedSound: Song?
-    var capturedSoundCompletion: ((Song) -> ())?
-    var capturedImageCompletion: ((Song) -> ())?
+    var capturedSound: Sound?
+    var capturedSoundCompletion: ((Sound) -> ())?
+    var capturedImageCompletion: ((Sound) -> ())?
     
-    func loadSoundAssets(sound: Song, soundCompletion: @escaping (Song) -> (), imageCompletion: @escaping (Song) -> ()) {
+    func loadSoundAssets(sound: Sound, soundCompletion: @escaping (Sound) -> (), imageCompletion: @escaping (Sound) -> ()) {
         calledLoadSoundAssets = true
         capturedSound = sound
         capturedSoundCompletion = soundCompletion

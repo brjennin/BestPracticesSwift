@@ -6,7 +6,7 @@ class SongTableViewCell: UITableViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     
-    func configureWithSound(sound: Song) {
+    func configureWithSound(sound: Sound) {
         self.titleLabel.text = sound.name
     }
     

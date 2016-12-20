@@ -1,17 +1,17 @@
 import SwiftyJSON
 
 protocol SoundListDeserializerProtocol: class {
-    func deserialize(json: JSON?) -> [Song]?
+    func deserialize(json: JSON?) -> [Sound]?
 }
 
 class SoundListDeserializer: SoundListDeserializerProtocol {
-    func deserialize(json: JSON?) -> [Song]? {
-        var sounds: [Song]?
+    func deserialize(json: JSON?) -> [Sound]? {
+        var sounds: [Sound]?
 
         if let json = json {
-            sounds = [Song]()
+            sounds = [Sound]()
             for (_, subJson):(String, JSON) in json {
-                let sound = Song()
+                let sound = Sound()
                 sound.identifier = subJson["id"].intValue
                 sound.name = subJson["name"].stringValue
                 sound.artist = subJson["artist"].stringValue

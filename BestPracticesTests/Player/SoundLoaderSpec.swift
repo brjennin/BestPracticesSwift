@@ -24,31 +24,31 @@ class SoundLoaderSpec: QuickSpec {
         }
 
         describe(".loadSoundAssets") {
-            var sound: Song!
+            var sound: Sound!
 
             let bundle = Bundle(for: type(of: self))
 
-            var capturedSoundFromSongCompletion: Song?
+            var capturedSoundFromSoundCompletion: Sound?
             var calledSoundCompletion = false
-            var capturedSoundFromImageCompletion: Song?
+            var capturedSoundFromImageCompletion: Sound?
             var calledImageCompletion = false
 
-            let soundCompletion: ((Song) -> ()) = { capturedSound in
+            let soundCompletion: ((Sound) -> ()) = { capturedSound in
                 calledSoundCompletion = true
-                capturedSoundFromSongCompletion = capturedSound
+                capturedSoundFromSoundCompletion = capturedSound
             }
-            let imageCompletion: ((Song) -> ()) = { capturedSound in
+            let imageCompletion: ((Sound) -> ()) = { capturedSound in
                 calledImageCompletion = true
                 capturedSoundFromImageCompletion = capturedSound
             }
 
-            sharedExamples("downloading a song", closure: {
-                it("calls the http client for the song request") {
-                    expect(httpClient.downloadUrls.first!).to(equal("songUrl"))
+            sharedExamples("downloading a sound", closure: {
+                it("calls the http client for the sound request") {
+                    expect(httpClient.downloadUrls.first!).to(equal("soundUrl"))
                     expect(httpClient.downloadFolders.first!).to(equal("audio/384/"))
                 }
 
-                describe("When the song completion resolves") {
+                describe("When the sound completion resolves") {
                     context("When there is a URL") {
                         let path = bundle.path(forResource: "maneater", ofType: "mp3")!
                         let sampleFileURL = URL(fileURLWithPath: path)
@@ -59,10 +59,10 @@ class SoundLoaderSpec: QuickSpec {
 
                         it("calls the completion callback with a local url") {
                             expect(calledSoundCompletion).to(beTruthy())
-                            expect(capturedSoundFromSongCompletion!.identifier).to(equal(384))
+                            expect(capturedSoundFromSoundCompletion!.identifier).to(equal(384))
                         }
 
-                        it("persists the new song url") {
+                        it("persists the new sound url") {
                             expect(soundPersistence.calledUpdateSoundUrl).to(beTruthy())
                             expect(soundPersistence.capturedUpdateSoundUrlSound!.identifier).to(equal(384))
                             expect(soundPersistence.capturedUpdateSoundUrlUrl!).to(equal(sampleFileURL.path))
@@ -76,10 +76,10 @@ class SoundLoaderSpec: QuickSpec {
 
                         it("calls the completion callback with a nil local url") {
                             expect(calledSoundCompletion).to(beTruthy())
-                            expect(capturedSoundFromSongCompletion!.identifier).to(equal(384))
+                            expect(capturedSoundFromSoundCompletion!.identifier).to(equal(384))
                         }
 
-                        it("does not persist the new song url") {
+                        it("does not persist the new sound url") {
                             expect(soundPersistence.calledUpdateSoundUrl).to(beFalsy())
                         }
                     }
@@ -106,7 +106,7 @@ class SoundLoaderSpec: QuickSpec {
                             expect(capturedSoundFromImageCompletion!.identifier).to(equal(384))
                         }
 
-                        it("persists the new song url") {
+                        it("persists the new sound url") {
                             expect(soundPersistence.calledUpdateImageUrl).to(beTruthy())
                             expect(soundPersistence.capturedUpdateImageUrlSound!.identifier).to(equal(384))
                             expect(soundPersistence.capturedUpdateImageUrlUrl!).to(equal(sampleFileURL.path))
@@ -146,25 +146,25 @@ class SoundLoaderSpec: QuickSpec {
                 }
             })
 
-            sharedExamples("not attempting to download a song", closure: {
-                it("does not call the http client for the song request") {
-                    expect(httpClient.downloadUrls).toNot(contain("songUrl"))
+            sharedExamples("not attempting to download a sound", closure: {
+                it("does not call the http client for the sound request") {
+                    expect(httpClient.downloadUrls).toNot(contain("soundUrl"))
                 }
 
                 it("calls the completion callback with the existing url") {
                     expect(calledSoundCompletion).to(beTruthy())
-                    expect(capturedSoundFromSongCompletion!.identifier).to(equal(384))
-                    expect(capturedSoundFromSongCompletion!.songLocalPath).to(equal("existingSong"))
+                    expect(capturedSoundFromSoundCompletion!.identifier).to(equal(384))
+                    expect(capturedSoundFromSoundCompletion!.soundLocalPath).to(equal("existingSound"))
                 }
 
-                it("does not persist the song url") {
+                it("does not persist the sound url") {
                     expect(soundPersistence.calledUpdateSoundUrl).to(beFalsy())
                 }
             })
 
-            context("When the song has no image and no sound file in the DB") {
+            context("When the sound has no image and no sound file in the DB") {
                 beforeEach {
-                    sound = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl"])
+                    sound = Sound(value: ["identifier": 384, "url": "soundUrl", "albumArt": "imageUrl"])
                     subject.loadSoundAssets(sound: sound, soundCompletion: soundCompletion, imageCompletion: imageCompletion)
                 }
 
@@ -172,17 +172,17 @@ class SoundLoaderSpec: QuickSpec {
                     expect(httpClient.downloadCallCount).to(equal(2))
                 }
 
-                itBehavesLike("downloading a song")
+                itBehavesLike("downloading a sound")
 
                 itBehavesLike("downloading an image")
             }
 
-            context("When the song has an image and no sound file in the DB") {
+            context("When the sound has an image and no sound file in the DB") {
                 context("When the file actually exists") {
                     beforeEach {
                         diskMaster.returnValueForIsMediaFilePresent = true
 
-                        sound = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "imageLocalPath": "existingImage"])
+                        sound = Sound(value: ["identifier": 384, "url": "soundUrl", "albumArt": "imageUrl", "imageLocalPath": "existingImage"])
                         subject.loadSoundAssets(sound: sound, soundCompletion: soundCompletion, imageCompletion: imageCompletion)
                     }
 
@@ -195,7 +195,7 @@ class SoundLoaderSpec: QuickSpec {
                         expect(diskMaster.capturedPathForMediaFilePresent).to(equal("existingImage"))
                     }
 
-                    itBehavesLike("downloading a song")
+                    itBehavesLike("downloading a sound")
 
                     itBehavesLike("not attempting to download an image")
                 }
@@ -204,7 +204,7 @@ class SoundLoaderSpec: QuickSpec {
                     beforeEach {
                         diskMaster.returnValueForIsMediaFilePresent = false
 
-                        sound = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "imageLocalPath": "existingImage"])
+                        sound = Sound(value: ["identifier": 384, "url": "soundUrl", "albumArt": "imageUrl", "imageLocalPath": "existingImage"])
                         subject.loadSoundAssets(sound: sound, soundCompletion: soundCompletion, imageCompletion: imageCompletion)
                     }
 
@@ -217,18 +217,18 @@ class SoundLoaderSpec: QuickSpec {
                         expect(diskMaster.capturedPathForMediaFilePresent).to(equal("existingImage"))
                     }
 
-                    itBehavesLike("downloading a song")
+                    itBehavesLike("downloading a sound")
 
                     itBehavesLike("downloading an image")
                 }
             }
 
-            context("When the song has a sound and no image file in the DB") {
+            context("When the sound has a sound and no image file in the DB") {
                 context("When the file actually exists") {
                     beforeEach {
                         diskMaster.returnValueForIsMediaFilePresent = true
 
-                        sound = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong"])
+                        sound = Sound(value: ["identifier": 384, "url": "soundUrl", "albumArt": "imageUrl", "soundLocalPath": "existingSound"])
                         subject.loadSoundAssets(sound: sound, soundCompletion: soundCompletion, imageCompletion: imageCompletion)
                     }
 
@@ -238,19 +238,19 @@ class SoundLoaderSpec: QuickSpec {
 
                     it("checks to see if the file exists") {
                         expect(diskMaster.calledIsMediaFilePresent).to(beTruthy())
-                        expect(diskMaster.capturedPathForMediaFilePresent).to(equal("existingSong"))
+                        expect(diskMaster.capturedPathForMediaFilePresent).to(equal("existingSound"))
                     }
 
                     itBehavesLike("downloading an image")
 
-                    itBehavesLike("not attempting to download a song")
+                    itBehavesLike("not attempting to download a sound")
                 }
 
                 context("When the file does not actually exist") {
                     beforeEach {
                         diskMaster.returnValueForIsMediaFilePresent = false
 
-                        sound = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong"])
+                        sound = Sound(value: ["identifier": 384, "url": "soundUrl", "albumArt": "imageUrl", "soundLocalPath": "existingSound"])
                         subject.loadSoundAssets(sound: sound, soundCompletion: soundCompletion, imageCompletion: imageCompletion)
                     }
 
@@ -260,19 +260,19 @@ class SoundLoaderSpec: QuickSpec {
 
                     it("checks to see if the file exists") {
                         expect(diskMaster.calledIsMediaFilePresent).to(beTruthy())
-                        expect(diskMaster.capturedPathForMediaFilePresent).to(equal("existingSong"))
+                        expect(diskMaster.capturedPathForMediaFilePresent).to(equal("existingSound"))
                     }
 
-                    itBehavesLike("downloading a song")
+                    itBehavesLike("downloading a sound")
 
                     itBehavesLike("downloading an image")
                 }
             }
 
-            context("When the song has a sound and image file in the DB") {
+            context("When the sound has a sound and image file in the DB") {
                 beforeEach {
                     diskMaster.returnValueForIsMediaFilePresent = true
-                    sound = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong", "imageLocalPath": "existingImage"])
+                    sound = Sound(value: ["identifier": 384, "url": "soundUrl", "albumArt": "imageUrl", "soundLocalPath": "existingSound", "imageLocalPath": "existingImage"])
                     subject.loadSoundAssets(sound: sound, soundCompletion: soundCompletion, imageCompletion: imageCompletion)
                 }
 
@@ -282,7 +282,7 @@ class SoundLoaderSpec: QuickSpec {
 
                 itBehavesLike("not attempting to download an image")
 
-                itBehavesLike("not attempting to download a song")
+                itBehavesLike("not attempting to download a sound")
             }
         }
 

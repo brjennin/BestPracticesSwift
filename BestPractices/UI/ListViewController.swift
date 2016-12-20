@@ -6,9 +6,9 @@ class ListViewController: UITableViewController {
     var soundCache: SoundCacheProtocol! = SoundCache()
     weak var soundSelectionDelegate: SoundSelectionDelegate!
 
-    var songs: [Song] = []
+    var sounds: [Sound] = []
 
-    var songsCompletion: (([Song]) -> ())!
+    var soundsCompletion: (([Sound]) -> ())!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +20,9 @@ class ListViewController: UITableViewController {
 
         self.refreshControl!.beginRefreshing()
 
-        songsCompletion = { [weak self] songs in
+        soundsCompletion = { [weak self] sounds in
             if self != nil {
-                self!.songs = songs
+                self!.sounds = sounds
             }
             self?.dispatcher.dispatchToMainQueue {
                 self?.tableView.reloadData()
@@ -30,25 +30,25 @@ class ListViewController: UITableViewController {
             }
         }
 
-        self.soundCache.getSounds(completion: songsCompletion)
+        self.soundCache.getSounds(completion: soundsCompletion)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.songs.count
+        return self.sounds.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SongTableViewCell.cellIdentifier, for: indexPath) as! SongTableViewCell
-        cell.configureWithSound(sound: self.songs[(indexPath as NSIndexPath).row])
+        cell.configureWithSound(sound: self.sounds[(indexPath as NSIndexPath).row])
 
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.soundSelectionDelegate.soundWasSelected(sound: self.songs[(indexPath as NSIndexPath).row])
+        self.soundSelectionDelegate.soundWasSelected(sound: self.sounds[(indexPath as NSIndexPath).row])
     }
 
     func refresh(refreshControl: UIRefreshControl) {
-        self.soundCache.getSoundsAndRefreshCache(completion: songsCompletion)
+        self.soundCache.getSoundsAndRefreshCache(completion: soundsCompletion)
     }
 }

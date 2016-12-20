@@ -36,13 +36,13 @@ class HomeViewControllerSpec: QuickSpec {
             navigationController = UINavigationController(rootViewController: subject)
         }
 
-        sharedExamples("downloading song assets") {
+        sharedExamples("downloading sound assets") {
             describe("When the image asset has loaded") {
                 context("When the image asset exists") {
-                    let songWithAssets = Song(value: ["imageLocalPath": imagePath])
+                    let soundWithAssets = Sound(value: ["imageLocalPath": imagePath])
 
                     beforeEach {
-                        soundLoader.capturedImageCompletion!(songWithAssets)
+                        soundLoader.capturedImageCompletion!(soundWithAssets)
                     }
 
                     it("sets the album art image") {
@@ -53,11 +53,11 @@ class HomeViewControllerSpec: QuickSpec {
                 }
 
                 context("When the image does not exist") {
-                    let songWithoutAssets = Song()
-                    songWithoutAssets.imageLocalPath = nil
+                    let soundWithoutAssets = Sound()
+                    soundWithoutAssets.imageLocalPath = nil
 
                     beforeEach {
-                        soundLoader.capturedImageCompletion!(songWithoutAssets)
+                        soundLoader.capturedImageCompletion!(soundWithoutAssets)
                     }
 
                     it("clears the album art image") {
@@ -66,31 +66,31 @@ class HomeViewControllerSpec: QuickSpec {
                 }
             }
 
-            describe("When the song asset has loaded") {
-                let songAssetPath = bundle.path(forResource: "maneater", ofType: "mp3")!
+            describe("When the sound asset has loaded") {
+                let soundAssetPath = bundle.path(forResource: "maneater", ofType: "mp3")!
 
-                context("When the song asset exists") {
-                    let songWithAssets = Song(value: ["songLocalPath": songAssetPath])
+                context("When the sound asset exists") {
+                    let soundWithAssets = Sound(value: ["soundLocalPath": soundAssetPath])
 
                     beforeEach {
-                        soundLoader.capturedSoundCompletion!(songWithAssets)
+                        soundLoader.capturedSoundCompletion!(soundWithAssets)
                     }
 
-                    it("loads the song into the player") {
+                    it("loads the sound into the player") {
                         expect(player.loadedSound).to(beTruthy())
-                        expect(player.capturedFilePath!).to(equal(songAssetPath))
+                        expect(player.capturedFilePath!).to(equal(soundAssetPath))
                     }
                 }
 
-                context("When the song asset does not exist") {
-                    let songWithoutAssets = Song()
-                    songWithoutAssets.songLocalPath = nil
+                context("When the sound asset does not exist") {
+                    let soundWithoutAssets = Sound()
+                    soundWithoutAssets.soundLocalPath = nil
 
                     beforeEach {
-                        soundLoader.capturedSoundCompletion!(songWithoutAssets)
+                        soundLoader.capturedSoundCompletion!(soundWithoutAssets)
                     }
 
-                    it("does not load the song into the player") {
+                    it("does not load the sound into the player") {
                         expect(player.loadedSound).to(beFalsy())
                     }
                 }
@@ -110,11 +110,11 @@ class HomeViewControllerSpec: QuickSpec {
                 expect(subject.title).to(equal("YACHTY"))
             }
 
-            it("gets the songs from the cache") {
+            it("gets the sounds from the cache") {
                 expect(soundCache.calledGetSounds).to(beTruthy())
             }
 
-            it("does not load the song") {
+            it("does not load the sound") {
                 expect(player.loadedSound).to(beFalsy())
                 expect(soundLoader.calledLoadSoundAssets).to(beFalsy())
             }
@@ -129,34 +129,34 @@ class HomeViewControllerSpec: QuickSpec {
                 expect(subject.whammySlider.value).to(equal(0))
             }
 
-            describe("When the cache resolves with songs") {
-                context("When there are songs") {
-                    let soundOne = Song(value: ["identifier": 123, "name": "Sound One"])
-                    let soundTwo = Song(value: ["identifier": 111, "name": "Sound Two"])
+            describe("When the cache resolves with sounds") {
+                context("When there are sounds") {
+                    let soundOne = Sound(value: ["identifier": 123, "name": "Sound One"])
+                    let soundTwo = Sound(value: ["identifier": 111, "name": "Sound Two"])
                     let sounds = [soundOne, soundTwo]
 
                     beforeEach {
                         soundCache.capturedGetSoundsCompletion!(sounds)
                     }
 
-                    it("calls the song loader") {
+                    it("calls the sound loader") {
                         expect(soundLoader.calledLoadSoundAssets).to(beTruthy())
                         expect(soundLoader.capturedSound!.identifier).to(equal(123))
                     }
 
-                    it("sets the label to the song name") {
+                    it("sets the label to the sound name") {
                         expect(subject.currentSongLabel.text).to(equal("Sound One"))
                     }
 
-                    itBehavesLike("downloading song assets")
+                    itBehavesLike("downloading sound assets")
                 }
 
-                context("When there are no songs") {
+                context("When there are no sounds") {
                     beforeEach {
                         soundCache.capturedGetSoundsCompletion!([])
                     }
 
-                    it("does not load a song") {
+                    it("does not load a sound") {
                         expect(soundLoader.calledLoadSoundAssets).to(beFalsy())
                     }
 
@@ -245,20 +245,20 @@ class HomeViewControllerSpec: QuickSpec {
                     expect(navigationController.topViewController).to(beIdenticalTo(listViewController))
                 }
 
-                it("sets itself as the song selection delegate") {
+                it("sets itself as the sound selection delegate") {
                     expect(listViewController.soundSelectionDelegate).to(beIdenticalTo(subject))
                 }
 
-                describe("As a SongSelectionDelegate") {
+                describe("As a SoundSelectionDelegate") {
                     beforeEach {
                         subject.albumArtImageView.image = UIImage(contentsOfFile: imagePath)
                         subject.currentSongLabel.text = "something"
 
-                        let song = Song(value: ["identifier": 993, "name": "Hall and Oates"])
-                        subject.soundWasSelected(sound: song)
+                        let sound = Sound(value: ["identifier": 993, "name": "Hall and Oates"])
+                        subject.soundWasSelected(sound: sound)
                     }
 
-                    it("calls the song loader") {
+                    it("calls the sound loader") {
                         expect(soundLoader.calledLoadSoundAssets).to(beTruthy())
                         expect(soundLoader.capturedSound!.identifier).to(equal(993))
                     }
@@ -271,15 +271,15 @@ class HomeViewControllerSpec: QuickSpec {
                         expect(subject.albumArtImageView.image).to(beNil())
                     }
 
-                    it("clears the previously loaded song") {
+                    it("clears the previously loaded sound") {
                         expect(player.calledClearSound).to(beTruthy())
                     }
 
-                    it("sets the label to the song name") {
+                    it("sets the label to the sound name") {
                         expect(subject.currentSongLabel.text).to(equal("Hall and Oates"))
                     }
 
-                    itBehavesLike("downloading song assets")
+                    itBehavesLike("downloading sound assets")
                 }
             }
             

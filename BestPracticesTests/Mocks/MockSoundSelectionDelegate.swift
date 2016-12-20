@@ -2,9 +2,9 @@
 
 class MockSoundSelectionDelegate: SoundSelectionDelegate {
     var calledDelegate = false
-    var capturedSound: Song?
+    var capturedSound: Sound?
     
-    func soundWasSelected(sound: Song) {
+    func soundWasSelected(sound: Sound) {
         self.calledDelegate = true
         self.capturedSound = sound
     }

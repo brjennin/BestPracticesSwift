@@ -1,5 +1,5 @@
 protocol SoundLoaderProtocol: class {
-    func loadSoundAssets(sound: Song, soundCompletion: @escaping (Song) -> (), imageCompletion: @escaping (Song) -> ())
+    func loadSoundAssets(sound: Sound, soundCompletion: @escaping (Sound) -> (), imageCompletion: @escaping (Sound) -> ())
 }
 
 class SoundLoader: SoundLoaderProtocol {
@@ -8,13 +8,13 @@ class SoundLoader: SoundLoaderProtocol {
     var soundPersistence: SoundPersistenceProtocol! = SoundPersistence()
     var diskMaster: DiskMasterProtocol! = DiskMaster()
 
-    func loadSoundAssets(sound: Song, soundCompletion: @escaping (Song) -> (), imageCompletion: @escaping (Song) -> ()) {
-        fetchAssetAtPath(sound: sound, folderName: "audio", path: sound.songLocalPath, downloadURL: sound.url, completion: soundCompletion, updateFunction: self.soundPersistence.updateLocalSoundUrl)
+    func loadSoundAssets(sound: Sound, soundCompletion: @escaping (Sound) -> (), imageCompletion: @escaping (Sound) -> ()) {
+        fetchAssetAtPath(sound: sound, folderName: "audio", path: sound.soundLocalPath, downloadURL: sound.url, completion: soundCompletion, updateFunction: self.soundPersistence.updateLocalSoundUrl)
 
         fetchAssetAtPath(sound: sound, folderName: "images", path: sound.imageLocalPath, downloadURL: sound.albumArt, completion: imageCompletion, updateFunction: self.soundPersistence.updateLocalImageUrl)
     }
 
-    fileprivate func fetchAssetAtPath(sound: Song, folderName: String, path: String?, downloadURL: String, completion: @escaping (Song) -> (), updateFunction: @escaping (Song, String) -> ()) {
+    fileprivate func fetchAssetAtPath(sound: Sound, folderName: String, path: String?, downloadURL: String, completion: @escaping (Sound) -> (), updateFunction: @escaping (Sound, String) -> ()) {
         if path != nil && self.diskMaster.isMediaFilePresent(path: path!) {
             completion(sound)
         } else {

@@ -98,13 +98,13 @@ class AudioBoxSpec: QuickSpec {
                     }
                 }
 
-                sharedExamples("playing a song") {
+                sharedExamples("playing a sound") {
                     it("schedules playing the file") {
                         expect(player.calledScheduleFile).to(beTruthy())
                         expect(player.capturedFile!).to(beIdenticalTo(audioFile))
                     }
 
-                    it("plays the song") {
+                    it("plays the sound") {
                         expect(player.calledPlay).to(beTruthy())
                     }
                 }
@@ -115,7 +115,7 @@ class AudioBoxSpec: QuickSpec {
                         subject.play(delay: true, reverb: true)
                     }
 
-                    itBehavesLike("playing a song")
+                    itBehavesLike("playing a sound")
 
                     it("turns on delay nodes") {
                         expect(delays[0].bypass).to(beFalsy())
@@ -134,7 +134,7 @@ class AudioBoxSpec: QuickSpec {
                         subject.play(delay: true, reverb: false)
                     }
 
-                    itBehavesLike("playing a song")
+                    itBehavesLike("playing a sound")
 
                     it("turns on delay nodes") {
                         expect(delays[0].bypass).to(beFalsy())
@@ -162,7 +162,7 @@ class AudioBoxSpec: QuickSpec {
                         subject.play(delay: false, reverb: true)
                     }
 
-                    itBehavesLike("playing a song")
+                    itBehavesLike("playing a sound")
 
                     it("turns off delay nodes") {
                         expect(delays[0].bypass).to(beTruthy())
@@ -181,7 +181,7 @@ class AudioBoxSpec: QuickSpec {
                         subject.play(delay: false, reverb: false)
                     }
 
-                    itBehavesLike("playing a song")
+                    itBehavesLike("playing a sound")
 
                     it("turns off delay nodes") {
                         expect(delays[0].bypass).to(beTruthy())

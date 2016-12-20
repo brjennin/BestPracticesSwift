@@ -1,3 +1,3 @@
 protocol SoundSelectionDelegate: class {
-    func soundWasSelected(sound: Song)
+    func soundWasSelected(sound: Sound)
 }

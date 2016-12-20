@@ -30,8 +30,8 @@ class PlayerSpec: QuickSpec {
             audioBox = MockAudioBox(file: audioFile, engine: MockAVAudioEngine(), player: MockAVAudioPlayerNode(), pitchShift: AVAudioUnitVarispeed(), delays: [], reverb: AVAudioUnitReverb(), eq: AVAudioUnitEQ())
         }
 
-        describe(".loadSong") {
-            it("does not initialize an audio box until we have a song file") {
+        describe(".loadSound") {
+            it("does not initialize an audio box until we have a sound file") {
                 expect(subject.audioBox).to(beNil())
             }
 
@@ -93,14 +93,14 @@ class PlayerSpec: QuickSpec {
             }
         }
 
-        describe(".clearSong") {
-            context("When a song has been loaded") {
+        describe(".clearSound") {
+            context("When a sound has been loaded") {
                 beforeEach {
                     subject.audioBox = audioBox
                     subject.clearSound()
                 }
 
-                it("stops playing any song") {
+                it("stops playing any sound") {
                     expect(audioBox.calledStop).to(beTruthy())
                 }
 
@@ -109,7 +109,7 @@ class PlayerSpec: QuickSpec {
                 }
             }
 
-            context("When a song has not been loaded") {
+            context("When a sound has not been loaded") {
                 beforeEach {
                     subject.audioBox = nil
                 }
@@ -121,7 +121,7 @@ class PlayerSpec: QuickSpec {
         }
 
         describe(".play") {
-            context("When a song has been loaded") {
+            context("When a sound has been loaded") {
                 beforeEach {
                     subject.audioBox = audioBox
                 }
@@ -179,7 +179,7 @@ class PlayerSpec: QuickSpec {
                 }
             }
 
-            context("When a song has not been loaded") {
+            context("When a sound has not been loaded") {
                 beforeEach {
                     subject.audioBox = nil
                 }
@@ -191,13 +191,13 @@ class PlayerSpec: QuickSpec {
         }
 
         describe(".pitchShift") {
-            context("When a song has been loaded") {
+            context("When a sound has been loaded") {
                 beforeEach {
                     subject.audioBox = audioBox
                     subject.clearSound()
                 }
 
-                it("stops playing any song") {
+                it("stops playing any sound") {
                     expect(audioBox.calledStop).to(beTruthy())
                 }
 
@@ -206,7 +206,7 @@ class PlayerSpec: QuickSpec {
                 }
             }
 
-            context("When a song has not been loaded") {
+            context("When a sound has not been loaded") {
                 beforeEach {
                     subject.audioBox = nil
                 }
@@ -218,7 +218,7 @@ class PlayerSpec: QuickSpec {
         }
 
         describe(".pitchShift") {
-            context("When a song is loaded") {
+            context("When a sound is loaded") {
                 beforeEach {
                     subject.audioBox = audioBox
 
@@ -237,7 +237,7 @@ class PlayerSpec: QuickSpec {
                 }
             }
 
-            context("When a song is not loaded") {
+            context("When a sound is not loaded") {
                 beforeEach {
                     subject.audioBox = nil
                     subject.pitchShift(amount: 1.2)

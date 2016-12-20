@@ -3,13 +3,13 @@ import Nimble
 import RealmSwift
 @testable import BestPractices
 
-class SongSpec: QuickSpec {
+class SoundSpec: QuickSpec {
     override func spec() {
 
-        var subject: Song!
+        var subject: Sound!
 
         beforeEach {
-            subject = Song(value: ["identifier": 213, "artist": "artist", "name": "name", "url": "url", "albumArt": "album"])
+            subject = Sound(value: ["identifier": 213, "artist": "artist", "name": "name", "url": "url", "albumArt": "album"])
         }
 
         it("stores off the values it is initialized with in properties") {

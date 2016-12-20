@@ -11,7 +11,7 @@ class DiskMasterSpec: QuickSpec {
         let fileManager = FileManager.default
         let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         let mediaDirectory = directoryURL.appendingPathComponent(MockDiskMaster.rootFolderName)
-        let finalDirectory = mediaDirectory.appendingPathComponent("songs/thing/1/")
+        let finalDirectory = mediaDirectory.appendingPathComponent("sounds/thing/1/")
 
         beforeEach {
             subject = DiskMaster()
@@ -54,7 +54,7 @@ class DiskMasterSpec: QuickSpec {
             }
         }
 
-        describe(".mediaURLForSongWithFilename") {
+        describe(".mediaURLForSoundWithFilename") {
             var result: URL!
 
             context("When the root folder doesn't exist") {
@@ -63,7 +63,7 @@ class DiskMasterSpec: QuickSpec {
                         try! fileManager.removeItem(at: mediaDirectory)
                     }
 
-                    result = subject.mediaURLForFileWithFilename(folder: "songs/thing/1/", filename: "file.mp3")
+                    result = subject.mediaURLForFileWithFilename(folder: "sounds/thing/1/", filename: "file.mp3")
                 }
 
                 it("creates intermediate folders and returns the URL to where the file would go") {
@@ -73,7 +73,7 @@ class DiskMasterSpec: QuickSpec {
             }
 
             context("When the root folder does exist") {
-                let songsDirectory = mediaDirectory.appendingPathComponent("songs/")
+                let soundsDirectory = mediaDirectory.appendingPathComponent("sounds/")
 
                 beforeEach {
                     if fileManager.fileExists(atPath: mediaDirectory.path) {
@@ -86,8 +86,8 @@ class DiskMasterSpec: QuickSpec {
                     let filePath = finalDirectory.appendingPathComponent("file.mp3")
 
                     beforeEach {
-                        if fileManager.fileExists(atPath: songsDirectory.path) {
-                            try! fileManager.removeItem(at: songsDirectory)
+                        if fileManager.fileExists(atPath: soundsDirectory.path) {
+                            try! fileManager.removeItem(at: soundsDirectory)
                         }
                         try! fileManager.createDirectory(at: finalDirectory, withIntermediateDirectories: true, attributes: nil)
                     }
@@ -95,7 +95,7 @@ class DiskMasterSpec: QuickSpec {
                     context("When the file already exists") {
                         beforeEach {
                             fileManager.createFile(atPath: filePath.path, contents: nil, attributes: nil)
-                            result = subject.mediaURLForFileWithFilename(folder: "songs/thing/1/", filename: "file.mp3")
+                            result = subject.mediaURLForFileWithFilename(folder: "sounds/thing/1/", filename: "file.mp3")
                         }
 
                         it("creates intermediate folders and returns the URL to where the file would go") {
@@ -110,7 +110,7 @@ class DiskMasterSpec: QuickSpec {
 
                     context("When the file does not already exist") {
                         beforeEach {
-                            result = subject.mediaURLForFileWithFilename(folder: "songs/thing/1/", filename: "file.mp3")
+                            result = subject.mediaURLForFileWithFilename(folder: "sounds/thing/1/", filename: "file.mp3")
                         }
 
                         it("creates intermediate folders and returns the URL to where the file would go") {
@@ -126,11 +126,11 @@ class DiskMasterSpec: QuickSpec {
 
                 context("When the intermediate folders don't exist") {
                     beforeEach {
-                        if fileManager.fileExists(atPath: songsDirectory.path) {
-                            try! fileManager.removeItem(at: songsDirectory)
+                        if fileManager.fileExists(atPath: soundsDirectory.path) {
+                            try! fileManager.removeItem(at: soundsDirectory)
                         }
 
-                        result = subject.mediaURLForFileWithFilename(folder: "songs/thing/1/", filename: "file.mp3")
+                        result = subject.mediaURLForFileWithFilename(folder: "sounds/thing/1/", filename: "file.mp3")
                     }
 
                     it("creates intermediate folders and returns the URL to where the file would go") {
@@ -151,7 +151,7 @@ class DiskMasterSpec: QuickSpec {
                         try! fileManager.removeItem(at: filePath)
                     }
                     fileManager.createFile(atPath: filePath.path, contents: nil, attributes: nil)
-                    result = subject.isMediaFilePresent(path: "songs/thing/1/file.mp3")
+                    result = subject.isMediaFilePresent(path: "sounds/thing/1/file.mp3")
                 }
 
                 it("returns true") {
@@ -164,7 +164,7 @@ class DiskMasterSpec: QuickSpec {
                     if fileManager.fileExists(atPath: filePath.path) {
                         try! fileManager.removeItem(at: filePath)
                     }
-                    result = subject.isMediaFilePresent(path: "songs/thing/1/file.mp3")
+                    result = subject.isMediaFilePresent(path: "sounds/thing/1/file.mp3")
                 }
 
                 it("returns false") {

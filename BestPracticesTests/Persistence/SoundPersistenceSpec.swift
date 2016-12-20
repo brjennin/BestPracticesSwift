@@ -30,25 +30,25 @@ class SoundPersistenceSpec: QuickSpec {
             }
         }
 
-        describe("With no songs in the DB") {
+        describe("With no sounds in the DB") {
             it("returns nil when trying to retreive") {
                 expect(subject.retrieve()).to(beNil())
             }
 
             describe("Storing some items") {
                 beforeEach {
-                    let songs = [
-                        Song(value: ["identifier": 256, "name": "Private Eyes", "artist": "Hall & Oates", "url": "url1", "albumArt": "album_art1"]),
-                        Song(value: ["identifier": 257, "name": "Long Train Runnin", "artist": "Doobie Brothers", "url": "url2", "albumArt": "album_art2"]),
+                    let sounds = [
+                            Sound(value: ["identifier": 256, "name": "Private Eyes", "artist": "Hall & Oates", "url": "url1", "albumArt": "album_art1"]),
+                            Sound(value: ["identifier": 257, "name": "Long Train Runnin", "artist": "Doobie Brothers", "url": "url2", "albumArt": "album_art2"]),
                     ]
-                    subject.replace(sounds: songs)
+                    subject.replace(sounds: sounds)
                 }
 
-                it("wipes the local storage of songs and images") {
+                it("wipes the local storage of sounds and images") {
                     expect(diskMaster.calledWipeLocalStorage).to(beTruthy())
                 }
                 
-                it("returns the songs when retrieving") {
+                it("returns the sounds when retrieving") {
                     let result = subject.retrieve()
                     expect(result).toNot(beNil())
                     expect(result!.count).to(equal(2))
@@ -66,21 +66,21 @@ class SoundPersistenceSpec: QuickSpec {
                     expect(result!.last!.albumArt).to(equal("album_art2"))
                 }
 
-                describe("Replacing with different songs") {
-                    var soundOne: Song!
-                    var soundTwo: Song!
-                    var soundThree: Song!
+                describe("Replacing with different sounds") {
+                    var soundOne: Sound!
+                    var soundTwo: Sound!
+                    var soundThree: Sound!
                     
                     beforeEach {
-                        soundOne = Song(value: ["identifier": 258, "name": "Rich Girl", "artist": "Hall & Oates", "url": "url3", "albumArt": "album_art3"])
-                        soundTwo = Song(value: ["identifier": 257, "name": "Long Train Runnin", "artist": "Doobie Brothers", "url": "url2", "albumArt": "album_art2"])
-                        soundThree = Song(value: ["identifier": 259, "name": "Sara Smile", "artist": "Hall & Oates", "url": "url4", "albumArt": "album_art4"])
+                        soundOne = Sound(value: ["identifier": 258, "name": "Rich Girl", "artist": "Hall & Oates", "url": "url3", "albumArt": "album_art3"])
+                        soundTwo = Sound(value: ["identifier": 257, "name": "Long Train Runnin", "artist": "Doobie Brothers", "url": "url2", "albumArt": "album_art2"])
+                        soundThree = Sound(value: ["identifier": 259, "name": "Sara Smile", "artist": "Hall & Oates", "url": "url4", "albumArt": "album_art4"])
                         
-                        let sounds: [Song] = [soundOne, soundTwo, soundThree]
+                        let sounds: [Sound] = [soundOne, soundTwo, soundThree]
                         subject.replace(sounds: sounds)
                     }
 
-                    it("returns the songs when retrieving") {
+                    it("returns the sounds when retrieving") {
                         let result = subject.retrieve()
                         expect(result).toNot(beNil())
                         expect(result!.count).to(equal(3))
@@ -91,7 +91,7 @@ class SoundPersistenceSpec: QuickSpec {
                         expect(result![0].url).to(equal("url2"))
                         expect(result![0].albumArt).to(equal("album_art2"))
                         expect(result![0].imageLocalPath).to(beNil())
-                        expect(result![0].songLocalPath).to(beNil())
+                        expect(result![0].soundLocalPath).to(beNil())
 
                         expect(result![1].identifier).to(equal(258))
                         expect(result![1].name).to(equal("Rich Girl"))
@@ -99,7 +99,7 @@ class SoundPersistenceSpec: QuickSpec {
                         expect(result![1].url).to(equal("url3"))
                         expect(result![1].albumArt).to(equal("album_art3"))
                         expect(result![1].imageLocalPath).to(beNil())
-                        expect(result![1].songLocalPath).to(beNil())
+                        expect(result![1].soundLocalPath).to(beNil())
                         
                         expect(result![2].identifier).to(equal(259))
                         expect(result![2].name).to(equal("Sara Smile"))
@@ -107,19 +107,19 @@ class SoundPersistenceSpec: QuickSpec {
                         expect(result![2].url).to(equal("url4"))
                         expect(result![2].albumArt).to(equal("album_art4"))
                         expect(result![2].imageLocalPath).to(beNil())
-                        expect(result![2].songLocalPath).to(beNil())
+                        expect(result![2].soundLocalPath).to(beNil())
                     }
                     
-                    describe("Updating urls for songs") {
+                    describe("Updating urls for sounds") {
                         beforeEach {
                             subject.updateLocalSoundUrl(sound: soundTwo, url: "testurl")
                         }
                         
-                        it("stores off the url for the song") {
-                            expect(soundTwo.songLocalPath).to(equal("testurl"))
+                        it("stores off the url for the sound") {
+                            expect(soundTwo.soundLocalPath).to(equal("testurl"))
                             let result = subject.retrieve()
                             expect(result![0].identifier).to(equal(257))
-                            expect(result![0].songLocalPath).to(equal("testurl"))
+                            expect(result![0].soundLocalPath).to(equal("testurl"))
                         }
                     }
                     

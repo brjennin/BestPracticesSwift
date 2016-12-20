@@ -25,12 +25,12 @@ class ListViewControllerSpec: QuickSpec {
             subject.soundCache = soundCache
         }
 
-        sharedExamples("reloading songs") {
+        sharedExamples("reloading sounds") {
             it("should dispatch to the main queue") {
                 expect(dispatcher.calledDispatch).to(beTruthy())
             }
 
-            it("has 2 song table view cells correctly configured") {
+            it("has 2 sound table view cells correctly configured") {
                 expect(subject.tableView.visibleCells.count).to(equal(2))
                 expect(subject.tableView.visibleCells.first).to(beAKindOf(SongTableViewCell.self))
                 expect(subject.tableView.visibleCells.last).to(beAKindOf(SongTableViewCell.self))
@@ -65,7 +65,7 @@ class ListViewControllerSpec: QuickSpec {
                     subject.tableView(subject.tableView, didSelectRowAt: indexPath)
                 }
 
-                it("calls the delegate with the correct song") {
+                it("calls the delegate with the correct sound") {
                     expect(soundSelectionDelegate.calledDelegate).to(beTruthy())
                     expect(soundSelectionDelegate.capturedSound).toNot(beNil())
                     expect(soundSelectionDelegate.capturedSound!.identifier).to(equal(123))
@@ -74,15 +74,15 @@ class ListViewControllerSpec: QuickSpec {
         }
 
         describe(".viewDidLoad") {
-            let soundOne = Song(value: ["identifier": 123, "name": "Sound One"])
-            let soundTwo = Song(value: ["identifier": 111, "name": "Sound Two"])
+            let soundOne = Sound(value: ["identifier": 123, "name": "Sound One"])
+            let soundTwo = Sound(value: ["identifier": 111, "name": "Sound Two"])
             let sounds = [soundOne, soundTwo]
 
             beforeEach {
                 UIApplication.shared.keyWindow?.rootViewController = subject
             }
 
-            it("gets the songs from the cache") {
+            it("gets the sounds from the cache") {
                 expect(soundCache.calledGetSounds).to(beTruthy())
             }
 
@@ -121,12 +121,12 @@ class ListViewControllerSpec: QuickSpec {
                 }
             }
 
-            describe("When the cache resolves with songs") {
+            describe("When the cache resolves with sounds") {
                 beforeEach {
                     soundCache.capturedGetSoundsCompletion!(sounds)
                 }
 
-                itBehavesLike("reloading songs")
+                itBehavesLike("reloading sounds")
             }
 
             describe("Pulling to refresh") {
@@ -135,16 +135,16 @@ class ListViewControllerSpec: QuickSpec {
                     subject.refreshControl!.beginRefreshing()
                 }
 
-                it("gets the songs from the cache and refreashes the cache") {
+                it("gets the sounds from the cache and refreashes the cache") {
                     expect(soundCache.calledGetSoundsAndRefreshCache).to(beTruthy())
                 }
 
-                describe("When the cache resolves with songs") {
+                describe("When the cache resolves with sounds") {
                     beforeEach {
                         soundCache.capturedGetSoundsAndRefreshCacheCompletion!(sounds)
                     }
 
-                    itBehavesLike("reloading songs")
+                    itBehavesLike("reloading sounds")
                 }
             }
         }

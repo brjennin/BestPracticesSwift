@@ -1,13 +1,13 @@
 import RealmSwift
 
 protocol SoundPersistenceProtocol: class {
-    func replace(sounds: [Song])
+    func replace(sounds: [Sound])
 
-    func retrieve() -> [Song]?
+    func retrieve() -> [Sound]?
     
-    func updateLocalSoundUrl(sound: Song, url: String)
+    func updateLocalSoundUrl(sound: Sound, url: String)
     
-    func updateLocalImageUrl(sound: Song, url: String)
+    func updateLocalImageUrl(sound: Sound, url: String)
 }
 
 class SoundPersistence: SoundPersistenceProtocol {
@@ -15,7 +15,7 @@ class SoundPersistence: SoundPersistenceProtocol {
     var realm: Realm!
     var diskMaster: DiskMasterProtocol! = DiskMaster()
 
-    func replace(sounds: [Song]) {
+    func replace(sounds: [Sound]) {
         do {
             try establishConnection()
             try wipeDatabase()
@@ -32,19 +32,19 @@ class SoundPersistence: SoundPersistenceProtocol {
         }
     }
 
-    func retrieve() -> [Song]? {
+    func retrieve() -> [Sound]? {
         do {
             try establishConnection()
         } catch {
             return nil
         }
 
-        let sounds = realm.objects(Song.self).sorted(byProperty: "identifier")
+        let sounds = realm.objects(Sound.self).sorted(byProperty: "identifier")
         if sounds.count == 0 {
             return nil
         }
 
-        var result = [Song]()
+        var result = [Sound]()
         for sound in sounds {
             result.append(sound)
         }
@@ -52,18 +52,18 @@ class SoundPersistence: SoundPersistenceProtocol {
         return result
     }
     
-    func updateLocalSoundUrl(sound: Song, url: String) {
+    func updateLocalSoundUrl(sound: Sound, url: String) {
         do {
             try establishConnection()
             try realm.write {
-                sound.songLocalPath = url
+                sound.soundLocalPath = url
             }
         } catch {
             return
         }
     }
     
-    func updateLocalImageUrl(sound: Song, url: String) {
+    func updateLocalImageUrl(sound: Sound, url: String) {
         do {
             try establishConnection()
             try realm.write {

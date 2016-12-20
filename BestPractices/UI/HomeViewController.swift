@@ -50,14 +50,14 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: SoundSelectionDelegate {
 
-    func soundWasSelected(sound: Song) {
+    func soundWasSelected(sound: Sound) {
         _ = self.navigationController?.popViewController(animated: true)
         self.albumArtImageView.image = nil
         self.player.clearSound()
         self.currentSongLabel.text = sound.name
 
         self.soundLoader.loadSoundAssets(sound: sound, soundCompletion: { [weak self] soundWithSound in
-            if let soundPath = soundWithSound.songLocalPath {
+            if let soundPath = soundWithSound.soundLocalPath {
                 self?.player.loadSound(filePath: soundPath)
             }
         }, imageCompletion: { [weak self] soundWithImage in

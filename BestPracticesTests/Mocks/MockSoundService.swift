@@ -3,9 +3,9 @@ import Foundation
 
 class MockSoundService: SoundServiceProtocol {
     var calledService = false
-    var completion: (([Song]?, NSError?) -> ())?
+    var completion: (([Sound]?, NSError?) -> ())?
 
-    func getSounds(completion: @escaping (([Song]?, NSError?) -> ())) {
+    func getSounds(completion: @escaping (([Sound]?, NSError?) -> ())) {
         calledService = true
         self.completion = completion
     }

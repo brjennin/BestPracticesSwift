@@ -3,36 +3,36 @@
 class MockSoundPersistence: SoundPersistenceProtocol {
     
     var calledReplace = false
-    var capturedReplaceSounds: [Song]?
+    var capturedReplaceSounds: [Sound]?
     
-    func replace(sounds: [Song]) {
+    func replace(sounds: [Sound]) {
         calledReplace = true
         capturedReplaceSounds = sounds
     }
     
     var calledRetrieve = false
-    var soundsThatGetRetrieved: [Song]?
+    var soundsThatGetRetrieved: [Sound]?
     
-    func retrieve() -> [Song]? {
+    func retrieve() -> [Sound]? {
         calledRetrieve = true
         return soundsThatGetRetrieved
     }
     
     var calledUpdateSoundUrl = false
-    var capturedUpdateSoundUrlSound: Song?
+    var capturedUpdateSoundUrlSound: Sound?
     var capturedUpdateSoundUrlUrl: String?
     
-    func updateLocalSoundUrl(sound: Song, url: String) {
+    func updateLocalSoundUrl(sound: Sound, url: String) {
         calledUpdateSoundUrl = true
         capturedUpdateSoundUrlSound = sound
         capturedUpdateSoundUrlUrl = url
     }
     
     var calledUpdateImageUrl = false
-    var capturedUpdateImageUrlSound: Song?
+    var capturedUpdateImageUrlSound: Sound?
     var capturedUpdateImageUrlUrl: String?
     
-    func updateLocalImageUrl(sound: Song, url: String) {
+    func updateLocalImageUrl(sound: Sound, url: String) {
         calledUpdateImageUrl = true
         capturedUpdateImageUrlSound = sound
         capturedUpdateImageUrlUrl = url

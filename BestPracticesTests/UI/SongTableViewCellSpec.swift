@@ -14,10 +14,10 @@ class SongTableViewCellSpec: QuickSpec {
             subject.titleLabel = titleLabel
         }
 
-        describe("Configuring a cell with a song") {
+        describe("Configuring a cell with a sound") {
             beforeEach {
-                let song = Song(value: ["name": "title"])
-                subject.configureWithSound(sound: song)
+                let sound = Sound(value: ["name": "title"])
+                subject.configureWithSound(sound: sound)
             }
 
             it("sets the title label for the cell") {
