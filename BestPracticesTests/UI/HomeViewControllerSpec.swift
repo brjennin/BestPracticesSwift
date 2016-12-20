@@ -118,6 +118,10 @@ class HomeViewControllerSpec: QuickSpec {
                 expect(player.loadedSound).to(beFalsy())
                 expect(soundLoader.calledLoadSoundAssets).to(beFalsy())
             }
+            
+            it("clears text off the back button") {
+                expect(subject.navigationItem.backBarButtonItem!.title!).to(equal(""))
+            }
 
             it("clears label text") {
                 expect(subject.currentSoundLabel.text).to(equal(""))

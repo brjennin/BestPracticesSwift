@@ -18,6 +18,9 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         self.title = "YACHTY"
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        
         self.currentSoundLabel.text = ""
         soundCache.getSounds { [weak self] sounds in
             if sounds.count > 0 {
