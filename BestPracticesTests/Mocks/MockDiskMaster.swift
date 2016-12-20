@@ -11,12 +11,12 @@ class MockDiskMaster: DiskMasterProtocol {
         calledWipeLocalStorage = true
     }
 
-    var calledMediaURLForSongWithFilename = false
+    var calledMediaURLForFileWithFilename = false
     var capturedFolderForMediaURL: String?
     var capturedFilenameForMediaURL: String?
 
-    func mediaURLForSongWithFilename(folder: String, filename: String) -> URL {
-        calledMediaURLForSongWithFilename = true
+    func mediaURLForFileWithFilename(folder: String, filename: String) -> URL {
+        calledMediaURLForFileWithFilename = true
         capturedFolderForMediaURL = folder
         capturedFilenameForMediaURL = filename
 

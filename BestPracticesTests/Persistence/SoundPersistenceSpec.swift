@@ -41,7 +41,7 @@ class SoundPersistenceSpec: QuickSpec {
                         Song(value: ["identifier": 256, "name": "Private Eyes", "artist": "Hall & Oates", "url": "url1", "albumArt": "album_art1"]),
                         Song(value: ["identifier": 257, "name": "Long Train Runnin", "artist": "Doobie Brothers", "url": "url2", "albumArt": "album_art2"]),
                     ]
-                    subject.replace(songs: songs)
+                    subject.replace(sounds: songs)
                 }
 
                 it("wipes the local storage of songs and images") {
@@ -77,7 +77,7 @@ class SoundPersistenceSpec: QuickSpec {
                         songThree = Song(value: ["identifier": 259, "name": "Sara Smile", "artist": "Hall & Oates", "url": "url4", "albumArt": "album_art4"])
                         
                         let songs: [Song] = [songOne, songTwo, songThree]
-                        subject.replace(songs: songs)
+                        subject.replace(sounds: songs)
                     }
 
                     it("returns the songs when retrieving") {
@@ -112,7 +112,7 @@ class SoundPersistenceSpec: QuickSpec {
                     
                     describe("Updating urls for songs") {
                         beforeEach {
-                            subject.updateLocalSongUrl(song: songTwo, url: "testurl")
+                            subject.updateLocalSoundUrl(sound: songTwo, url: "testurl")
                         }
                         
                         it("stores off the url for the song") {
@@ -125,7 +125,7 @@ class SoundPersistenceSpec: QuickSpec {
                     
                     describe("Updating urls for images") {
                         beforeEach {
-                            subject.updateLocalImageUrl(song: songOne, url: "imageurl")
+                            subject.updateLocalImageUrl(sound: songOne, url: "imageurl")
                         }
                         
                         it("stores off the url for the image") {

@@ -1,5 +1,5 @@
 protocol SongLoaderProtocol: class {
-    func loadSongAssets(song: Song, songCompletion: @escaping (Song) -> (), imageCompletion: @escaping (Song) -> ())
+    func loadSoundAssets(sound: Song, soundCompletion: @escaping (Song) -> (), imageCompletion: @escaping (Song) -> ())
 }
 
 class SongLoader: SongLoaderProtocol {
@@ -8,22 +8,22 @@ class SongLoader: SongLoaderProtocol {
     var soundPersistence: SoundPersistenceProtocol! = SoundPersistence()
     var diskMaster: DiskMasterProtocol! = DiskMaster()
 
-    func loadSongAssets(song: Song, songCompletion: @escaping (Song) -> (), imageCompletion: @escaping (Song) -> ()) {
-        fetchAssetAtPath(song: song, folderName: "songs", path: song.songLocalPath, downloadURL: song.url, completion: songCompletion, updateFunction: self.soundPersistence.updateLocalSongUrl)
+    func loadSoundAssets(sound: Song, soundCompletion: @escaping (Song) -> (), imageCompletion: @escaping (Song) -> ()) {
+        fetchAssetAtPath(sound: sound, folderName: "audio", path: sound.songLocalPath, downloadURL: sound.url, completion: soundCompletion, updateFunction: self.soundPersistence.updateLocalSoundUrl)
 
-        fetchAssetAtPath(song: song, folderName: "images", path: song.imageLocalPath, downloadURL: song.albumArt, completion: imageCompletion, updateFunction: self.soundPersistence.updateLocalImageUrl)
+        fetchAssetAtPath(sound: sound, folderName: "images", path: sound.imageLocalPath, downloadURL: sound.albumArt, completion: imageCompletion, updateFunction: self.soundPersistence.updateLocalImageUrl)
     }
 
-    fileprivate func fetchAssetAtPath(song: Song, folderName: String, path: String?, downloadURL: String, completion: @escaping (Song) -> (), updateFunction: @escaping (Song, String) -> ()) {
+    fileprivate func fetchAssetAtPath(sound: Song, folderName: String, path: String?, downloadURL: String, completion: @escaping (Song) -> (), updateFunction: @escaping (Song, String) -> ()) {
         if path != nil && self.diskMaster.isMediaFilePresent(path: path!) {
-            completion(song)
+            completion(sound)
         } else {
-            let folder = "\(folderName)/\(song.identifier)/"
+            let folder = "\(folderName)/\(sound.identifier)/"
             self.httpClient.downloadFile(url: downloadURL, folderPath: folder) { url in
                 if let url = url {
-                    updateFunction(song, url.path)
+                    updateFunction(sound, url.path)
                 }
-                completion(song)
+                completion(sound)
             }
         }
     }

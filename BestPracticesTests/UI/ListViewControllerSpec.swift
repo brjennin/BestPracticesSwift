@@ -8,7 +8,7 @@ class ListViewControllerSpec: QuickSpec {
 
         var subject: ListViewController!
         var dispatcher: MockDispatcher!
-        var songSelectionDelegate: MockSongSelectionDelegate!
+        var soundSelectionDelegate: MockSoundSelectionDelegate!
         var soundCache: MockSoundCache!
 
         beforeEach {
@@ -18,8 +18,8 @@ class ListViewControllerSpec: QuickSpec {
             dispatcher = MockDispatcher()
             subject.dispatcher = dispatcher
 
-            songSelectionDelegate = MockSongSelectionDelegate()
-            subject.songSelectionDelegate = songSelectionDelegate
+            soundSelectionDelegate = MockSoundSelectionDelegate()
+            subject.soundSelectionDelegate = soundSelectionDelegate
 
             soundCache = MockSoundCache()
             subject.soundCache = soundCache
@@ -66,9 +66,9 @@ class ListViewControllerSpec: QuickSpec {
                 }
 
                 it("calls the delegate with the correct song") {
-                    expect(songSelectionDelegate.calledDelegate).to(beTruthy())
-                    expect(songSelectionDelegate.capturedSong).toNot(beNil())
-                    expect(songSelectionDelegate.capturedSong!.identifier).to(equal(123))
+                    expect(soundSelectionDelegate.calledDelegate).to(beTruthy())
+                    expect(soundSelectionDelegate.capturedSound).toNot(beNil())
+                    expect(soundSelectionDelegate.capturedSound!.identifier).to(equal(123))
                 }
             }
         }
@@ -83,7 +83,7 @@ class ListViewControllerSpec: QuickSpec {
             }
 
             it("gets the songs from the cache") {
-                expect(soundCache.calledGetSongs).to(beTruthy())
+                expect(soundCache.calledGetSounds).to(beTruthy())
             }
 
             it("sets the title") {
@@ -123,7 +123,7 @@ class ListViewControllerSpec: QuickSpec {
 
             describe("When the cache resolves with songs") {
                 beforeEach {
-                    soundCache.capturedGetSongsCompletion!(songs)
+                    soundCache.capturedGetSoundsCompletion!(songs)
                 }
 
                 itBehavesLike("reloading songs")
@@ -136,12 +136,12 @@ class ListViewControllerSpec: QuickSpec {
                 }
 
                 it("gets the songs from the cache and refreashes the cache") {
-                    expect(soundCache.calledGetSongsAndRefreshCache).to(beTruthy())
+                    expect(soundCache.calledGetSoundsAndRefreshCache).to(beTruthy())
                 }
 
                 describe("When the cache resolves with songs") {
                     beforeEach {
-                        soundCache.capturedGetSongsAndRefreshCacheCompletion!(songs)
+                        soundCache.capturedGetSoundsAndRefreshCacheCompletion!(songs)
                     }
 
                     itBehavesLike("reloading songs")

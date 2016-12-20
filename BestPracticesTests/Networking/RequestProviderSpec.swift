@@ -12,11 +12,11 @@ class RequestProviderSpec: QuickSpec {
             subject = RequestProvider()
         }
         
-        describe(".getSongsListRequest") {
+        describe(".getSoundsListRequest") {
             var result: HTTPRequest!
             
             beforeEach {
-                result = subject.getSongsListRequest()
+                result = subject.getSoundsListRequest()
             }
             
             it("returns a request") {

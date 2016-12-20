@@ -1,12 +1,12 @@
 import Alamofire
 
 protocol RequestProviderProtocol: class {
-    func getSongsListRequest() -> HTTPRequest
+    func getSoundsListRequest() -> HTTPRequest
 }
 
 class RequestProvider: RequestProviderProtocol {
   
-    func getSongsListRequest() -> HTTPRequest {
+    func getSoundsListRequest() -> HTTPRequest {
         return HTTPRequest(urlString: "https://yachty.herokuapp.com/api/v1/songs", httpMethod: HTTPMethod.get, params: nil, headers: nil)
     }
     

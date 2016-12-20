@@ -39,7 +39,7 @@ class HTTPClient: HTTPClientProtocol {
         self.activityIndicator.start()
         
         let destination: DownloadRequest.DownloadFileDestination = { [weak self] _, response in
-            let destinationURL = self!.diskMaster.mediaURLForSongWithFilename(folder: folderPath, filename: response.suggestedFilename!)
+            let destinationURL = self!.diskMaster.mediaURLForFileWithFilename(folder: folderPath, filename: response.suggestedFilename!)
             
             return (destinationURL, [.removePreviousFile, .createIntermediateDirectories])
         }

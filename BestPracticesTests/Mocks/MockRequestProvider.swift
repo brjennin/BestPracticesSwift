@@ -2,10 +2,10 @@ import Alamofire
 @testable import BestPractices
 
 class MockRequestProvider: RequestProviderProtocol {
-    var calledGetSongsListRequest = false
+    var calledGetSoundsListRequest = false
     
-    func getSongsListRequest() -> HTTPRequest {
-        calledGetSongsListRequest = true
-        return HTTPRequest(urlString: "getSongsList", httpMethod: HTTPMethod.get, params: nil, headers: nil)
+    func getSoundsListRequest() -> HTTPRequest {
+        calledGetSoundsListRequest = true
+        return HTTPRequest(urlString: "getSoundsList", httpMethod: HTTPMethod.get, params: nil, headers: nil)
     }
 }

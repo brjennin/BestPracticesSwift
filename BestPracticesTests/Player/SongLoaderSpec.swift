@@ -45,7 +45,7 @@ class SongLoaderSpec: QuickSpec {
             sharedExamples("downloading a song", closure: {
                 it("calls the http client for the song request") {
                     expect(httpClient.downloadUrls.first!).to(equal("songUrl"))
-                    expect(httpClient.downloadFolders.first!).to(equal("songs/384/"))
+                    expect(httpClient.downloadFolders.first!).to(equal("audio/384/"))
                 }
 
                 describe("When the song completion resolves") {
@@ -63,9 +63,9 @@ class SongLoaderSpec: QuickSpec {
                         }
 
                         it("persists the new song url") {
-                            expect(soundPersistence.calledUpdateSongUrl).to(beTruthy())
-                            expect(soundPersistence.capturedUpdateSongUrlSong!.identifier).to(equal(384))
-                            expect(soundPersistence.capturedUpdateSongUrlUrl!).to(equal(sampleFileURL.path))
+                            expect(soundPersistence.calledUpdateSoundUrl).to(beTruthy())
+                            expect(soundPersistence.capturedUpdateSoundUrlSound!.identifier).to(equal(384))
+                            expect(soundPersistence.capturedUpdateSoundUrlUrl!).to(equal(sampleFileURL.path))
                         }
                     }
 
@@ -80,7 +80,7 @@ class SongLoaderSpec: QuickSpec {
                         }
 
                         it("does not persist the new song url") {
-                            expect(soundPersistence.calledUpdateSongUrl).to(beFalsy())
+                            expect(soundPersistence.calledUpdateSoundUrl).to(beFalsy())
                         }
                     }
                 }
@@ -108,7 +108,7 @@ class SongLoaderSpec: QuickSpec {
 
                         it("persists the new song url") {
                             expect(soundPersistence.calledUpdateImageUrl).to(beTruthy())
-                            expect(soundPersistence.capturedUpdateImageUrlSong!.identifier).to(equal(384))
+                            expect(soundPersistence.capturedUpdateImageUrlSound!.identifier).to(equal(384))
                             expect(soundPersistence.capturedUpdateImageUrlUrl!).to(equal(sampleFileURL.path))
                         }
                     }
@@ -158,14 +158,14 @@ class SongLoaderSpec: QuickSpec {
                 }
 
                 it("does not persist the song url") {
-                    expect(soundPersistence.calledUpdateSongUrl).to(beFalsy())
+                    expect(soundPersistence.calledUpdateSoundUrl).to(beFalsy())
                 }
             })
 
             context("When the song has no image and no sound file in the DB") {
                 beforeEach {
                     song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl"])
-                    subject.loadSongAssets(song: song, songCompletion: songCompletion, imageCompletion: imageCompletion)
+                    subject.loadSoundAssets(sound: song, soundCompletion: songCompletion, imageCompletion: imageCompletion)
                 }
 
                 it("downloads 2 files") {
@@ -183,7 +183,7 @@ class SongLoaderSpec: QuickSpec {
                         diskMaster.returnValueForIsMediaFilePresent = true
 
                         song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "imageLocalPath": "existingImage"])
-                        subject.loadSongAssets(song: song, songCompletion: songCompletion, imageCompletion: imageCompletion)
+                        subject.loadSoundAssets(sound: song, soundCompletion: songCompletion, imageCompletion: imageCompletion)
                     }
 
                     it("downloads 1 files") {
@@ -205,7 +205,7 @@ class SongLoaderSpec: QuickSpec {
                         diskMaster.returnValueForIsMediaFilePresent = false
 
                         song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "imageLocalPath": "existingImage"])
-                        subject.loadSongAssets(song: song, songCompletion: songCompletion, imageCompletion: imageCompletion)
+                        subject.loadSoundAssets(sound: song, soundCompletion: songCompletion, imageCompletion: imageCompletion)
                     }
 
                     it("downloads 2 files") {
@@ -229,7 +229,7 @@ class SongLoaderSpec: QuickSpec {
                         diskMaster.returnValueForIsMediaFilePresent = true
 
                         song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong"])
-                        subject.loadSongAssets(song: song, songCompletion: songCompletion, imageCompletion: imageCompletion)
+                        subject.loadSoundAssets(sound: song, soundCompletion: songCompletion, imageCompletion: imageCompletion)
                     }
 
                     it("downloads 1 files") {
@@ -251,7 +251,7 @@ class SongLoaderSpec: QuickSpec {
                         diskMaster.returnValueForIsMediaFilePresent = false
 
                         song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong"])
-                        subject.loadSongAssets(song: song, songCompletion: songCompletion, imageCompletion: imageCompletion)
+                        subject.loadSoundAssets(sound: song, soundCompletion: songCompletion, imageCompletion: imageCompletion)
                     }
 
                     it("downloads 2 files") {
@@ -273,7 +273,7 @@ class SongLoaderSpec: QuickSpec {
                 beforeEach {
                     diskMaster.returnValueForIsMediaFilePresent = true
                     song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong", "imageLocalPath": "existingImage"])
-                    subject.loadSongAssets(song: song, songCompletion: songCompletion, imageCompletion: imageCompletion)
+                    subject.loadSoundAssets(sound: song, soundCompletion: songCompletion, imageCompletion: imageCompletion)
                 }
 
                 it("downloads 0 files") {

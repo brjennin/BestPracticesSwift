@@ -2,9 +2,9 @@ import AVKit
 import AVFoundation
 
 protocol PlayerProtocol: class {
-    func loadSong(filePath: String)
+    func loadSound(filePath: String)
 
-    func clearSong()
+    func clearSound()
 
     func play(delay: Bool, reverb: Bool)
 
@@ -18,7 +18,7 @@ class Player: PlayerProtocol {
 
     var audioBox: AudioBoxProtocol?
 
-    func loadSong(filePath: String) {
+    func loadSound(filePath: String) {
         let url = URL(fileURLWithPath: filePath)
         let file = try? AVAudioFile.init(forReading: url)
 
@@ -32,7 +32,7 @@ class Player: PlayerProtocol {
         }
     }
 
-    func clearSong() {
+    func clearSound() {
         audioBox?.stop()
         audioBox = nil
     }

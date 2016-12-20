@@ -29,18 +29,18 @@ class SoundServiceSpec: QuickSpec {
             var returnedError: NSError?
 
             beforeEach {
-                subject.getSongs { songs, error in
+                subject.getSounds { songs, error in
                     returnedSongs = songs
                     returnedError = error
                 }
             }
 
             it("gets a request from the request provider") {
-                expect(requestProvider.calledGetSongsListRequest).to(beTruthy())
+                expect(requestProvider.calledGetSoundsListRequest).to(beTruthy())
             }
 
             it("makes a request") {
-                expect(httpClient.capturedJSONRequest!.urlString).to(equal("getSongsList"))
+                expect(httpClient.capturedJSONRequest!.urlString).to(equal("getSoundsList"))
             }
 
             describe("When the HTTP call resolves") {

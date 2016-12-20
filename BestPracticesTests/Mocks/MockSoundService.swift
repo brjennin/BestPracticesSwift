@@ -5,7 +5,7 @@ class MockSoundService: SoundServiceProtocol {
     var calledService = false
     var completion: (([Song]?, NSError?) -> ())?
 
-    func getSongs(completion: @escaping (([Song]?, NSError?) -> ())) {
+    func getSounds(completion: @escaping (([Song]?, NSError?) -> ())) {
         calledService = true
         self.completion = completion
     }

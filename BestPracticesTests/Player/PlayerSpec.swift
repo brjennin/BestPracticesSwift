@@ -43,7 +43,7 @@ class PlayerSpec: QuickSpec {
                 context("When the engine throws an exception") {
                     beforeEach {
                         audioBox.startShouldThrow = true
-                        subject.loadSong(filePath: path)
+                        subject.loadSound(filePath: path)
                     }
 
                     it("calls the engine builder") {
@@ -63,7 +63,7 @@ class PlayerSpec: QuickSpec {
                 context("When the engine starts successfully") {
                     beforeEach {
                         audioBox.startShouldThrow = false
-                        subject.loadSong(filePath: path)
+                        subject.loadSound(filePath: path)
                     }
 
                     it("calls the engine builder") {
@@ -84,7 +84,7 @@ class PlayerSpec: QuickSpec {
 
             context("With a bad URL") {
                 beforeEach {
-                    subject.loadSong(filePath: "")
+                    subject.loadSound(filePath: "")
                 }
 
                 it("does not store the audio box") {
@@ -97,7 +97,7 @@ class PlayerSpec: QuickSpec {
             context("When a song has been loaded") {
                 beforeEach {
                     subject.audioBox = audioBox
-                    subject.clearSong()
+                    subject.clearSound()
                 }
 
                 it("stops playing any song") {
@@ -115,7 +115,7 @@ class PlayerSpec: QuickSpec {
                 }
 
                 it("does not raise an exception") {
-                    expect(subject.clearSong()).toNot(throwError())
+                    expect(subject.clearSound()).toNot(throwError())
                 }
             }
         }
@@ -194,7 +194,7 @@ class PlayerSpec: QuickSpec {
             context("When a song has been loaded") {
                 beforeEach {
                     subject.audioBox = audioBox
-                    subject.clearSong()
+                    subject.clearSound()
                 }
 
                 it("stops playing any song") {
@@ -212,7 +212,7 @@ class PlayerSpec: QuickSpec {
                 }
 
                 it("does not raise an exception") {
-                    expect(subject.clearSong()).toNot(throwError())
+                    expect(subject.clearSound()).toNot(throwError())
                 }
             }
         }

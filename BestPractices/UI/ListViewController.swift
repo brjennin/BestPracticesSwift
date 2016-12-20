@@ -4,7 +4,7 @@ class ListViewController: UITableViewController {
 
     var dispatcher: DispatcherProtocol! = Dispatcher()
     var soundCache: SoundCacheProtocol! = SoundCache()
-    weak var songSelectionDelegate: SongSelectionDelegate!
+    weak var soundSelectionDelegate: SoundSelectionDelegate!
 
     var songs: [Song] = []
 
@@ -30,7 +30,7 @@ class ListViewController: UITableViewController {
             }
         }
 
-        self.soundCache.getSongs(completion: songsCompletion)
+        self.soundCache.getSounds(completion: songsCompletion)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,10 +45,10 @@ class ListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.songSelectionDelegate.songWasSelected(song: self.songs[(indexPath as NSIndexPath).row])
+        self.soundSelectionDelegate.soundWasSelected(sound: self.songs[(indexPath as NSIndexPath).row])
     }
 
     func refresh(refreshControl: UIRefreshControl) {
-        self.soundCache.getSongsAndRefreshCache(completion: songsCompletion)
+        self.soundCache.getSoundsAndRefreshCache(completion: songsCompletion)
     }
 }

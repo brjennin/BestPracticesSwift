@@ -19,9 +19,9 @@ class HomeViewController: UIViewController {
 
         self.title = "YACHTY"
         self.currentSongLabel.text = ""
-        soundCache.getSongs { [weak self] songs in
-            if songs.count > 0 {
-                self?.songWasSelected(song: songs.first!)
+        soundCache.getSounds { [weak self] sounds in
+            if sounds.count > 0 {
+                self?.soundWasSelected(sound: sounds.first!)
             }
         }
     }
@@ -29,7 +29,7 @@ class HomeViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToListView" {
             if let listViewController = segue.destination as? ListViewController {
-                listViewController.songSelectionDelegate = self
+                listViewController.soundSelectionDelegate = self
             }
         }
     }
@@ -48,20 +48,20 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: SongSelectionDelegate {
+extension HomeViewController: SoundSelectionDelegate {
 
-    func songWasSelected(song: Song) {
+    func soundWasSelected(sound: Song) {
         _ = self.navigationController?.popViewController(animated: true)
         self.albumArtImageView.image = nil
-        self.player.clearSong()
-        self.currentSongLabel.text = song.name
+        self.player.clearSound()
+        self.currentSongLabel.text = sound.name
 
-        self.songLoader.loadSongAssets(song: song, songCompletion: { [weak self] songWithSong in
-            if let songPath = songWithSong.songLocalPath {
-                self?.player.loadSong(filePath: songPath)
+        self.songLoader.loadSoundAssets(sound: sound, soundCompletion: { [weak self] soundWithSound in
+            if let soundPath = soundWithSound.songLocalPath {
+                self?.player.loadSound(filePath: soundPath)
             }
-        }, imageCompletion: { [weak self] songWithImage in
-            if let imagePath = songWithImage.imageLocalPath {
+        }, imageCompletion: { [weak self] soundWithImage in
+            if let imagePath = soundWithImage.imageLocalPath {
                 self?.albumArtImageView.image = UIImage(contentsOfFile: imagePath)
             }
         })

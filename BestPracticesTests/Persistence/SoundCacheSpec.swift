@@ -24,7 +24,7 @@ class SoundCacheSpec: QuickSpec {
 
         describe(".getSongsAndRefreshCache") {
             beforeEach {
-                subject.getSongsAndRefreshCache { returnedSongs in
+                subject.getSoundsAndRefreshCache { returnedSongs in
                     result = returnedSongs
                 }
             }
@@ -55,8 +55,8 @@ class SoundCacheSpec: QuickSpec {
 
                     it("persists the songs") {
                         expect(soundPersistence.calledReplace).to(beTruthy())
-                        expect(soundPersistence.capturedReplaceSongs!.first!.identifier).to(equal(111))
-                        expect(soundPersistence.capturedReplaceSongs!.last!.identifier).to(equal(222))
+                        expect(soundPersistence.capturedReplaceSounds!.first!.identifier).to(equal(111))
+                        expect(soundPersistence.capturedReplaceSounds!.last!.identifier).to(equal(222))
                     }
                 }
 
@@ -65,7 +65,7 @@ class SoundCacheSpec: QuickSpec {
 
                     context("When there are songs persisted") {
                         beforeEach {
-                            soundPersistence.songsThatGetRetrieved = [
+                            soundPersistence.soundsThatGetRetrieved = [
                                 Song(value: ["identifier": 831]),
                                 Song(value: ["identifier": 821]),
                             ]
@@ -89,7 +89,7 @@ class SoundCacheSpec: QuickSpec {
 
                     context("When there are no songs persisted") {
                         beforeEach {
-                            soundPersistence.songsThatGetRetrieved = nil
+                            soundPersistence.soundsThatGetRetrieved = nil
                             soundService.completion!(nil, error)
                         }
 
@@ -120,12 +120,12 @@ class SoundCacheSpec: QuickSpec {
 
             context("When the persistence layer has songs") {
                 beforeEach {
-                    soundPersistence.songsThatGetRetrieved = [
+                    soundPersistence.soundsThatGetRetrieved = [
                         Song(value: ["identifier": 831]),
                         Song(value: ["identifier": 821]),
                     ]
 
-                    subject.getSongs { returnedSongs in
+                    subject.getSounds { returnedSongs in
                         result = returnedSongs
                     }
                 }
@@ -146,9 +146,9 @@ class SoundCacheSpec: QuickSpec {
 
             context("When the persistence layer has no songs") {
                 beforeEach {
-                    soundPersistence.songsThatGetRetrieved = nil
+                    soundPersistence.soundsThatGetRetrieved = nil
 
-                    subject.getSongs { returnedSongs in
+                    subject.getSounds { returnedSongs in
                         result = returnedSongs
                     }
                 }
@@ -183,8 +183,8 @@ class SoundCacheSpec: QuickSpec {
 
                         it("persists the songs") {
                             expect(soundPersistence.calledReplace).to(beTruthy())
-                            expect(soundPersistence.capturedReplaceSongs!.first!.identifier).to(equal(111))
-                            expect(soundPersistence.capturedReplaceSongs!.last!.identifier).to(equal(222))
+                            expect(soundPersistence.capturedReplaceSounds!.first!.identifier).to(equal(111))
+                            expect(soundPersistence.capturedReplaceSounds!.last!.identifier).to(equal(222))
                         }
                     }
 
@@ -192,7 +192,7 @@ class SoundCacheSpec: QuickSpec {
                         let error = NSError(domain: "com.example", code: 213, userInfo: nil)
 
                         beforeEach {
-                            soundPersistence.songsThatGetRetrieved = nil
+                            soundPersistence.soundsThatGetRetrieved = nil
                             soundService.completion!(nil, error)
                         }
 

@@ -1,7 +1,7 @@
 protocol SoundCacheProtocol: class {
-    func getSongs(completion: @escaping ([Song]) -> ())
+    func getSounds(completion: @escaping ([Song]) -> ())
 
-    func getSongsAndRefreshCache(completion: @escaping ([Song]) -> ())
+    func getSoundsAndRefreshCache(completion: @escaping ([Song]) -> ())
 }
 
 class SoundCache: SoundCacheProtocol {
@@ -9,37 +9,37 @@ class SoundCache: SoundCacheProtocol {
     var soundService: SoundServiceProtocol! = SoundService()
     var soundPersistence: SoundPersistenceProtocol! = SoundPersistence()
 
-    func getSongs(completion: @escaping ([Song]) -> ()) {
-        let persistedSongs = self.soundPersistence.retrieve()
-        if let songs = persistedSongs {
-            completion(songs)
+    func getSounds(completion: @escaping ([Song]) -> ()) {
+        let persistedSounds = self.soundPersistence.retrieve()
+        if let sounds = persistedSounds {
+            completion(sounds)
         } else {
-            self.soundService.getSongs { [weak self] songs, error in
-                var songsResult = [Song]()
-                if let songs = songs {
-                    self?.soundPersistence.replace(songs: songs)
-                    songsResult = songs
+            self.soundService.getSounds { [weak self] sounds, error in
+                var soundsResult = [Song]()
+                if let sounds = sounds {
+                    self?.soundPersistence.replace(sounds: sounds)
+                    soundsResult = sounds
                 }
 
-                completion(songsResult)
+                completion(soundsResult)
             }
         }
     }
 
-    func getSongsAndRefreshCache(completion: @escaping ([Song]) -> ()) {
-        self.soundService.getSongs { [weak self] songs, error in
-            var songsResult = [Song]()
-            if let songs = songs {
-                self?.soundPersistence.replace(songs: songs)
-                songsResult = songs
+    func getSoundsAndRefreshCache(completion: @escaping ([Song]) -> ()) {
+        self.soundService.getSounds { [weak self] sounds, error in
+            var soundsResult = [Song]()
+            if let sounds = sounds {
+                self?.soundPersistence.replace(sounds: sounds)
+                soundsResult = sounds
             } else {
-                let persistedSongs = self?.soundPersistence.retrieve()
-                if let persistedSongs = persistedSongs {
-                    songsResult = persistedSongs
+                let persistedSounds = self?.soundPersistence.retrieve()
+                if let persistedSounds = persistedSounds {
+                    soundsResult = persistedSounds
                 }
             }
 
-            completion(songsResult)
+            completion(soundsResult)
         }
     }
 

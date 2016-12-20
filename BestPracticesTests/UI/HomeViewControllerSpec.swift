@@ -73,11 +73,11 @@ class HomeViewControllerSpec: QuickSpec {
                     let songWithAssets = Song(value: ["songLocalPath": songAssetPath])
 
                     beforeEach {
-                        songLoader.capturedSongCompletion!(songWithAssets)
+                        songLoader.capturedSoundCompletion!(songWithAssets)
                     }
 
                     it("loads the song into the player") {
-                        expect(player.loadedSong).to(beTruthy())
+                        expect(player.loadedSound).to(beTruthy())
                         expect(player.capturedFilePath!).to(equal(songAssetPath))
                     }
                 }
@@ -87,11 +87,11 @@ class HomeViewControllerSpec: QuickSpec {
                     songWithoutAssets.songLocalPath = nil
 
                     beforeEach {
-                        songLoader.capturedSongCompletion!(songWithoutAssets)
+                        songLoader.capturedSoundCompletion!(songWithoutAssets)
                     }
 
                     it("does not load the song into the player") {
-                        expect(player.loadedSong).to(beFalsy())
+                        expect(player.loadedSound).to(beFalsy())
                     }
                 }
             }
@@ -111,12 +111,12 @@ class HomeViewControllerSpec: QuickSpec {
             }
 
             it("gets the songs from the cache") {
-                expect(soundCache.calledGetSongs).to(beTruthy())
+                expect(soundCache.calledGetSounds).to(beTruthy())
             }
 
             it("does not load the song") {
-                expect(player.loadedSong).to(beFalsy())
-                expect(songLoader.calledLoadSongAssets).to(beFalsy())
+                expect(player.loadedSound).to(beFalsy())
+                expect(songLoader.calledLoadSoundAssets).to(beFalsy())
             }
 
             it("clears label text") {
@@ -136,12 +136,12 @@ class HomeViewControllerSpec: QuickSpec {
                     let songs = [songOne, songTwo]
 
                     beforeEach {
-                        soundCache.capturedGetSongsCompletion!(songs)
+                        soundCache.capturedGetSoundsCompletion!(songs)
                     }
 
                     it("calls the song loader") {
-                        expect(songLoader.calledLoadSongAssets).to(beTruthy())
-                        expect(songLoader.capturedSong!.identifier).to(equal(123))
+                        expect(songLoader.calledLoadSoundAssets).to(beTruthy())
+                        expect(songLoader.capturedSound!.identifier).to(equal(123))
                     }
 
                     it("sets the label to the song name") {
@@ -153,11 +153,11 @@ class HomeViewControllerSpec: QuickSpec {
 
                 context("When there are no songs") {
                     beforeEach {
-                        soundCache.capturedGetSongsCompletion!([])
+                        soundCache.capturedGetSoundsCompletion!([])
                     }
 
                     it("does not load a song") {
-                        expect(songLoader.calledLoadSongAssets).to(beFalsy())
+                        expect(songLoader.calledLoadSoundAssets).to(beFalsy())
                     }
 
                     it("has a nil album art image") {
@@ -183,7 +183,7 @@ class HomeViewControllerSpec: QuickSpec {
                         }
                         
                         it("tells the player to play") {
-                            expect(player.playedSong).to(beTruthy())
+                            expect(player.playedSound).to(beTruthy())
                             expect(player.capturedDelay).to(beTruthy())
                             expect(player.capturedReverb).to(beTruthy())
                         }
@@ -196,7 +196,7 @@ class HomeViewControllerSpec: QuickSpec {
                         }
                         
                         it("tells the player to play") {
-                            expect(player.playedSong).to(beTruthy())
+                            expect(player.playedSound).to(beTruthy())
                             expect(player.capturedDelay).to(beTruthy())
                             expect(player.capturedReverb).to(beFalsy())
                         }
@@ -215,7 +215,7 @@ class HomeViewControllerSpec: QuickSpec {
                         }
                         
                         it("tells the player to play") {
-                            expect(player.playedSong).to(beTruthy())
+                            expect(player.playedSound).to(beTruthy())
                             expect(player.capturedDelay).to(beFalsy())
                             expect(player.capturedReverb).to(beTruthy())
                         }
@@ -228,7 +228,7 @@ class HomeViewControllerSpec: QuickSpec {
                         }
                         
                         it("tells the player to play") {
-                            expect(player.playedSong).to(beTruthy())
+                            expect(player.playedSound).to(beTruthy())
                             expect(player.capturedDelay).to(beFalsy())
                             expect(player.capturedReverb).to(beFalsy())
                         }
@@ -246,7 +246,7 @@ class HomeViewControllerSpec: QuickSpec {
                 }
 
                 it("sets itself as the song selection delegate") {
-                    expect(listViewController.songSelectionDelegate).to(beIdenticalTo(subject))
+                    expect(listViewController.soundSelectionDelegate).to(beIdenticalTo(subject))
                 }
 
                 describe("As a SongSelectionDelegate") {
@@ -255,12 +255,12 @@ class HomeViewControllerSpec: QuickSpec {
                         subject.currentSongLabel.text = "something"
 
                         let song = Song(value: ["identifier": 993, "name": "Hall and Oates"])
-                        subject.songWasSelected(song: song)
+                        subject.soundWasSelected(sound: song)
                     }
 
                     it("calls the song loader") {
-                        expect(songLoader.calledLoadSongAssets).to(beTruthy())
-                        expect(songLoader.capturedSong!.identifier).to(equal(993))
+                        expect(songLoader.calledLoadSoundAssets).to(beTruthy())
+                        expect(songLoader.capturedSound!.identifier).to(equal(993))
                     }
 
                     it("pops the list view controller off the navigation stack") {
@@ -272,7 +272,7 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("clears the previously loaded song") {
-                        expect(player.calledClearSong).to(beTruthy())
+                        expect(player.calledClearSound).to(beTruthy())
                     }
 
                     it("sets the label to the song name") {
