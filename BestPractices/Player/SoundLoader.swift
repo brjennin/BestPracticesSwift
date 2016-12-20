@@ -1,8 +1,8 @@
-protocol SongLoaderProtocol: class {
+protocol SoundLoaderProtocol: class {
     func loadSoundAssets(sound: Song, soundCompletion: @escaping (Song) -> (), imageCompletion: @escaping (Song) -> ())
 }
 
-class SongLoader: SongLoaderProtocol {
+class SoundLoader: SoundLoaderProtocol {
 
     var httpClient: HTTPClientProtocol! = HTTPClient()
     var soundPersistence: SoundPersistenceProtocol! = SoundPersistence()

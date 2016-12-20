@@ -2,16 +2,16 @@ import Quick
 import Nimble
 @testable import BestPractices
 
-class SongLoaderSpec: QuickSpec {
+class SoundLoaderSpec: QuickSpec {
     override func spec() {
 
-        var subject: SongLoader!
+        var subject: SoundLoader!
         var httpClient: MockHTTPClient!
         var soundPersistence: MockSoundPersistence!
         var diskMaster: MockDiskMaster!
 
         beforeEach {
-            subject = SongLoader()
+            subject = SoundLoader()
 
             httpClient = MockHTTPClient()
             subject.httpClient = httpClient

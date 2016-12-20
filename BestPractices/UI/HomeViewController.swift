@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var reverbNation: UISwitch!
 
     var player: PlayerProtocol! = Player()
-    var songLoader: SongLoaderProtocol! = SongLoader()
+    var soundLoader: SoundLoaderProtocol! = SoundLoader()
     var soundCache: SoundCacheProtocol! = SoundCache()
 
     override func viewDidLoad() {
@@ -56,7 +56,7 @@ extension HomeViewController: SoundSelectionDelegate {
         self.player.clearSound()
         self.currentSongLabel.text = sound.name
 
-        self.songLoader.loadSoundAssets(sound: sound, soundCompletion: { [weak self] soundWithSound in
+        self.soundLoader.loadSoundAssets(sound: sound, soundCompletion: { [weak self] soundWithSound in
             if let soundPath = soundWithSound.songLocalPath {
                 self?.player.loadSound(filePath: soundPath)
             }

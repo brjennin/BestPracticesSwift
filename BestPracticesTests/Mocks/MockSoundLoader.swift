@@ -1,6 +1,6 @@
 @testable import BestPractices
 
-class MockSongLoader: SongLoaderProtocol {
+class MockSoundLoader: SoundLoaderProtocol {
     
     var calledLoadSoundAssets = false
     var capturedSound: Song?

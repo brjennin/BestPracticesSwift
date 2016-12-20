@@ -10,7 +10,7 @@ class HomeViewControllerSpec: QuickSpec {
         var navigationController: UINavigationController!
         var listViewController: ListViewController!
         var player: MockPlayer!
-        var songLoader: MockSongLoader!
+        var soundLoader: MockSoundLoader!
         var soundCache: MockSoundCache!
 
         let bundle = Bundle(for: type(of: self))
@@ -27,8 +27,8 @@ class HomeViewControllerSpec: QuickSpec {
             player = MockPlayer()
             subject.player = player
 
-            songLoader = MockSongLoader()
-            subject.songLoader = songLoader
+            soundLoader = MockSoundLoader()
+            subject.soundLoader = soundLoader
 
             soundCache = MockSoundCache()
             subject.soundCache = soundCache
@@ -42,7 +42,7 @@ class HomeViewControllerSpec: QuickSpec {
                     let songWithAssets = Song(value: ["imageLocalPath": imagePath])
 
                     beforeEach {
-                        songLoader.capturedImageCompletion!(songWithAssets)
+                        soundLoader.capturedImageCompletion!(songWithAssets)
                     }
 
                     it("sets the album art image") {
@@ -57,7 +57,7 @@ class HomeViewControllerSpec: QuickSpec {
                     songWithoutAssets.imageLocalPath = nil
 
                     beforeEach {
-                        songLoader.capturedImageCompletion!(songWithoutAssets)
+                        soundLoader.capturedImageCompletion!(songWithoutAssets)
                     }
 
                     it("clears the album art image") {
@@ -73,7 +73,7 @@ class HomeViewControllerSpec: QuickSpec {
                     let songWithAssets = Song(value: ["songLocalPath": songAssetPath])
 
                     beforeEach {
-                        songLoader.capturedSoundCompletion!(songWithAssets)
+                        soundLoader.capturedSoundCompletion!(songWithAssets)
                     }
 
                     it("loads the song into the player") {
@@ -87,7 +87,7 @@ class HomeViewControllerSpec: QuickSpec {
                     songWithoutAssets.songLocalPath = nil
 
                     beforeEach {
-                        songLoader.capturedSoundCompletion!(songWithoutAssets)
+                        soundLoader.capturedSoundCompletion!(songWithoutAssets)
                     }
 
                     it("does not load the song into the player") {
@@ -116,7 +116,7 @@ class HomeViewControllerSpec: QuickSpec {
 
             it("does not load the song") {
                 expect(player.loadedSound).to(beFalsy())
-                expect(songLoader.calledLoadSoundAssets).to(beFalsy())
+                expect(soundLoader.calledLoadSoundAssets).to(beFalsy())
             }
 
             it("clears label text") {
@@ -140,8 +140,8 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("calls the song loader") {
-                        expect(songLoader.calledLoadSoundAssets).to(beTruthy())
-                        expect(songLoader.capturedSound!.identifier).to(equal(123))
+                        expect(soundLoader.calledLoadSoundAssets).to(beTruthy())
+                        expect(soundLoader.capturedSound!.identifier).to(equal(123))
                     }
 
                     it("sets the label to the song name") {
@@ -157,7 +157,7 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("does not load a song") {
-                        expect(songLoader.calledLoadSoundAssets).to(beFalsy())
+                        expect(soundLoader.calledLoadSoundAssets).to(beFalsy())
                     }
 
                     it("has a nil album art image") {
@@ -259,8 +259,8 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("calls the song loader") {
-                        expect(songLoader.calledLoadSoundAssets).to(beTruthy())
-                        expect(songLoader.capturedSound!.identifier).to(equal(993))
+                        expect(soundLoader.calledLoadSoundAssets).to(beTruthy())
+                        expect(soundLoader.capturedSound!.identifier).to(equal(993))
                     }
 
                     it("pops the list view controller off the navigation stack") {
