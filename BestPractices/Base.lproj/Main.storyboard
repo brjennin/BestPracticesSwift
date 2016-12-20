@@ -79,7 +79,7 @@
                     <navigationItem key="navigationItem" id="fQz-4l-7U3"/>
                     <connections>
                         <outlet property="albumArtImageView" destination="Bg5-RO-Cu9" id="DKt-mo-3CF"/>
-                        <outlet property="currentSongLabel" destination="PER-4W-yur" id="EpU-ac-yyl"/>
+                        <outlet property="currentSoundLabel" destination="PER-4W-yur" id="EpU-ac-yyl"/>
                         <outlet property="delaySwitch" destination="wNz-Dd-EiX" id="Tq8-YU-Xid"/>
                         <outlet property="looseButton" destination="qcZ-Sj-h7c" id="bhK-o6-dVy"/>
                         <outlet property="playButton" destination="NVg-wo-ubL" id="sog-xO-J6M"/>
@@ -100,7 +100,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SongTableViewCell" rowHeight="44" id="idi-UU-MD0" customClass="SongTableViewCell" customModule="BestPractices" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SoundTableViewCell" rowHeight="44" id="idi-UU-MD0" customClass="SoundTableViewCell" customModule="BestPractices" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="idi-UU-MD0" id="d0D-Rm-Hdu">

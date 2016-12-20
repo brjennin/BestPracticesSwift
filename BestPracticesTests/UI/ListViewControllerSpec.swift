@@ -32,11 +32,11 @@ class ListViewControllerSpec: QuickSpec {
 
             it("has 2 sound table view cells correctly configured") {
                 expect(subject.tableView.visibleCells.count).to(equal(2))
-                expect(subject.tableView.visibleCells.first).to(beAKindOf(SongTableViewCell.self))
-                expect(subject.tableView.visibleCells.last).to(beAKindOf(SongTableViewCell.self))
+                expect(subject.tableView.visibleCells.first).to(beAKindOf(SoundTableViewCell.self))
+                expect(subject.tableView.visibleCells.last).to(beAKindOf(SoundTableViewCell.self))
 
-                let cellOne = subject.tableView.visibleCells.first as! SongTableViewCell
-                let cellTwo = subject.tableView.visibleCells.last as! SongTableViewCell
+                let cellOne = subject.tableView.visibleCells.first as! SoundTableViewCell
+                let cellTwo = subject.tableView.visibleCells.last as! SoundTableViewCell
                 expect(cellOne.titleLabel.text).to(equal("Sound One"))
                 expect(cellTwo.titleLabel.text).to(equal("Sound Two"))
             }

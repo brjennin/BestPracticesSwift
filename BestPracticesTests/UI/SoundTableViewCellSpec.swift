@@ -2,14 +2,14 @@ import Quick
 import Nimble
 @testable import BestPractices
 
-class SongTableViewCellSpec: QuickSpec {
+class SoundTableViewCellSpec: QuickSpec {
     override func spec() {
 
-        var subject: SongTableViewCell!
+        var subject: SoundTableViewCell!
         var titleLabel: UILabel!
 
         beforeEach {
-            subject = SongTableViewCell()
+            subject = SoundTableViewCell()
             titleLabel = UILabel()
             subject.titleLabel = titleLabel
         }

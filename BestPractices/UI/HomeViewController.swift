@@ -3,7 +3,7 @@ import UIKit
 class HomeViewController: UIViewController {
 
     @IBOutlet weak var looseButton: UIButton!
-    @IBOutlet weak var currentSongLabel: UILabel!
+    @IBOutlet weak var currentSoundLabel: UILabel!
     @IBOutlet weak var albumArtImageView: UIImageView!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var delaySwitch: UISwitch!
@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         self.title = "YACHTY"
-        self.currentSongLabel.text = ""
+        self.currentSoundLabel.text = ""
         soundCache.getSounds { [weak self] sounds in
             if sounds.count > 0 {
                 self?.soundWasSelected(sound: sounds.first!)
@@ -54,7 +54,7 @@ extension HomeViewController: SoundSelectionDelegate {
         _ = self.navigationController?.popViewController(animated: true)
         self.albumArtImageView.image = nil
         self.player.clearSound()
-        self.currentSongLabel.text = sound.name
+        self.currentSoundLabel.text = sound.name
 
         self.soundLoader.loadSoundAssets(sound: sound, soundCompletion: { [weak self] soundWithSound in
             if let soundPath = soundWithSound.soundLocalPath {

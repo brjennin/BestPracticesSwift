@@ -1,8 +1,8 @@
 import UIKit
 
-class SongTableViewCell: UITableViewCell {
+class SoundTableViewCell: UITableViewCell {
     
-    static let cellIdentifier = "SongTableViewCell"
+    static let cellIdentifier = "SoundTableViewCell"
     
     @IBOutlet weak var titleLabel: UILabel!
     

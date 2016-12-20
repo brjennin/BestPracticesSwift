@@ -120,7 +120,7 @@ class HomeViewControllerSpec: QuickSpec {
             }
 
             it("clears label text") {
-                expect(subject.currentSongLabel.text).to(equal(""))
+                expect(subject.currentSoundLabel.text).to(equal(""))
             }
             
             it("has default whammy values between 0 and 2") {
@@ -145,7 +145,7 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("sets the label to the sound name") {
-                        expect(subject.currentSongLabel.text).to(equal("Sound One"))
+                        expect(subject.currentSoundLabel.text).to(equal("Sound One"))
                     }
 
                     itBehavesLike("downloading sound assets")
@@ -165,7 +165,7 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("has blank label text") {
-                        expect(subject.currentSongLabel.text).to(equal(""))
+                        expect(subject.currentSoundLabel.text).to(equal(""))
                     }
                 }
             }
@@ -252,7 +252,7 @@ class HomeViewControllerSpec: QuickSpec {
                 describe("As a SoundSelectionDelegate") {
                     beforeEach {
                         subject.albumArtImageView.image = UIImage(contentsOfFile: imagePath)
-                        subject.currentSongLabel.text = "something"
+                        subject.currentSoundLabel.text = "something"
 
                         let sound = Sound(value: ["identifier": 993, "name": "Hall and Oates"])
                         subject.soundWasSelected(sound: sound)
@@ -276,7 +276,7 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("sets the label to the sound name") {
-                        expect(subject.currentSongLabel.text).to(equal("Hall and Oates"))
+                        expect(subject.currentSoundLabel.text).to(equal("Hall and Oates"))
                     }
 
                     itBehavesLike("downloading sound assets")
