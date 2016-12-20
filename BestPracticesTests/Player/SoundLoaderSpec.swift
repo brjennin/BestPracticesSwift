@@ -23,23 +23,23 @@ class SoundLoaderSpec: QuickSpec {
             subject.diskMaster = diskMaster
         }
 
-        describe(".loadSongAssets") {
-            var song: Song!
+        describe(".loadSoundAssets") {
+            var sound: Song!
 
             let bundle = Bundle(for: type(of: self))
 
-            var capturedSongFromSongCompletion: Song?
-            var calledSongCompletion = false
-            var capturedSongFromImageCompletion: Song?
+            var capturedSoundFromSongCompletion: Song?
+            var calledSoundCompletion = false
+            var capturedSoundFromImageCompletion: Song?
             var calledImageCompletion = false
 
-            let songCompletion: ((Song) -> ()) = { capturedSong in
-                calledSongCompletion = true
-                capturedSongFromSongCompletion = capturedSong
+            let soundCompletion: ((Song) -> ()) = { capturedSound in
+                calledSoundCompletion = true
+                capturedSoundFromSongCompletion = capturedSound
             }
-            let imageCompletion: ((Song) -> ()) = { capturedSong in
+            let imageCompletion: ((Song) -> ()) = { capturedSound in
                 calledImageCompletion = true
-                capturedSongFromImageCompletion = capturedSong
+                capturedSoundFromImageCompletion = capturedSound
             }
 
             sharedExamples("downloading a song", closure: {
@@ -58,8 +58,8 @@ class SoundLoaderSpec: QuickSpec {
                         }
 
                         it("calls the completion callback with a local url") {
-                            expect(calledSongCompletion).to(beTruthy())
-                            expect(capturedSongFromSongCompletion!.identifier).to(equal(384))
+                            expect(calledSoundCompletion).to(beTruthy())
+                            expect(capturedSoundFromSongCompletion!.identifier).to(equal(384))
                         }
 
                         it("persists the new song url") {
@@ -75,8 +75,8 @@ class SoundLoaderSpec: QuickSpec {
                         }
 
                         it("calls the completion callback with a nil local url") {
-                            expect(calledSongCompletion).to(beTruthy())
-                            expect(capturedSongFromSongCompletion!.identifier).to(equal(384))
+                            expect(calledSoundCompletion).to(beTruthy())
+                            expect(capturedSoundFromSongCompletion!.identifier).to(equal(384))
                         }
 
                         it("does not persist the new song url") {
@@ -103,7 +103,7 @@ class SoundLoaderSpec: QuickSpec {
 
                         it("calls the completion callback with a local url") {
                             expect(calledImageCompletion).to(beTruthy())
-                            expect(capturedSongFromImageCompletion!.identifier).to(equal(384))
+                            expect(capturedSoundFromImageCompletion!.identifier).to(equal(384))
                         }
 
                         it("persists the new song url") {
@@ -120,7 +120,7 @@ class SoundLoaderSpec: QuickSpec {
 
                         it("calls the completion callback with a nil local url") {
                             expect(calledImageCompletion).to(beTruthy())
-                            expect(capturedSongFromImageCompletion!.identifier).to(equal(384))
+                            expect(capturedSoundFromImageCompletion!.identifier).to(equal(384))
                         }
 
                         it("does not persist the new image url") {
@@ -137,8 +137,8 @@ class SoundLoaderSpec: QuickSpec {
 
                 it("calls the completion callback with the existing url") {
                     expect(calledImageCompletion).to(beTruthy())
-                    expect(capturedSongFromImageCompletion!.identifier).to(equal(384))
-                    expect(capturedSongFromImageCompletion!.imageLocalPath).to(equal("existingImage"))
+                    expect(capturedSoundFromImageCompletion!.identifier).to(equal(384))
+                    expect(capturedSoundFromImageCompletion!.imageLocalPath).to(equal("existingImage"))
                 }
 
                 it("does not persist the image url") {
@@ -152,9 +152,9 @@ class SoundLoaderSpec: QuickSpec {
                 }
 
                 it("calls the completion callback with the existing url") {
-                    expect(calledSongCompletion).to(beTruthy())
-                    expect(capturedSongFromSongCompletion!.identifier).to(equal(384))
-                    expect(capturedSongFromSongCompletion!.songLocalPath).to(equal("existingSong"))
+                    expect(calledSoundCompletion).to(beTruthy())
+                    expect(capturedSoundFromSongCompletion!.identifier).to(equal(384))
+                    expect(capturedSoundFromSongCompletion!.songLocalPath).to(equal("existingSong"))
                 }
 
                 it("does not persist the song url") {
@@ -164,8 +164,8 @@ class SoundLoaderSpec: QuickSpec {
 
             context("When the song has no image and no sound file in the DB") {
                 beforeEach {
-                    song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl"])
-                    subject.loadSoundAssets(sound: song, soundCompletion: songCompletion, imageCompletion: imageCompletion)
+                    sound = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl"])
+                    subject.loadSoundAssets(sound: sound, soundCompletion: soundCompletion, imageCompletion: imageCompletion)
                 }
 
                 it("downloads 2 files") {
@@ -182,8 +182,8 @@ class SoundLoaderSpec: QuickSpec {
                     beforeEach {
                         diskMaster.returnValueForIsMediaFilePresent = true
 
-                        song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "imageLocalPath": "existingImage"])
-                        subject.loadSoundAssets(sound: song, soundCompletion: songCompletion, imageCompletion: imageCompletion)
+                        sound = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "imageLocalPath": "existingImage"])
+                        subject.loadSoundAssets(sound: sound, soundCompletion: soundCompletion, imageCompletion: imageCompletion)
                     }
 
                     it("downloads 1 files") {
@@ -204,8 +204,8 @@ class SoundLoaderSpec: QuickSpec {
                     beforeEach {
                         diskMaster.returnValueForIsMediaFilePresent = false
 
-                        song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "imageLocalPath": "existingImage"])
-                        subject.loadSoundAssets(sound: song, soundCompletion: songCompletion, imageCompletion: imageCompletion)
+                        sound = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "imageLocalPath": "existingImage"])
+                        subject.loadSoundAssets(sound: sound, soundCompletion: soundCompletion, imageCompletion: imageCompletion)
                     }
 
                     it("downloads 2 files") {
@@ -228,8 +228,8 @@ class SoundLoaderSpec: QuickSpec {
                     beforeEach {
                         diskMaster.returnValueForIsMediaFilePresent = true
 
-                        song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong"])
-                        subject.loadSoundAssets(sound: song, soundCompletion: songCompletion, imageCompletion: imageCompletion)
+                        sound = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong"])
+                        subject.loadSoundAssets(sound: sound, soundCompletion: soundCompletion, imageCompletion: imageCompletion)
                     }
 
                     it("downloads 1 files") {
@@ -250,8 +250,8 @@ class SoundLoaderSpec: QuickSpec {
                     beforeEach {
                         diskMaster.returnValueForIsMediaFilePresent = false
 
-                        song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong"])
-                        subject.loadSoundAssets(sound: song, soundCompletion: songCompletion, imageCompletion: imageCompletion)
+                        sound = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong"])
+                        subject.loadSoundAssets(sound: sound, soundCompletion: soundCompletion, imageCompletion: imageCompletion)
                     }
 
                     it("downloads 2 files") {
@@ -272,8 +272,8 @@ class SoundLoaderSpec: QuickSpec {
             context("When the song has a sound and image file in the DB") {
                 beforeEach {
                     diskMaster.returnValueForIsMediaFilePresent = true
-                    song = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong", "imageLocalPath": "existingImage"])
-                    subject.loadSoundAssets(sound: song, soundCompletion: songCompletion, imageCompletion: imageCompletion)
+                    sound = Song(value: ["identifier": 384, "url": "songUrl", "albumArt": "imageUrl", "songLocalPath": "existingSong", "imageLocalPath": "existingImage"])
+                    subject.loadSoundAssets(sound: sound, soundCompletion: soundCompletion, imageCompletion: imageCompletion)
                 }
 
                 it("downloads 0 files") {

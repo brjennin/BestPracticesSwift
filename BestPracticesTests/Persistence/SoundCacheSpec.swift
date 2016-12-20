@@ -35,16 +35,16 @@ class SoundCacheSpec: QuickSpec {
 
             describe("When the service resolves") {
                 context("When it resolves with songs") {
-                    var songOne: Song!
-                    var songTwo: Song!
-                    var songs: [Song]!
+                    var soundOne: Song!
+                    var soundTwo: Song!
+                    var sounds: [Song]!
 
                     beforeEach {
-                        songOne = Song(value: ["identifier": 111])
-                        songTwo = Song(value: ["identifier": 222])
-                        songs = [songOne, songTwo]
+                        soundOne = Song(value: ["identifier": 111])
+                        soundTwo = Song(value: ["identifier": 222])
+                        sounds = [soundOne, soundTwo]
 
-                        soundService.completion!(songs, nil)
+                        soundService.completion!(sounds, nil)
                     }
 
                     it("calls the completion with the song list") {

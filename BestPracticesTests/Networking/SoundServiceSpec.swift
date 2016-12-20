@@ -25,12 +25,12 @@ class SoundServiceSpec: QuickSpec {
         }
 
         describe(".getSongs") {
-            var returnedSongs: [Song]?
+            var returnedSounds: [Song]?
             var returnedError: NSError?
 
             beforeEach {
                 subject.getSounds { songs, error in
-                    returnedSongs = songs
+                    returnedSounds = songs
                     returnedError = error
                 }
             }
@@ -65,8 +65,8 @@ class SoundServiceSpec: QuickSpec {
                     }
 
                     it("calls the completion with song objects from the deserializer") {
-                        expect(returnedSongs!.first!.identifier).to(equal(123))
-                        expect(returnedSongs!.last!.identifier).to(equal(456))
+                        expect(returnedSounds!.first!.identifier).to(equal(123))
+                        expect(returnedSounds!.last!.identifier).to(equal(456))
                     }
 
                     it("bubbles up errors from the http client") {
@@ -87,7 +87,7 @@ class SoundServiceSpec: QuickSpec {
                     }
 
                     it("doesn't have any returned songs") {
-                        expect(returnedSongs).to(beNil())
+                        expect(returnedSounds).to(beNil())
                     }
 
                     it("doesn't have a returned error") {

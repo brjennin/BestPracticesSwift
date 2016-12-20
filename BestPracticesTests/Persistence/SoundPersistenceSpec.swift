@@ -67,17 +67,17 @@ class SoundPersistenceSpec: QuickSpec {
                 }
 
                 describe("Replacing with different songs") {
-                    var songOne: Song!
-                    var songTwo: Song!
-                    var songThree: Song!
+                    var soundOne: Song!
+                    var soundTwo: Song!
+                    var soundThree: Song!
                     
                     beforeEach {
-                        songOne = Song(value: ["identifier": 258, "name": "Rich Girl", "artist": "Hall & Oates", "url": "url3", "albumArt": "album_art3"])
-                        songTwo = Song(value: ["identifier": 257, "name": "Long Train Runnin", "artist": "Doobie Brothers", "url": "url2", "albumArt": "album_art2"])
-                        songThree = Song(value: ["identifier": 259, "name": "Sara Smile", "artist": "Hall & Oates", "url": "url4", "albumArt": "album_art4"])
+                        soundOne = Song(value: ["identifier": 258, "name": "Rich Girl", "artist": "Hall & Oates", "url": "url3", "albumArt": "album_art3"])
+                        soundTwo = Song(value: ["identifier": 257, "name": "Long Train Runnin", "artist": "Doobie Brothers", "url": "url2", "albumArt": "album_art2"])
+                        soundThree = Song(value: ["identifier": 259, "name": "Sara Smile", "artist": "Hall & Oates", "url": "url4", "albumArt": "album_art4"])
                         
-                        let songs: [Song] = [songOne, songTwo, songThree]
-                        subject.replace(sounds: songs)
+                        let sounds: [Song] = [soundOne, soundTwo, soundThree]
+                        subject.replace(sounds: sounds)
                     }
 
                     it("returns the songs when retrieving") {
@@ -112,11 +112,11 @@ class SoundPersistenceSpec: QuickSpec {
                     
                     describe("Updating urls for songs") {
                         beforeEach {
-                            subject.updateLocalSoundUrl(sound: songTwo, url: "testurl")
+                            subject.updateLocalSoundUrl(sound: soundTwo, url: "testurl")
                         }
                         
                         it("stores off the url for the song") {
-                            expect(songTwo.songLocalPath).to(equal("testurl"))
+                            expect(soundTwo.songLocalPath).to(equal("testurl"))
                             let result = subject.retrieve()
                             expect(result![0].identifier).to(equal(257))
                             expect(result![0].songLocalPath).to(equal("testurl"))
@@ -125,11 +125,11 @@ class SoundPersistenceSpec: QuickSpec {
                     
                     describe("Updating urls for images") {
                         beforeEach {
-                            subject.updateLocalImageUrl(sound: songOne, url: "imageurl")
+                            subject.updateLocalImageUrl(sound: soundOne, url: "imageurl")
                         }
                         
                         it("stores off the url for the image") {
-                            expect(songOne.imageLocalPath).to(equal("imageurl"))
+                            expect(soundOne.imageLocalPath).to(equal("imageurl"))
                             let result = subject.retrieve()
                             expect(result![1].identifier).to(equal(258))
                             expect(result![1].imageLocalPath).to(equal("imageurl"))

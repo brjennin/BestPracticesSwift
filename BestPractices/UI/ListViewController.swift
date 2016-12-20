@@ -39,7 +39,7 @@ class ListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: SongTableViewCell.cellIdentifier, for: indexPath) as! SongTableViewCell
-        cell.configureWithSong(song: self.songs[(indexPath as NSIndexPath).row])
+        cell.configureWithSound(sound: self.songs[(indexPath as NSIndexPath).row])
 
         return cell
     }

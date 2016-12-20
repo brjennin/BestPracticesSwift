@@ -37,8 +37,8 @@ class ListViewControllerSpec: QuickSpec {
 
                 let cellOne = subject.tableView.visibleCells.first as! SongTableViewCell
                 let cellTwo = subject.tableView.visibleCells.last as! SongTableViewCell
-                expect(cellOne.titleLabel.text).to(equal("Song One"))
-                expect(cellTwo.titleLabel.text).to(equal("Song Two"))
+                expect(cellOne.titleLabel.text).to(equal("Sound One"))
+                expect(cellTwo.titleLabel.text).to(equal("Sound Two"))
             }
 
             it("should end refreshing") {
@@ -74,9 +74,9 @@ class ListViewControllerSpec: QuickSpec {
         }
 
         describe(".viewDidLoad") {
-            let songOne = Song(value: ["identifier": 123, "name": "Song One"])
-            let songTwo = Song(value: ["identifier": 111, "name": "Song Two"])
-            let songs = [songOne, songTwo]
+            let soundOne = Song(value: ["identifier": 123, "name": "Sound One"])
+            let soundTwo = Song(value: ["identifier": 111, "name": "Sound Two"])
+            let sounds = [soundOne, soundTwo]
 
             beforeEach {
                 UIApplication.shared.keyWindow?.rootViewController = subject
@@ -123,7 +123,7 @@ class ListViewControllerSpec: QuickSpec {
 
             describe("When the cache resolves with songs") {
                 beforeEach {
-                    soundCache.capturedGetSoundsCompletion!(songs)
+                    soundCache.capturedGetSoundsCompletion!(sounds)
                 }
 
                 itBehavesLike("reloading songs")
@@ -141,7 +141,7 @@ class ListViewControllerSpec: QuickSpec {
 
                 describe("When the cache resolves with songs") {
                     beforeEach {
-                        soundCache.capturedGetSoundsAndRefreshCacheCompletion!(songs)
+                        soundCache.capturedGetSoundsAndRefreshCacheCompletion!(sounds)
                     }
 
                     itBehavesLike("reloading songs")

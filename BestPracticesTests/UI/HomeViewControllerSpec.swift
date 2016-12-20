@@ -131,12 +131,12 @@ class HomeViewControllerSpec: QuickSpec {
 
             describe("When the cache resolves with songs") {
                 context("When there are songs") {
-                    let songOne = Song(value: ["identifier": 123, "name": "Song One"])
-                    let songTwo = Song(value: ["identifier": 111, "name": "Song Two"])
-                    let songs = [songOne, songTwo]
+                    let soundOne = Song(value: ["identifier": 123, "name": "Sound One"])
+                    let soundTwo = Song(value: ["identifier": 111, "name": "Sound Two"])
+                    let sounds = [soundOne, soundTwo]
 
                     beforeEach {
-                        soundCache.capturedGetSoundsCompletion!(songs)
+                        soundCache.capturedGetSoundsCompletion!(sounds)
                     }
 
                     it("calls the song loader") {
@@ -145,7 +145,7 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("sets the label to the song name") {
-                        expect(subject.currentSongLabel.text).to(equal("Song One"))
+                        expect(subject.currentSongLabel.text).to(equal("Sound One"))
                     }
 
                     itBehavesLike("downloading song assets")
