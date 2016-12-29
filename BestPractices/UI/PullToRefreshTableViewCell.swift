@@ -10,7 +10,7 @@ class PullToRefreshTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.infoLabel.setFAText(prefixText: "Pull to Refresh  ", icon: FAType.FARefresh, postfixText: "", size: 14.0, iconSize: 14.0)
+        self.infoLabel.setFAText(prefixText: "Pull to Refresh  ", icon: FAType.FARefresh, postfixText: "", size: 12.0, iconSize: 12.0)
     }
 
 }

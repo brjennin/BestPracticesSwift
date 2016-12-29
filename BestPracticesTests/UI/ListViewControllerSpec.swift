@@ -84,11 +84,25 @@ class ListViewControllerSpec: QuickSpec {
                     }
                 }
                 
-                describe(".tableView:titleForHeaderInSection:") {
+                describe(".tableView:heightForHeaderInSection:") {
                     it("Sets the title for the table sections") {
-                        expect(subject.tableView(subject.tableView, titleForHeaderInSection: 0)).to(beNil())
-                        expect(subject.tableView(subject.tableView, titleForHeaderInSection: 1)).to(equal("Section One"))
-                        expect(subject.tableView(subject.tableView, titleForHeaderInSection: 2)).to(equal("Section Two"))
+                        expect(subject.tableView(subject.tableView, heightForHeaderInSection: 0)).to(equal(0))
+                        expect(subject.tableView(subject.tableView, heightForHeaderInSection: 1)).to(equal(30))
+                        expect(subject.tableView(subject.tableView, heightForHeaderInSection: 2)).to(equal(30))
+                    }
+                }
+                
+                describe(".tableView:viewForHeaderInSection:") {
+                    it("Sets the title for the table sections") {
+                        let sectionOne = subject.tableView(subject.tableView, viewForHeaderInSection: 0)
+                        let sectionTwo = subject.tableView(subject.tableView, viewForHeaderInSection: 1) as! SectionHeaderViewCell
+                        let sectionThree = subject.tableView(subject.tableView, viewForHeaderInSection: 2) as! SectionHeaderViewCell
+                        
+                        expect(sectionOne).to(beNil())
+                        expect(sectionTwo).toNot(beNil())
+                        expect(sectionTwo.titleLabel.text).to(equal("SECTION ONE"))
+                        expect(sectionThree).toNot(beNil())
+                        expect(sectionThree.titleLabel.text).to(equal("SECTION TWO"))
                     }
                 }
             }

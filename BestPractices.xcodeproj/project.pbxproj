@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		08F8128CA9ECC2978D2DABFA /* Pods_BestPracticesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EAC0E99A6C92352273C8513 /* Pods_BestPracticesTests.framework */; };
 		AE10EC5E1E156CE100F0CBE1 /* SoundGroupSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE10EC5D1E156CE100F0CBE1 /* SoundGroupSpec.swift */; };
+		AE10EC601E15B45D00F0CBE1 /* SectionHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE10EC5F1E15B45D00F0CBE1 /* SectionHeaderViewCell.swift */; };
+		AE10EC621E15B53800F0CBE1 /* SectionHeaderViewCellSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE10EC611E15B53800F0CBE1 /* SectionHeaderViewCellSpec.swift */; };
 		AE10EF761E099BD2000309F4 /* PullToRefreshTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE10EF751E099BD2000309F4 /* PullToRefreshTableViewCell.swift */; };
 		AE10EF781E09AFED000309F4 /* SoundGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE10EF771E09AFED000309F4 /* SoundGroup.swift */; };
 		AE1ABA7E1D93059700357DA5 /* MockSoundCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA7D1D93059700357DA5 /* MockSoundCache.swift */; };
@@ -107,6 +109,8 @@
 		A68A29476DAABD3F71D1B900 /* Pods-BestPracticesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestPracticesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestPracticesTests/Pods-BestPracticesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A960EF264F74121529805475 /* Pods_BestPractices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestPractices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE10EC5D1E156CE100F0CBE1 /* SoundGroupSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundGroupSpec.swift; sourceTree = "<group>"; };
+		AE10EC5F1E15B45D00F0CBE1 /* SectionHeaderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderViewCell.swift; sourceTree = "<group>"; };
+		AE10EC611E15B53800F0CBE1 /* SectionHeaderViewCellSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderViewCellSpec.swift; sourceTree = "<group>"; };
 		AE10EF751E099BD2000309F4 /* PullToRefreshTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullToRefreshTableViewCell.swift; sourceTree = "<group>"; };
 		AE10EF771E09AFED000309F4 /* SoundGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundGroup.swift; sourceTree = "<group>"; };
 		AE1ABA7D1D93059700357DA5 /* MockSoundCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSoundCache.swift; sourceTree = "<group>"; };
@@ -268,6 +272,7 @@
 				DE99CC9A954DB67DE294D516 /* Main.storyboard */,
 				AE304A811D888212001F1D0C /* SoundSelectionDelegate.swift */,
 				AE10EF751E099BD2000309F4 /* PullToRefreshTableViewCell.swift */,
+				AE10EC5F1E15B45D00F0CBE1 /* SectionHeaderViewCell.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -478,6 +483,7 @@
 				DE99C5A73B9BE85B8658A01F /* ListViewControllerSpec.swift */,
 				DE99C828047E9E250097ADBA /* HomeViewControllerSpec.swift */,
 				AE304A7F1D885CAD001F1D0C /* SoundTableViewCellSpec.swift */,
+				AE10EC611E15B53800F0CBE1 /* SectionHeaderViewCellSpec.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -738,6 +744,7 @@
 				AE1ABAB21D99E26400357DA5 /* ApplicationProvider.swift in Sources */,
 				AE1ABA9F1D99A2CE00357DA5 /* ActivityIndicator.swift in Sources */,
 				AE304A821D888212001F1D0C /* SoundSelectionDelegate.swift in Sources */,
+				AE10EC601E15B45D00F0CBE1 /* SectionHeaderViewCell.swift in Sources */,
 				AE319F471D9D767900A65FB9 /* Audio.swift in Sources */,
 				DE99C1B1FCC8BB442521DA28 /* SoundService.swift in Sources */,
 				DE99C9220822A0E8F854007A /* Dispatcher.swift in Sources */,
@@ -791,6 +798,7 @@
 				AE1ABA901D947ACF00357DA5 /* MockDiskMaster.swift in Sources */,
 				AE319F4B1D9D7D6500A65FB9 /* MockAVAudioEngine.swift in Sources */,
 				AE319F571D9DBAE600A65FB9 /* AudioBoxSpec.swift in Sources */,
+				AE10EC621E15B53800F0CBE1 /* SectionHeaderViewCellSpec.swift in Sources */,
 				AEAACF4C1D90B595007177CF /* MockPlayer.swift in Sources */,
 				AE1ABA841D9308AA00357DA5 /* SoundCacheSpec.swift in Sources */,
 				AE319F491D9D7CB700A65FB9 /* MockAVAudioPlayerNode.swift in Sources */,

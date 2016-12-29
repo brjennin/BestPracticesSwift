@@ -37,12 +37,18 @@ class ListViewController: UITableViewController {
         return self.soundGroups.count + 1
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             return nil
-        } else {
-            return self.soundGroups[section-1].name
         }
+
+        let view = tableView.dequeueReusableCell(withIdentifier: SectionHeaderViewCell.cellIdentifier) as! SectionHeaderViewCell
+        view.configureWithTitle(title: self.soundGroups[section-1].name)
+        return view
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return section == 0 ? 0 : 30
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
