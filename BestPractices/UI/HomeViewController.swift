@@ -9,6 +9,8 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var whammySlider: UISlider!
     @IBOutlet weak var reverbNation: UISwitch!
     @IBOutlet weak var chooseSoundButton: UIBarButtonItem!
+    @IBOutlet var smallRadiusElements: [UIView]!
+    @IBOutlet var largeRadiusElements: [UIView]!
     
     var player: PlayerProtocol! = Player()
     var soundLoader: SoundLoaderProtocol! = SoundLoader()
@@ -18,6 +20,15 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         self.title = "YACHTY"
+        
+        for element in smallRadiusElements {
+            element.layer.cornerRadius = 1
+            element.layer.masksToBounds = true
+        }
+        for element in largeRadiusElements {
+            element.layer.cornerRadius = 5
+            element.layer.masksToBounds = true
+        }
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.chooseSoundButton.FAIcon = FAType.FAEject
