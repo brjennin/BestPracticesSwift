@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		08F8128CA9ECC2978D2DABFA /* Pods_BestPracticesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9EAC0E99A6C92352273C8513 /* Pods_BestPracticesTests.framework */; };
+		AE10EC5E1E156CE100F0CBE1 /* SoundGroupSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE10EC5D1E156CE100F0CBE1 /* SoundGroupSpec.swift */; };
 		AE10EF761E099BD2000309F4 /* PullToRefreshTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE10EF751E099BD2000309F4 /* PullToRefreshTableViewCell.swift */; };
+		AE10EF781E09AFED000309F4 /* SoundGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE10EF771E09AFED000309F4 /* SoundGroup.swift */; };
 		AE1ABA7E1D93059700357DA5 /* MockSoundCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA7D1D93059700357DA5 /* MockSoundCache.swift */; };
 		AE1ABA821D9305EF00357DA5 /* SoundCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA811D9305EF00357DA5 /* SoundCache.swift */; };
 		AE1ABA841D9308AA00357DA5 /* SoundCacheSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE1ABA831D9308AA00357DA5 /* SoundCacheSpec.swift */; };
@@ -104,7 +106,9 @@
 		9EAC0E99A6C92352273C8513 /* Pods_BestPracticesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestPracticesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A68A29476DAABD3F71D1B900 /* Pods-BestPracticesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BestPracticesTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BestPracticesTests/Pods-BestPracticesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A960EF264F74121529805475 /* Pods_BestPractices.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BestPractices.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE10EC5D1E156CE100F0CBE1 /* SoundGroupSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundGroupSpec.swift; sourceTree = "<group>"; };
 		AE10EF751E099BD2000309F4 /* PullToRefreshTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullToRefreshTableViewCell.swift; sourceTree = "<group>"; };
+		AE10EF771E09AFED000309F4 /* SoundGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundGroup.swift; sourceTree = "<group>"; };
 		AE1ABA7D1D93059700357DA5 /* MockSoundCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockSoundCache.swift; sourceTree = "<group>"; };
 		AE1ABA811D9305EF00357DA5 /* SoundCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundCache.swift; sourceTree = "<group>"; };
 		AE1ABA831D9308AA00357DA5 /* SoundCacheSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundCacheSpec.swift; sourceTree = "<group>"; };
@@ -272,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				AE304A7D1D885A03001F1D0C /* SoundSpec.swift */,
+				AE10EC5D1E156CE100F0CBE1 /* SoundGroupSpec.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -481,6 +486,7 @@
 			isa = PBXGroup;
 			children = (
 				AE1ABA8B1D94429800357DA5 /* Sound.swift */,
+				AE10EF771E09AFED000309F4 /* SoundGroup.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -735,6 +741,7 @@
 				AE319F471D9D767900A65FB9 /* Audio.swift in Sources */,
 				DE99C1B1FCC8BB442521DA28 /* SoundService.swift in Sources */,
 				DE99C9220822A0E8F854007A /* Dispatcher.swift in Sources */,
+				AE10EF781E09AFED000309F4 /* SoundGroup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,6 +763,7 @@
 				AE319F4D1D9D7E9C00A65FB9 /* MockAVAudioUnitDelay.swift in Sources */,
 				AEC6AE141D90B83B00933DCC /* PlayerSpec.swift in Sources */,
 				AE1ABA9D1D95A0A000357DA5 /* MockSoundLoader.swift in Sources */,
+				AE10EC5E1E156CE100F0CBE1 /* SoundGroupSpec.swift in Sources */,
 				AE319F451D9C65CB00A65FB9 /* EngineBuilderSpec.swift in Sources */,
 				AE1ABAA51D99CB6600357DA5 /* AppDelegateSpec.swift in Sources */,
 				AE304A7E1D885A03001F1D0C /* SoundSpec.swift in Sources */,

@@ -22,9 +22,9 @@ class HomeViewController: UIViewController {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         self.currentSoundLabel.text = ""
-        soundCache.getSounds { [weak self] sounds in
-            if sounds.count > 0 {
-                self?.soundWasSelected(sound: sounds.first!)
+        soundCache.getSounds { [weak self] soundGroups in
+            if soundGroups.count > 0 {
+                self?.soundWasSelected(sound: soundGroups.first!.sounds.first!)
             }
         }
     }

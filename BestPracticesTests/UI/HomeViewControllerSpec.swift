@@ -137,10 +137,13 @@ class HomeViewControllerSpec: QuickSpec {
                 context("When there are sounds") {
                     let soundOne = Sound(value: ["identifier": 123, "name": "Sound One"])
                     let soundTwo = Sound(value: ["identifier": 111, "name": "Sound Two"])
-                    let sounds = [soundOne, soundTwo]
+                    let soundGroups = [
+                        SoundGroup(value: ["identifier": 1, "name": "Section One", "sounds": [soundOne]]),
+                        SoundGroup(value: ["identifier": 2, "name": "Section Two", "sounds": [soundTwo]])
+                    ]
 
                     beforeEach {
-                        soundCache.capturedGetSoundsCompletion!(sounds)
+                        soundCache.capturedGetSoundsCompletion!(soundGroups)
                     }
 
                     it("calls the sound loader") {

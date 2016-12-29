@@ -3,17 +3,17 @@
 class MockSoundPersistence: SoundPersistenceProtocol {
     
     var calledReplace = false
-    var capturedReplaceSounds: [Sound]?
+    var capturedReplaceSounds: [SoundGroup]?
     
-    func replace(sounds: [Sound]) {
+    func replace(soundGroups: [SoundGroup]) {
         calledReplace = true
-        capturedReplaceSounds = sounds
+        capturedReplaceSounds = soundGroups
     }
     
     var calledRetrieve = false
-    var soundsThatGetRetrieved: [Sound]?
+    var soundsThatGetRetrieved: [SoundGroup]?
     
-    func retrieve() -> [Sound]? {
+    func retrieve() -> [SoundGroup]? {
         calledRetrieve = true
         return soundsThatGetRetrieved
     }

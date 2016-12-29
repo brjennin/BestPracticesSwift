@@ -3,17 +3,17 @@
 class MockSoundCache: SoundCacheProtocol {
     
     var calledGetSounds = false
-    var capturedGetSoundsCompletion: (([Sound]) -> ())?
+    var capturedGetSoundsCompletion: (([SoundGroup]) -> ())?
     
-    func getSounds(completion: @escaping ([Sound]) -> ()) {
+    func getSounds(completion: @escaping ([SoundGroup]) -> ()) {
         calledGetSounds = true
         capturedGetSoundsCompletion = completion
     }
     
     var calledGetSoundsAndRefreshCache = false
-    var capturedGetSoundsAndRefreshCacheCompletion: (([Sound]) -> ())?
+    var capturedGetSoundsAndRefreshCacheCompletion: (([SoundGroup]) -> ())?
     
-    func getSoundsAndRefreshCache(completion: @escaping (([Sound]) -> ())) {
+    func getSoundsAndRefreshCache(completion: @escaping (([SoundGroup]) -> ())) {
         calledGetSoundsAndRefreshCache = true
         capturedGetSoundsAndRefreshCacheCompletion = completion
     }

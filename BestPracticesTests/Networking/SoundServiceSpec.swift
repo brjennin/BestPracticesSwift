@@ -25,12 +25,12 @@ class SoundServiceSpec: QuickSpec {
         }
 
         describe(".getSounds") {
-            var returnedSounds: [Sound]?
+            var returnedSoundGroups: [SoundGroup]?
             var returnedError: NSError?
 
             beforeEach {
                 subject.getSounds { sounds, error in
-                    returnedSounds = sounds
+                    returnedSoundGroups = sounds
                     returnedError = error
                 }
             }
@@ -50,8 +50,8 @@ class SoundServiceSpec: QuickSpec {
 
                     beforeEach {
                         soundListDeserializer.returnValueForDeserialize = [
-                            Sound(value: ["identifier": 123]),
-                            Sound(value: ["identifier": 456])
+                            SoundGroup(value: ["identifier": 123]),
+                            SoundGroup(value: ["identifier": 456])
                         ]
 
                         json = JSON(["thing1", "thing2"])
@@ -64,9 +64,9 @@ class SoundServiceSpec: QuickSpec {
                         expect(soundListDeserializer.capturedJSON!).to(equal(json))
                     }
 
-                    it("calls the completion with sound objects from the deserializer") {
-                        expect(returnedSounds!.first!.identifier).to(equal(123))
-                        expect(returnedSounds!.last!.identifier).to(equal(456))
+                    it("calls the completion with sound group objects from the deserializer") {
+                        expect(returnedSoundGroups!.first!.identifier).to(equal(123))
+                        expect(returnedSoundGroups!.last!.identifier).to(equal(456))
                     }
 
                     it("bubbles up errors from the http client") {
@@ -74,7 +74,7 @@ class SoundServiceSpec: QuickSpec {
                     }
                 }
 
-                context("When there are no sounds") {
+                context("When there are no sound groups") {
                     beforeEach {
                         soundListDeserializer.returnValueForDeserialize = nil
 
@@ -87,7 +87,7 @@ class SoundServiceSpec: QuickSpec {
                     }
 
                     it("doesn't have any returned sounds") {
-                        expect(returnedSounds).to(beNil())
+                        expect(returnedSoundGroups).to(beNil())
                     }
 
                     it("doesn't have a returned error") {

@@ -1,7 +1,7 @@
 protocol SoundCacheProtocol: class {
-    func getSounds(completion: @escaping ([Sound]) -> ())
+    func getSounds(completion: @escaping ([SoundGroup]) -> ())
 
-    func getSoundsAndRefreshCache(completion: @escaping ([Sound]) -> ())
+    func getSoundsAndRefreshCache(completion: @escaping ([SoundGroup]) -> ())
 }
 
 class SoundCache: SoundCacheProtocol {
@@ -9,16 +9,16 @@ class SoundCache: SoundCacheProtocol {
     var soundService: SoundServiceProtocol! = SoundService()
     var soundPersistence: SoundPersistenceProtocol! = SoundPersistence()
 
-    func getSounds(completion: @escaping ([Sound]) -> ()) {
+    func getSounds(completion: @escaping ([SoundGroup]) -> ()) {
         let persistedSounds = self.soundPersistence.retrieve()
         if let sounds = persistedSounds {
             completion(sounds)
         } else {
-            self.soundService.getSounds { [weak self] sounds, error in
-                var soundsResult = [Sound]()
-                if let sounds = sounds {
-                    self?.soundPersistence.replace(sounds: sounds)
-                    soundsResult = sounds
+            self.soundService.getSounds { [weak self] soundGroups, error in
+                var soundsResult = [SoundGroup]()
+                if let soundGroups = soundGroups {
+                    self?.soundPersistence.replace(soundGroups: soundGroups)
+                    soundsResult = soundGroups
                 }
 
                 completion(soundsResult)
@@ -26,12 +26,12 @@ class SoundCache: SoundCacheProtocol {
         }
     }
 
-    func getSoundsAndRefreshCache(completion: @escaping ([Sound]) -> ()) {
-        self.soundService.getSounds { [weak self] sounds, error in
-            var soundsResult = [Sound]()
-            if let sounds = sounds {
-                self?.soundPersistence.replace(sounds: sounds)
-                soundsResult = sounds
+    func getSoundsAndRefreshCache(completion: @escaping ([SoundGroup]) -> ()) {
+        self.soundService.getSounds { [weak self] soundGroups, error in
+            var soundsResult = [SoundGroup]()
+            if let soundGroups = soundGroups {
+                self?.soundPersistence.replace(soundGroups: soundGroups)
+                soundsResult = soundGroups
             } else {
                 let persistedSounds = self?.soundPersistence.retrieve()
                 if let persistedSounds = persistedSounds {

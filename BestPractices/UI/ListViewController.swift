@@ -6,9 +6,9 @@ class ListViewController: UITableViewController {
     var soundCache: SoundCacheProtocol! = SoundCache()
     weak var soundSelectionDelegate: SoundSelectionDelegate!
 
-    var sounds: [Sound] = []
+    var soundGroups: [SoundGroup] = []
 
-    var soundsCompletion: (([Sound]) -> ())!
+    var soundsCompletion: (([SoundGroup]) -> ())!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,9 +20,9 @@ class ListViewController: UITableViewController {
 
         self.refreshControl!.beginRefreshing()
 
-        soundsCompletion = { [weak self] sounds in
+        soundsCompletion = { [weak self] soundGroups in
             if self != nil {
-                self!.sounds = sounds
+                self!.soundGroups = soundGroups
             }
             self?.dispatcher.dispatchToMainQueue {
                 self?.tableView.reloadData()
@@ -34,18 +34,19 @@ class ListViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return self.soundGroups.count + 1
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 1 {
-            return "Available Sounds"
+        if section == 0 {
+            return nil
+        } else {
+            return self.soundGroups[section-1].name
         }
-        return nil
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? 1 : self.sounds.count
+        return section == 0 ? 1 : self.soundGroups[section-1].sounds.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -55,7 +56,7 @@ class ListViewController: UITableViewController {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: SoundTableViewCell.cellIdentifier, for: indexPath) as! SoundTableViewCell
-            cell.configureWithSound(sound: self.sounds[(indexPath as NSIndexPath).row])
+            cell.configureWithSound(sound: self.soundGroups[indexPath.section-1].sounds[indexPath.row])
             
             return cell
         }
@@ -63,7 +64,7 @@ class ListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section > 0 {
-            self.soundSelectionDelegate.soundWasSelected(sound: self.sounds[(indexPath as NSIndexPath).row])
+            self.soundSelectionDelegate.soundWasSelected(sound: self.soundGroups[indexPath.section-1].sounds[indexPath.row])
         }
     }
 

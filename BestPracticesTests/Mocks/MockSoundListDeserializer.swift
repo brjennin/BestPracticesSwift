@@ -4,9 +4,9 @@ import SwiftyJSON
 class MockSoundListDeserializer: SoundListDeserializerProtocol {
     var calledDeserialize = false
     var capturedJSON: JSON?
-    var returnValueForDeserialize: [Sound]?
+    var returnValueForDeserialize: [SoundGroup]?
 
-    func deserialize(json: JSON?) -> [Sound]? {
+    func deserialize(json: JSON?) -> [SoundGroup]? {
         calledDeserialize = true
         capturedJSON = json
 

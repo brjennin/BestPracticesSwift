@@ -10,7 +10,7 @@ class SoundCacheSpec: QuickSpec {
         var soundService: MockSoundService!
         var soundPersistence: MockSoundPersistence!
 
-        var result: [Sound]!
+        var result: [SoundGroup]!
 
         beforeEach {
             subject = SoundCache()
@@ -34,17 +34,17 @@ class SoundCacheSpec: QuickSpec {
             }
 
             describe("When the service resolves") {
-                context("When it resolves with sounds") {
-                    var soundOne: Sound!
-                    var soundTwo: Sound!
-                    var sounds: [Sound]!
+                context("When it resolves with sound groups") {
+                    var groupOne: SoundGroup!
+                    var groupTwo: SoundGroup!
+                    var groups: [SoundGroup]!
 
                     beforeEach {
-                        soundOne = Sound(value: ["identifier": 111])
-                        soundTwo = Sound(value: ["identifier": 222])
-                        sounds = [soundOne, soundTwo]
+                        groupOne = SoundGroup(value: ["identifier": 111])
+                        groupTwo = SoundGroup(value: ["identifier": 222])
+                        groups = [groupOne, groupTwo]
 
-                        soundService.completion!(sounds, nil)
+                        soundService.completion!(groups, nil)
                     }
 
                     it("calls the completion with the sound list") {
@@ -66,8 +66,8 @@ class SoundCacheSpec: QuickSpec {
                     context("When there are sounds persisted") {
                         beforeEach {
                             soundPersistence.soundsThatGetRetrieved = [
-                                    Sound(value: ["identifier": 831]),
-                                    Sound(value: ["identifier": 821]),
+                                    SoundGroup(value: ["identifier": 831]),
+                                    SoundGroup(value: ["identifier": 821]),
                             ]
 
                             soundService.completion!(nil, error)
@@ -112,7 +112,7 @@ class SoundCacheSpec: QuickSpec {
         }
 
         describe(".getSounds") {
-            var result: [Sound]!
+            var result: [SoundGroup]!
 
             beforeEach {
                 soundService.reset()
@@ -121,8 +121,8 @@ class SoundCacheSpec: QuickSpec {
             context("When the persistence layer has sounds") {
                 beforeEach {
                     soundPersistence.soundsThatGetRetrieved = [
-                            Sound(value: ["identifier": 831]),
-                            Sound(value: ["identifier": 821]),
+                            SoundGroup(value: ["identifier": 831]),
+                            SoundGroup(value: ["identifier": 821]),
                     ]
 
                     subject.getSounds { returnedSounds in
@@ -163,18 +163,19 @@ class SoundCacheSpec: QuickSpec {
 
                 describe("When the service resolves") {
                     context("When it resolves with sounds") {
-                        var soundOne: Sound!
-                        var soundTwo: Sound!
-                        var sounds: [Sound]!
-
+                        var groupOne: SoundGroup!
+                        var groupTwo: SoundGroup!
+                        var groups: [SoundGroup]!
+                        
                         beforeEach {
-                            soundOne = Sound(value: ["identifier": 111])
-                            soundTwo = Sound(value: ["identifier": 222])
-                            sounds = [soundOne, soundTwo]
-
-                            soundService.completion!(sounds, nil)
+                            groupOne = SoundGroup(value: ["identifier": 111])
+                            groupTwo = SoundGroup(value: ["identifier": 222])
+                            groups = [groupOne, groupTwo]
+                            
+                            soundService.completion!(groups, nil)
                         }
-
+                        
+                        
                         it("calls the completion with the sound list") {
                             expect(result.count).to(equal(2))
                             expect(result.first!.identifier).to(equal(111))

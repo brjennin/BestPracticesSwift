@@ -1,9 +1,9 @@
 import RealmSwift
 
 protocol SoundPersistenceProtocol: class {
-    func replace(sounds: [Sound])
+    func replace(soundGroups: [SoundGroup])
 
-    func retrieve() -> [Sound]?
+    func retrieve() -> [SoundGroup]?
     
     func updateLocalSoundUrl(sound: Sound, url: String)
     
@@ -15,7 +15,7 @@ class SoundPersistence: SoundPersistenceProtocol {
     var realm: Realm!
     var diskMaster: DiskMasterProtocol! = DiskMaster()
 
-    func replace(sounds: [Sound]) {
+    func replace(soundGroups: [SoundGroup]) {
         do {
             try establishConnection()
             try wipeDatabase()
@@ -25,28 +25,28 @@ class SoundPersistence: SoundPersistenceProtocol {
 
         self.diskMaster.wipeLocalStorage()
         
-        for sound in sounds {
+        for soundGroup in soundGroups {
             _ = try? self.realm.write {
-                self.realm.add(sound)
+                self.realm.add(soundGroup)
             }
         }
     }
 
-    func retrieve() -> [Sound]? {
+    func retrieve() -> [SoundGroup]? {
         do {
             try establishConnection()
         } catch {
             return nil
         }
 
-        let sounds = realm.objects(Sound.self).sorted(byProperty: "identifier")
-        if sounds.count == 0 {
+        let soundGroups = realm.objects(SoundGroup.self).sorted(byProperty: "identifier")
+        if soundGroups.count == 0 {
             return nil
         }
 
-        var result = [Sound]()
-        for sound in sounds {
-            result.append(sound)
+        var result = [SoundGroup]()
+        for soundGroup in soundGroups {
+            result.append(soundGroup)
         }
 
         return result
