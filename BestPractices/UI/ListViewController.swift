@@ -16,6 +16,7 @@ class ListViewController: UITableViewController {
         self.title = "Choose a Sound"
 
         self.refreshControl = UIRefreshControl()
+        self.refreshControl!.backgroundColor = UIColor(colorLiteralRed: 234.0/255.0, green: 234.0/255.0, blue: 234.0/255.0, alpha: 1)
         self.refreshControl!.addTarget(self, action: #selector(refresh(refreshControl:)), for: .valueChanged)
 
         self.refreshControl!.beginRefreshing()
