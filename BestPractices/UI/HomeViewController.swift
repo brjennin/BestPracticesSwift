@@ -1,9 +1,8 @@
 import UIKit
+import Font_Awesome_Swift
 
 class HomeViewController: UIViewController {
 
-    @IBOutlet weak var looseButton: UIButton!
-    @IBOutlet weak var currentSoundLabel: UILabel!
     @IBOutlet weak var albumArtImageView: UIImageView!
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var delaySwitch: UISwitch!
@@ -21,8 +20,8 @@ class HomeViewController: UIViewController {
         self.title = "YACHTY"
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.chooseSoundButton.FAIcon = FAType.FAEject
         
-        self.currentSoundLabel.text = ""
         soundCache.getSounds { [weak self] soundGroups in
             if soundGroups.count > 0 {
                 self?.soundWasSelected(sound: soundGroups.first!.sounds.first!)
@@ -58,7 +57,7 @@ extension HomeViewController: SoundSelectionDelegate {
         _ = self.navigationController?.popViewController(animated: true)
         self.albumArtImageView.image = nil
         self.player.clearSound()
-        self.currentSoundLabel.text = sound.name
+        self.title = sound.name
 
         self.soundLoader.loadSoundAssets(sound: sound, soundCompletion: { [weak self] soundWithSound in
             if let soundPath = soundWithSound.soundLocalPath {

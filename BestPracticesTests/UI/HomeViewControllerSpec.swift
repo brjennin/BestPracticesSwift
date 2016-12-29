@@ -1,6 +1,7 @@
 import Quick
 import Nimble
 import Fleet
+import Font_Awesome_Swift
 @testable import BestPractices
 
 class HomeViewControllerSpec: QuickSpec {
@@ -104,9 +105,10 @@ class HomeViewControllerSpec: QuickSpec {
 
             it("has a button to go to the list view") {
                 expect(subject.chooseSoundButton).toNot(beNil())
+                expect(subject.chooseSoundButton.FAIcon).to(equal(FAType.FAEject))
             }
 
-            it("sets the title") {
+            it("sets the title default to the app name") {
                 expect(subject.title).to(equal("YACHTY"))
             }
 
@@ -121,10 +123,6 @@ class HomeViewControllerSpec: QuickSpec {
             
             it("clears text off the back button") {
                 expect(subject.navigationItem.backBarButtonItem!.title!).to(equal(""))
-            }
-
-            it("clears label text") {
-                expect(subject.currentSoundLabel.text).to(equal(""))
             }
             
             it("has default whammy values between 0 and 2") {
@@ -152,7 +150,7 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("sets the label to the sound name") {
-                        expect(subject.currentSoundLabel.text).to(equal("Sound One"))
+                        expect(subject.title).to(equal("Sound One"))
                     }
 
                     itBehavesLike("downloading sound assets")
@@ -171,8 +169,8 @@ class HomeViewControllerSpec: QuickSpec {
                         expect(subject.albumArtImageView.image).to(beNil())
                     }
 
-                    it("has blank label text") {
-                        expect(subject.currentSoundLabel.text).to(equal(""))
+                    it("resets the title to the app name") {
+                        expect(subject.title).to(equal("YACHTY"))
                     }
                 }
             }
@@ -259,7 +257,7 @@ class HomeViewControllerSpec: QuickSpec {
                 describe("As a SoundSelectionDelegate") {
                     beforeEach {
                         subject.albumArtImageView.image = UIImage(contentsOfFile: imagePath)
-                        subject.currentSoundLabel.text = "something"
+                        subject.title = "something"
 
                         let sound = Sound(value: ["identifier": 993, "name": "Hall and Oates"])
                         subject.soundWasSelected(sound: sound)
@@ -283,7 +281,7 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("sets the label to the sound name") {
-                        expect(subject.currentSoundLabel.text).to(equal("Hall and Oates"))
+                        expect(subject.title).to(equal("Hall and Oates"))
                     }
 
                     itBehavesLike("downloading sound assets")

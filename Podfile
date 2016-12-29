@@ -5,7 +5,8 @@ target 'BestPractices' do
   pod 'Alamofire', '~> 4.2'
   pod 'SwiftyJSON', '~> 3.1'  
   pod 'RealmSwift', '~> 1.1'
-
+  pod 'Font-Awesome-Swift', '~> 1.5.3'
+  
   target 'BestPracticesTests' do
     inherit! :search_paths
 

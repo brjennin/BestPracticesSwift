@@ -25,12 +25,6 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bg5-RO-Cu9" userLabel="album art">
                                 <rect key="frame" x="16" y="64" width="343" height="603"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sound" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PER-4W-yur">
-                                <rect key="frame" x="163" y="314.5" width="49.5" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVg-wo-ubL">
                                 <rect key="frame" x="172" y="587" width="31" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
@@ -68,14 +62,12 @@
                             <constraint firstItem="NVg-wo-ubL" firstAttribute="centerX" secondItem="Bg5-RO-Cu9" secondAttribute="centerX" id="Ft3-zo-UTQ"/>
                             <constraint firstItem="wNz-Dd-EiX" firstAttribute="centerY" secondItem="duB-Hp-8cM" secondAttribute="centerY" id="JYN-kv-5DF"/>
                             <constraint firstItem="wNz-Dd-EiX" firstAttribute="leading" secondItem="duB-Hp-8cM" secondAttribute="trailing" constant="10" id="RK5-Ec-OGw"/>
-                            <constraint firstItem="PER-4W-yur" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aQ6-hx-xdz"/>
                             <constraint firstItem="NVg-wo-ubL" firstAttribute="top" secondItem="wNz-Dd-EiX" secondAttribute="bottom" constant="20" id="adB-Iv-nL3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wNz-Dd-EiX" secondAttribute="trailing" constant="20" id="eud-HC-8aj"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Bg5-RO-Cu9" secondAttribute="bottom" id="iSx-DS-7RK"/>
                             <constraint firstItem="Bg5-RO-Cu9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="kZr-Im-xdW"/>
                             <constraint firstItem="wNz-Dd-EiX" firstAttribute="top" secondItem="yHf-ql-tBh" secondAttribute="bottom" constant="30" id="oug-mq-DrW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Bg5-RO-Cu9" secondAttribute="trailing" id="qym-sh-O7h"/>
-                            <constraint firstItem="eMc-UH-2Qt" firstAttribute="top" secondItem="PER-4W-yur" secondAttribute="bottom" constant="15" id="rhM-LA-pKO"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NVg-wo-ubL" secondAttribute="bottom" constant="20" id="uK5-5I-9f2"/>
                             <constraint firstItem="yHf-ql-tBh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="ztF-Fo-RDF"/>
                             <constraint firstItem="eMc-UH-2Qt" firstAttribute="centerY" secondItem="Bg5-RO-Cu9" secondAttribute="centerY" id="zz6-P4-D9r"/>
@@ -91,7 +83,6 @@
                     <connections>
                         <outlet property="albumArtImageView" destination="Bg5-RO-Cu9" id="DKt-mo-3CF"/>
                         <outlet property="chooseSoundButton" destination="mF2-bw-f5q" id="aQq-jI-GFL"/>
-                        <outlet property="currentSoundLabel" destination="PER-4W-yur" id="EpU-ac-yyl"/>
                         <outlet property="delaySwitch" destination="wNz-Dd-EiX" id="Tq8-YU-Xid"/>
                         <outlet property="playButton" destination="NVg-wo-ubL" id="sog-xO-J6M"/>
                         <outlet property="reverbNation" destination="eMc-UH-2Qt" id="eH1-Be-m56"/>
@@ -115,7 +106,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LV1-zh-p89" id="BMV-Pc-z3Q">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pull to Refresh from Server" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jfj-ya-tTG">
@@ -135,7 +126,7 @@
                                 <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="idi-UU-MD0" id="d0D-Rm-Hdu">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1E-l9-61Q" userLabel="Title Label">
@@ -170,7 +161,7 @@
         <scene sceneID="hdP-QL-jXU">
             <objects>
                 <navigationController storyboardIdentifier="NavigationController" id="YYY-JP-MGN" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7aI-YE-4tZ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="7aI-YE-4tZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
