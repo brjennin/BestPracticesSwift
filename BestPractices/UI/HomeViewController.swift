@@ -9,7 +9,8 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var delaySwitch: UISwitch!
     @IBOutlet weak var whammySlider: UISlider!
     @IBOutlet weak var reverbNation: UISwitch!
-
+    @IBOutlet weak var chooseSoundButton: UIBarButtonItem!
+    
     var player: PlayerProtocol! = Player()
     var soundLoader: SoundLoaderProtocol! = SoundLoader()
     var soundCache: SoundCacheProtocol! = SoundCache()

@@ -25,15 +25,8 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bg5-RO-Cu9" userLabel="album art">
                                 <rect key="frame" x="16" y="64" width="343" height="603"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qcZ-Sj-h7c">
-                                <rect key="frame" x="143.5" y="318.5" width="88" height="30"/>
-                                <state key="normal" title="Pick a sound"/>
-                                <connections>
-                                    <segue destination="aYW-py-we1" kind="show" identifier="segueToListView" id="XBd-rF-CR5"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sound" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PER-4W-yur">
-                                <rect key="frame" x="163" y="283" width="49.5" height="20.5"/>
+                                <rect key="frame" x="163" y="314.5" width="49.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -64,21 +57,17 @@
                                 </connections>
                             </slider>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eMc-UH-2Qt" userLabel="Reverb Switch">
-                                <rect key="frame" x="163" y="358.5" width="51" height="31"/>
+                                <rect key="frame" x="163" y="350" width="51" height="31"/>
                             </switch>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="eMc-UH-2Qt" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Abe-Ga-APC"/>
                             <constraint firstAttribute="trailingMargin" secondItem="yHf-ql-tBh" secondAttribute="trailing" constant="10" id="AiN-yU-g2y"/>
-                            <constraint firstItem="qcZ-Sj-h7c" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="CXb-fJ-xPf"/>
-                            <constraint firstItem="qcZ-Sj-h7c" firstAttribute="top" secondItem="PER-4W-yur" secondAttribute="bottom" constant="15" id="Dis-K2-Sgr"/>
                             <constraint firstItem="Bg5-RO-Cu9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Fhg-Vc-7E8"/>
                             <constraint firstItem="NVg-wo-ubL" firstAttribute="centerX" secondItem="Bg5-RO-Cu9" secondAttribute="centerX" id="Ft3-zo-UTQ"/>
                             <constraint firstItem="wNz-Dd-EiX" firstAttribute="centerY" secondItem="duB-Hp-8cM" secondAttribute="centerY" id="JYN-kv-5DF"/>
-                            <constraint firstItem="qcZ-Sj-h7c" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="KgF-qg-Alz"/>
                             <constraint firstItem="wNz-Dd-EiX" firstAttribute="leading" secondItem="duB-Hp-8cM" secondAttribute="trailing" constant="10" id="RK5-Ec-OGw"/>
-                            <constraint firstItem="eMc-UH-2Qt" firstAttribute="top" secondItem="qcZ-Sj-h7c" secondAttribute="bottom" constant="10" id="RPQ-Pv-PQF"/>
                             <constraint firstItem="PER-4W-yur" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aQ6-hx-xdz"/>
                             <constraint firstItem="NVg-wo-ubL" firstAttribute="top" secondItem="wNz-Dd-EiX" secondAttribute="bottom" constant="20" id="adB-Iv-nL3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wNz-Dd-EiX" secondAttribute="trailing" constant="20" id="eud-HC-8aj"/>
@@ -86,16 +75,24 @@
                             <constraint firstItem="Bg5-RO-Cu9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="kZr-Im-xdW"/>
                             <constraint firstItem="wNz-Dd-EiX" firstAttribute="top" secondItem="yHf-ql-tBh" secondAttribute="bottom" constant="30" id="oug-mq-DrW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Bg5-RO-Cu9" secondAttribute="trailing" id="qym-sh-O7h"/>
+                            <constraint firstItem="eMc-UH-2Qt" firstAttribute="top" secondItem="PER-4W-yur" secondAttribute="bottom" constant="15" id="rhM-LA-pKO"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="NVg-wo-ubL" secondAttribute="bottom" constant="20" id="uK5-5I-9f2"/>
                             <constraint firstItem="yHf-ql-tBh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="ztF-Fo-RDF"/>
+                            <constraint firstItem="eMc-UH-2Qt" firstAttribute="centerY" secondItem="Bg5-RO-Cu9" secondAttribute="centerY" id="zz6-P4-D9r"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="fQz-4l-7U3"/>
+                    <navigationItem key="navigationItem" id="fQz-4l-7U3">
+                        <barButtonItem key="rightBarButtonItem" title="Sounds" id="mF2-bw-f5q">
+                            <connections>
+                                <segue destination="aYW-py-we1" kind="show" identifier="segueToListView" id="eg4-Gg-9iQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="albumArtImageView" destination="Bg5-RO-Cu9" id="DKt-mo-3CF"/>
+                        <outlet property="chooseSoundButton" destination="mF2-bw-f5q" id="aQq-jI-GFL"/>
                         <outlet property="currentSoundLabel" destination="PER-4W-yur" id="EpU-ac-yyl"/>
                         <outlet property="delaySwitch" destination="wNz-Dd-EiX" id="Tq8-YU-Xid"/>
-                        <outlet property="looseButton" destination="qcZ-Sj-h7c" id="bhK-o6-dVy"/>
                         <outlet property="playButton" destination="NVg-wo-ubL" id="sog-xO-J6M"/>
                         <outlet property="reverbNation" destination="eMc-UH-2Qt" id="eH1-Be-m56"/>
                         <outlet property="whammySlider" destination="yHf-ql-tBh" id="laU-jB-H67"/>
@@ -118,7 +115,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LV1-zh-p89" id="BMV-Pc-z3Q">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pull to Refresh from Server" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jfj-ya-tTG">

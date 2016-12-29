@@ -103,7 +103,7 @@ class HomeViewControllerSpec: QuickSpec {
             }
 
             it("has a button to go to the list view") {
-                expect(subject.looseButton).toNot(beNil())
+                expect(subject.chooseSoundButton).toNot(beNil())
             }
 
             it("sets the title") {
@@ -245,7 +245,7 @@ class HomeViewControllerSpec: QuickSpec {
 
             describe("Tapping on the button to get to the list view") {
                 beforeEach {
-                    subject.looseButton.tap()
+                    subject.chooseSoundButton.tap()
                 }
 
                 it("takes the user to the list view controller") {
