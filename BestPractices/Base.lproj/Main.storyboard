@@ -109,8 +109,8 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pull to Refresh from Server" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jfj-ya-tTG">
-                                            <rect key="frame" x="100.5" y="13.5" width="174" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pull to Refresh  " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jfj-ya-tTG">
+                                            <rect key="frame" x="136.5" y="13.5" width="102" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -121,6 +121,9 @@
                                         <constraint firstItem="Jfj-ya-tTG" firstAttribute="centerX" secondItem="BMV-Pc-z3Q" secondAttribute="centerX" id="rUe-wn-nCq"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="infoLabel" destination="Jfj-ya-tTG" id="lt6-G3-u3y"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SoundTableViewCell" rowHeight="44" id="idi-UU-MD0" customClass="SoundTableViewCell" customModule="BestPractices" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="72" width="375" height="44"/>
