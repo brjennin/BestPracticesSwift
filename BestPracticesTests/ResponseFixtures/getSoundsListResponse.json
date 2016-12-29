@@ -1,0 +1,38 @@
+[
+    {
+        "id": 999,
+        "group": "Yacht Rock",
+        "sounds": [
+            {
+                "id": 1,
+                "name": "Maneater",
+                "artist": "Hall & Oates",
+                "url": "https://p.scdn.co/mp3-preview/85538cf6e2a89e0fe2c85049cff9eece282b7151",
+                "album_art": "https://i.scdn.co/image/02208eaf815fff1e5820380bbefa957f38148ea8",
+                "created_at": "2016-09-19T21:13:20.594Z"
+            },
+            {
+                "id": 2,
+                "name": "Private Eyes",
+                "artist": "Hall & Oates",
+                "url": "https://p.scdn.co/mp3-preview/4a558e1144aba588135ba366ea5a705a3f653b94",
+                "album_art": "https://i.scdn.co/image/7c270ba6ca0991b05079aed0460628857270e7b2",
+                "created_at": "2016-07-19T21:13:20.594Z"
+            }
+        ]
+    },
+    {
+        "id": 123,
+        "group": "Ocean Sounds",
+        "sounds": [
+            {
+                "id": 3,
+                "name": "Flipper",
+                "artist": "Dolphin",
+                "url": "https://example.com/dolphin.mp3",
+                "album_art": "https://example.com/dolphin.jpg",
+                "created_at": "2016-12-19T21:13:20.594Z"
+            }
+        ]
+    }
+]

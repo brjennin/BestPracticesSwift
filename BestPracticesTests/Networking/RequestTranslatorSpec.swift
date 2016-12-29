@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 import Alamofire
 @testable import BestPractices
 
@@ -11,7 +10,7 @@ class RequestTranslatorSpec: QuickSpec {
         var params: [String: AnyObject]?
         var headers: [String: String]?
         let urlString = "url"
-        let method = HTTPMethod.GET
+        let method = HTTPMethod.get
         var originRequest: HTTPRequest!
         var result: Request!
         
@@ -29,13 +28,13 @@ class RequestTranslatorSpec: QuickSpec {
                     beforeEach {
                         headers = nil
                          originRequest = HTTPRequest(urlString: urlString, httpMethod: method, params: params, headers: headers)
-                        result = subject.translateRequestForAlamofire(originRequest)
+                        result = subject.translateRequestForAlamofire(request: originRequest)
                     }
                     
                     it("returns an Alamofire request") {
                         expect(result).toNot(beNil())
-                        expect(result.request!.HTTPMethod!).to(equal("GET"))
-                        expect(result.request!.URL!.absoluteString).to(equal("url"))
+                        expect(result.request!.httpMethod!).to(equal("GET"))
+                        expect(result.request!.url!.absoluteString).to(equal("url"))
                         expect(result.request?.allHTTPHeaderFields).to(beEmpty())
                     }
                 }
@@ -44,13 +43,13 @@ class RequestTranslatorSpec: QuickSpec {
                     beforeEach {
                         headers = ["Header-Thing": "Value"]
                         originRequest = HTTPRequest(urlString: urlString, httpMethod: method, params: params, headers: headers)
-                        result = subject.translateRequestForAlamofire(originRequest)
+                        result = subject.translateRequestForAlamofire(request: originRequest)
                     }
                     
                     it("returns an Alamofire request") {
                         expect(result).toNot(beNil())
-                        expect(result.request!.HTTPMethod!).to(equal("GET"))
-                        expect(result.request!.URL!.absoluteString).to(equal("url"))
+                        expect(result.request!.httpMethod!).to(equal("GET"))
+                        expect(result.request!.url!.absoluteString).to(equal("url"))
                         expect(result.request?.allHTTPHeaderFields!).to(equal(headers))
                     }
                 }
@@ -58,20 +57,20 @@ class RequestTranslatorSpec: QuickSpec {
             
             context("When there are params") {
                 beforeEach {
-                    params = ["Key": 3, "Other": "thing"]
+                    params = ["Key": "anyting" as AnyObject!, "Other": "thing" as AnyObject!]
                 }
                 
                 context("When no headers") {
                     beforeEach {
                         headers = nil
                         originRequest = HTTPRequest(urlString: urlString, httpMethod: method, params: params, headers: headers)
-                        result = subject.translateRequestForAlamofire(originRequest)
+                        result = subject.translateRequestForAlamofire(request: originRequest)
                     }
                     
                     it("returns an Alamofire request") {
                         expect(result).toNot(beNil())
-                        expect(result.request!.HTTPMethod!).to(equal("GET"))
-                        expect(result.request!.URL!.absoluteString).to(equal("url?Key=3&Other=thing"))
+                        expect(result.request!.httpMethod!).to(equal("GET"))
+                        expect(result.request!.url!.absoluteString).to(equal("url?Key=anyting&Other=thing"))
                         expect(result.request?.allHTTPHeaderFields).to(beEmpty())
                     }
                 }
@@ -80,13 +79,13 @@ class RequestTranslatorSpec: QuickSpec {
                     beforeEach {
                         headers = ["Header-Thing": "Value"]
                         originRequest = HTTPRequest(urlString: urlString, httpMethod: method, params: params, headers: headers)
-                        result = subject.translateRequestForAlamofire(originRequest)
+                        result = subject.translateRequestForAlamofire(request: originRequest)
                     }
                     
                     it("returns an Alamofire request") {
                         expect(result).toNot(beNil())
-                        expect(result.request!.HTTPMethod!).to(equal("GET"))
-                        expect(result.request!.URL!.absoluteString).to(equal("url?Key=3&Other=thing"))
+                        expect(result.request!.httpMethod!).to(equal("GET"))
+                        expect(result.request!.url!.absoluteString).to(equal("url?Key=anyting&Other=thing"))
                         expect(result.request?.allHTTPHeaderFields!).to(equal(headers))
                     }
                 }

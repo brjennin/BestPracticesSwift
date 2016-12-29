@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 import AVKit
 import AVFoundation
 @testable import BestPractices
@@ -9,96 +8,243 @@ class PlayerSpec: QuickSpec {
     override func spec() {
 
         var subject: Player!
+        var engineBuilder: MockEngineBuilder!
+        var shiftTranslator: MockShiftTranslator!
 
-        let bundle = NSBundle(forClass: self.dynamicType)
-        let path = bundle.pathForResource("maneater", ofType: "mp3")!
-        let sampleFileURL = NSURL(fileURLWithPath: path)
-        
+        var audioBox: MockAudioBox!
+
+        let bundle = Bundle(for: type(of: self))
+        let path = bundle.path(forResource: "maneater", ofType: "mp3")!
+        let sampleFileURL = URL(fileURLWithPath: path)
+        let audioFile = try! AVAudioFile.init(forReading: sampleFileURL)
+
         beforeEach {
             subject = Player()
+
+            engineBuilder = MockEngineBuilder()
+            subject.engineBuilder = engineBuilder
+
+            shiftTranslator = MockShiftTranslator()
+            subject.shiftTranslator = shiftTranslator
+
+            audioBox = MockAudioBox(file: audioFile, engine: MockAVAudioEngine(), player: MockAVAudioPlayerNode(), pitchShift: AVAudioUnitVarispeed(), delays: [], reverb: AVAudioUnitReverb(), eq: AVAudioUnitEQ())
         }
 
-        describe(".loadSong") {
-            it("does not initialize an audio player until we have a song file") {
-                expect(subject.audioPlayer).to(beNil())
+        describe(".loadSound") {
+            it("does not initialize an audio box until we have a sound file") {
+                expect(subject.audioBox).to(beNil())
             }
-            
+
             context("With a good URL") {
                 beforeEach {
-                    subject.loadSong(path)
+                    engineBuilder.returnAudioBoxValueForBuildEngine = audioBox
                 }
 
-                it("loads the song into the audio player") {
-                    expect(subject.audioPlayer).toNot(beNil())
-                    expect(subject.audioPlayer!.url!).to(equal(sampleFileURL))
+                context("When the engine throws an exception") {
+                    beforeEach {
+                        audioBox.startShouldThrow = true
+                        subject.loadSound(filePath: path)
+                    }
+
+                    it("calls the engine builder") {
+                        expect(engineBuilder.calledBuildEngine).to(beTruthy())
+                        expect(engineBuilder.capturedAudioFile!.url).to(equal(sampleFileURL))
+                    }
+
+                    it("starts the audio box") {
+                        expect(audioBox.calledStart).to(beTruthy())
+                    }
+
+                    it("does not store the audio box") {
+                        expect(subject.audioBox).to(beNil())
+                    }
+                }
+
+                context("When the engine starts successfully") {
+                    beforeEach {
+                        audioBox.startShouldThrow = false
+                        subject.loadSound(filePath: path)
+                    }
+
+                    it("calls the engine builder") {
+                        expect(engineBuilder.calledBuildEngine).to(beTruthy())
+                        expect(engineBuilder.capturedAudioFile!.url).to(equal(sampleFileURL))
+                    }
+
+                    it("starts the audio box") {
+                        expect(audioBox.calledStart).to(beTruthy())
+                    }
+
+                    it("stores the audio box") {
+                        expect(subject.audioBox).toNot(beNil())
+                        expect(subject.audioBox).to(beIdenticalTo(audioBox))
+                    }
                 }
             }
 
             context("With a bad URL") {
                 beforeEach {
-                    subject.loadSong("")
+                    subject.loadSound(filePath: "")
                 }
 
-                it("does not initialize an audio player until we have a song file") {
-                    expect(subject.audioPlayer).to(beNil())
+                it("does not store the audio box") {
+                    expect(subject.audioBox).to(beNil())
                 }
             }
         }
 
-        describe(".clearSong") {
-            context("When there is a song loaded") {
+        describe(".clearSound") {
+            context("When a sound has been loaded") {
                 beforeEach {
-                    subject.audioPlayer = try! AVAudioPlayer(contentsOfURL: sampleFileURL)
-                    
-                    subject.clearSong()
+                    subject.audioBox = audioBox
+                    subject.clearSound()
                 }
-                
-                it("clears the audio player") {
-                    expect(subject.audioPlayer).to(beNil())
+
+                it("stops playing any sound") {
+                    expect(audioBox.calledStop).to(beTruthy())
+                }
+
+                it("wipes out all references to engine components") {
+                    expect(subject.audioBox).to(beNil())
                 }
             }
-            
-            context("When there is no song loaded") {
+
+            context("When a sound has not been loaded") {
                 beforeEach {
-                    subject.audioPlayer = nil
-                    
-                    subject.clearSong()
+                    subject.audioBox = nil
                 }
-                
-                it("clears the audio player") {
-                    expect(subject.audioPlayer).to(beNil())
+
+                it("does not raise an exception") {
+                    expect(subject.clearSound()).toNot(throwError())
                 }
             }
         }
-        
+
         describe(".play") {
-            context("When there is a song loaded") {
-                let bundle = NSBundle(forClass: self.dynamicType)
-                let path = bundle.pathForResource("maneater", ofType: "mp3")!
-                let sampleFileURL = NSURL(fileURLWithPath: path)
-                let player = try! AVAudioPlayer(contentsOfURL: sampleFileURL)
-
+            context("When a sound has been loaded") {
                 beforeEach {
-                    subject.audioPlayer = player
-                    subject.play()
+                    subject.audioBox = audioBox
                 }
 
-                afterEach {
-                    subject.audioPlayer!.stop()
+                context("With delay") {
+                    context("With reverb") {
+                        beforeEach {
+                            subject.play(delay: true, reverb: true)
+                        }
+
+                        it("plays the audio box with delay") {
+                            expect(audioBox.calledPlay).to(beTruthy())
+                            expect(audioBox.capturedDelay).to(beTruthy())
+                            expect(audioBox.capturedReverb).to(beTruthy())
+                        }
+                    }
+
+                    context("Without reverb") {
+                        beforeEach {
+                            subject.play(delay: true, reverb: false)
+                        }
+
+                        it("plays the audio box with delay") {
+                            expect(audioBox.calledPlay).to(beTruthy())
+                            expect(audioBox.capturedDelay).to(beTruthy())
+                            expect(audioBox.capturedReverb).to(beFalsy())
+                        }
+                    }
                 }
 
-                it("plays the song") {
-                    expect(subject.audioPlayer!.playing).to(beTruthy())
+                context("Without delay") {
+                    context("With reverb") {
+                        beforeEach {
+                            subject.play(delay: false, reverb: true)
+                        }
+
+                        it("plays the audio box with delay") {
+                            expect(audioBox.calledPlay).to(beTruthy())
+                            expect(audioBox.capturedDelay).to(beFalsy())
+                            expect(audioBox.capturedReverb).to(beTruthy())
+                        }
+                    }
+
+                    context("Without reverb") {
+                        beforeEach {
+                            subject.play(delay: false, reverb: false)
+                        }
+
+                        it("plays the audio box with delay") {
+                            expect(audioBox.calledPlay).to(beTruthy())
+                            expect(audioBox.capturedDelay).to(beFalsy())
+                            expect(audioBox.capturedReverb).to(beFalsy())
+                        }
+                    }
                 }
             }
 
-            context("When there is no song loaded") {
+            context("When a sound has not been loaded") {
                 beforeEach {
-                    subject.audioPlayer = nil
+                    subject.audioBox = nil
                 }
 
-                it("plays the song") {
-                    expect(subject.play()).toNot(throwError())
+                it("does not raise an exception") {
+                    expect(subject.play(delay: true, reverb: true)).toNot(throwError())
+                }
+            }
+        }
+
+        describe(".pitchShift") {
+            context("When a sound has been loaded") {
+                beforeEach {
+                    subject.audioBox = audioBox
+                    subject.clearSound()
+                }
+
+                it("stops playing any sound") {
+                    expect(audioBox.calledStop).to(beTruthy())
+                }
+
+                it("wipes out all references to engine components") {
+                    expect(subject.audioBox).to(beNil())
+                }
+            }
+
+            context("When a sound has not been loaded") {
+                beforeEach {
+                    subject.audioBox = nil
+                }
+
+                it("does not raise an exception") {
+                    expect(subject.clearSound()).toNot(throwError())
+                }
+            }
+        }
+
+        describe(".pitchShift") {
+            context("When a sound is loaded") {
+                beforeEach {
+                    subject.audioBox = audioBox
+
+                    shiftTranslator.returnValueForTranslation = 3.5
+                    subject.pitchShift(amount: 1.2)
+                }
+
+                it("calls the shift translator") {
+                    expect(shiftTranslator.calledTranslate).to(beTruthy())
+                    expect(shiftTranslator.capturedInputValue).to(equal(1.2))
+                }
+
+                it("sets the shift node to the translated value") {
+                    expect(audioBox.calledPitchShift).to(beTruthy())
+                    expect(audioBox.capturedPitchShiftAmount).to(equal(3.5))
+                }
+            }
+
+            context("When a sound is not loaded") {
+                beforeEach {
+                    subject.audioBox = nil
+                    subject.pitchShift(amount: 1.2)
+                }
+
+                it("does not call the shift translator") {
+                    expect(shiftTranslator.calledTranslate).to(beFalsy())
                 }
             }
         }

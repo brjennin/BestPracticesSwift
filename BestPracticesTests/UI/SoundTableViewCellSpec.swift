@@ -1,24 +1,23 @@
 import Quick
 import Nimble
-import Fleet
 @testable import BestPractices
 
-class SongTableViewCellSpec: QuickSpec {
+class SoundTableViewCellSpec: QuickSpec {
     override func spec() {
 
-        var subject: SongTableViewCell!
+        var subject: SoundTableViewCell!
         var titleLabel: UILabel!
 
         beforeEach {
-            subject = SongTableViewCell()
+            subject = SoundTableViewCell()
             titleLabel = UILabel()
             subject.titleLabel = titleLabel
         }
 
-        describe("Configuring a cell with a song") {
+        describe("Configuring a cell with a sound") {
             beforeEach {
-                let song = Song(value: ["name": "title"])
-                subject.configureWithSong(song)
+                let sound = Sound(value: ["name": "title"])
+                subject.configureWithSound(sound: sound)
             }
 
             it("sets the title label for the cell") {

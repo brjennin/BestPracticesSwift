@@ -1,21 +1,21 @@
 import RealmSwift
 
-protocol SongPersistenceProtocol: class {
-    func replace(songs: [Song])
+protocol SoundPersistenceProtocol: class {
+    func replace(soundGroups: [SoundGroup])
 
-    func retrieve() -> [Song]?
+    func retrieve() -> [SoundGroup]?
     
-    func updateLocalSongUrl(song: Song, url: String)
+    func updateLocalSoundUrl(sound: Sound, url: String)
     
-    func updateLocalImageUrl(song: Song, url: String)
+    func updateLocalImageUrl(sound: Sound, url: String)
 }
 
-class SongPersistence: SongPersistenceProtocol {
+class SoundPersistence: SoundPersistenceProtocol {
 
     var realm: Realm!
     var diskMaster: DiskMasterProtocol! = DiskMaster()
 
-    func replace(songs: [Song]) {
+    func replace(soundGroups: [SoundGroup]) {
         do {
             try establishConnection()
             try wipeDatabase()
@@ -25,62 +25,62 @@ class SongPersistence: SongPersistenceProtocol {
 
         self.diskMaster.wipeLocalStorage()
         
-        for song in songs {
+        for soundGroup in soundGroups {
             _ = try? self.realm.write {
-                self.realm.add(song)
+                self.realm.add(soundGroup)
             }
         }
     }
 
-    func retrieve() -> [Song]? {
+    func retrieve() -> [SoundGroup]? {
         do {
             try establishConnection()
         } catch {
             return nil
         }
 
-        let songs = realm.objects(Song.self).sorted("identifier")
-        if songs.count == 0 {
+        let soundGroups = realm.objects(SoundGroup.self).sorted(byProperty: "identifier")
+        if soundGroups.count == 0 {
             return nil
         }
 
-        var result = [Song]()
-        for song in songs {
-            result.append(song)
+        var result = [SoundGroup]()
+        for soundGroup in soundGroups {
+            result.append(soundGroup)
         }
 
         return result
     }
     
-    func updateLocalSongUrl(song: Song, url: String) {
+    func updateLocalSoundUrl(sound: Sound, url: String) {
         do {
             try establishConnection()
             try realm.write {
-                song.songLocalPath = url
+                sound.soundLocalPath = url
             }
         } catch {
             return
         }
     }
     
-    func updateLocalImageUrl(song: Song, url: String) {
+    func updateLocalImageUrl(sound: Sound, url: String) {
         do {
             try establishConnection()
             try realm.write {
-                song.imageLocalPath = url
+                sound.imageLocalPath = url
             }
         } catch {
             return
         }
     }
 
-    private func establishConnection() throws {
+    fileprivate func establishConnection() throws {
         if self.realm == nil {
             self.realm = try Realm()
         }
     }
 
-    private func wipeDatabase() throws {
+    fileprivate func wipeDatabase() throws {
         try self.realm.write {
             self.realm.deleteAll()
         }

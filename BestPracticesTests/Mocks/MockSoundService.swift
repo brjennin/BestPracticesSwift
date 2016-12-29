@@ -1,11 +1,11 @@
 import Foundation
 @testable import BestPractices
 
-class MockSongService: SongServiceProtocol {
+class MockSoundService: SoundServiceProtocol {
     var calledService = false
-    var completion: (([Song]?, NSError?) -> ())?
+    var completion: (([SoundGroup]?, NSError?) -> ())?
 
-    func getSongs(completion: (([Song]?, NSError?) -> ())) {
+    func getSounds(completion: @escaping (([SoundGroup]?, NSError?) -> ())) {
         calledService = true
         self.completion = completion
     }

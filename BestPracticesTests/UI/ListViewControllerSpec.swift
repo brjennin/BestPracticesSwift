@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 @testable import BestPractices
 
 class ListViewControllerSpec: QuickSpec {
@@ -9,87 +8,152 @@ class ListViewControllerSpec: QuickSpec {
 
         var subject: ListViewController!
         var dispatcher: MockDispatcher!
-        var songSelectionDelegate: MockSongSelectionDelegate!
-        var songCache: MockSongCache!
+        var soundSelectionDelegate: MockSoundSelectionDelegate!
+        var soundCache: MockSoundCache!
 
         beforeEach {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-
-            subject = storyboard.instantiateViewControllerWithIdentifier("ListViewController") as! ListViewController
+            subject = storyboard.instantiateViewController(withIdentifier: "ListViewController") as! ListViewController
 
             dispatcher = MockDispatcher()
             subject.dispatcher = dispatcher
 
-            songSelectionDelegate = MockSongSelectionDelegate()
-            subject.songSelectionDelegate = songSelectionDelegate
+            soundSelectionDelegate = MockSoundSelectionDelegate()
+            subject.soundSelectionDelegate = soundSelectionDelegate
 
-            songCache = MockSongCache()
-            subject.songCache = songCache
+            soundCache = MockSoundCache()
+            subject.soundCache = soundCache
         }
 
-        sharedExamples("reloading songs") {
+        sharedExamples("reloading sounds") {
             it("should dispatch to the main queue") {
                 expect(dispatcher.calledDispatch).to(beTruthy())
             }
 
-            it("has 2 song table view cells correctly configured") {
-                expect(subject.tableView.visibleCells.count).to(equal(2))
-                expect(subject.tableView.visibleCells.first).to(beAKindOf(SongTableViewCell))
-                expect(subject.tableView.visibleCells.last).to(beAKindOf(SongTableViewCell))
-
-                let cellOne = subject.tableView.visibleCells.first as! SongTableViewCell
-                let cellTwo = subject.tableView.visibleCells.last as! SongTableViewCell
-                expect(cellOne.titleLabel.text).to(equal("Song One"))
-                expect(cellTwo.titleLabel.text).to(equal("Song Two"))
+            it("has 3 sound table view cells correctly configured and one refresh cell") {
+                expect(subject.tableView.visibleCells.count).to(equal(4))
+                expect(subject.tableView.visibleCells[0]).to(beAKindOf(PullToRefreshTableViewCell.self))
+                expect(subject.tableView.visibleCells[1]).to(beAKindOf(SoundTableViewCell.self))
+                expect(subject.tableView.visibleCells[2]).to(beAKindOf(SoundTableViewCell.self))
+                expect(subject.tableView.visibleCells[3]).to(beAKindOf(SoundTableViewCell.self))
+                
+                let cellOne = subject.tableView.visibleCells[1] as! SoundTableViewCell
+                let cellTwo = subject.tableView.visibleCells[2] as! SoundTableViewCell
+                let cellThree = subject.tableView.visibleCells[3] as! SoundTableViewCell
+                expect(cellOne.titleLabel.text).to(equal("Sound One"))
+                expect(cellTwo.titleLabel.text).to(equal("Sound Two"))
+                expect(cellThree.titleLabel.text).to(equal("Sound Three"))
             }
 
             it("should end refreshing") {
-                expect(subject.refreshControl!.refreshing).to(beFalsy())
+                expect(subject.refreshControl!.isRefreshing).to(beFalsy())
             }
 
             describe("As a UITableViewDataSource") {
                 describe(".numberOfSectionsInTableView") {
-                    it("should have 1 section") {
-                        expect(subject.numberOfSectionsInTableView(subject.tableView)).to(equal(1))
+                    it("should have 3 sections") {
+                        expect(subject.numberOfSections(in: subject.tableView)).to(equal(3))
                     }
                 }
 
                 describe(".tableView:numberOfRowsInSection:") {
-                    it("should have 2 rows in the first section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 0)).to(equal(2))
+                    it("should have 1 row in the first section") {
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 0)).to(equal(1))
+                    }
+                    
+                    it("should have 2 rows in the second section") {
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 1)).to(equal(2))
+                    }
+                    
+                    it("should have 1 row in the third section") {
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 2)).to(equal(1))
+                    }
+                }
+                
+                describe(".numberOfSectionsInTableView") {
+                    it("should have 3 sections") {
+                        expect(subject.numberOfSections(in: subject.tableView)).to(equal(3))
+                    }
+                }
+                
+                describe(".tableView:numberOfRowsInSection:") {
+                    it("should start with 1 row in the first section, 2 rows in 2nd and 1 in 3rd") {
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 0)).to(equal(1))
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 1)).to(equal(2))
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 2)).to(equal(1))
+                    }
+                }
+                
+                describe(".tableView:titleForHeaderInSection:") {
+                    it("Sets the title for the table sections") {
+                        expect(subject.tableView(subject.tableView, titleForHeaderInSection: 0)).to(beNil())
+                        expect(subject.tableView(subject.tableView, titleForHeaderInSection: 1)).to(equal("Section One"))
+                        expect(subject.tableView(subject.tableView, titleForHeaderInSection: 2)).to(equal("Section Two"))
                     }
                 }
             }
 
             describe("Tapping on a cell") {
-                beforeEach {
-                    let indexPath = NSIndexPath(forRow: 0, inSection: 0)
-                    subject.tableView(subject.tableView, didSelectRowAtIndexPath: indexPath)
+                context("In the first section") {
+                    beforeEach {
+                        let indexPath = IndexPath(row: 0, section: 0)
+                        subject.tableView(subject.tableView, didSelectRowAt: indexPath)
+                    }
+                    
+                    it("does not call the delegate") {
+                        expect(soundSelectionDelegate.calledDelegate).to(beFalsy())
+                    }
                 }
-
-                it("calls the delegate with the correct song") {
-                    expect(songSelectionDelegate.calledDelegate).to(beTruthy())
-                    expect(songSelectionDelegate.capturedSong).toNot(beNil())
-                    expect(songSelectionDelegate.capturedSong!.identifier).to(equal(123))
+                
+                context("In the second section") {
+                    beforeEach {
+                        let indexPath = IndexPath(row: 0, section: 1)
+                        subject.tableView(subject.tableView, didSelectRowAt: indexPath)
+                    }
+                    
+                    it("calls the delegate with the correct sound") {
+                        expect(soundSelectionDelegate.calledDelegate).to(beTruthy())
+                        expect(soundSelectionDelegate.capturedSound).toNot(beNil())
+                        expect(soundSelectionDelegate.capturedSound!.identifier).to(equal(123))
+                    }
+                }
+                
+                context("In the third section") {
+                    beforeEach {
+                        let indexPath = IndexPath(row: 0, section: 2)
+                        subject.tableView(subject.tableView, didSelectRowAt: indexPath)
+                    }
+                    
+                    it("calls the delegate with the correct sound") {
+                        expect(soundSelectionDelegate.calledDelegate).to(beTruthy())
+                        expect(soundSelectionDelegate.capturedSound).toNot(beNil())
+                        expect(soundSelectionDelegate.capturedSound!.identifier).to(equal(666))
+                    }
                 }
             }
         }
 
         describe(".viewDidLoad") {
-            let songOne = Song(value: ["identifier": 123, "name": "Song One"])
-            let songTwo = Song(value: ["identifier": 111, "name": "Song Two"])
-            let songs = [songOne, songTwo]
+            let soundOne = Sound(value: ["identifier": 123, "name": "Sound One"])
+            let soundTwo = Sound(value: ["identifier": 111, "name": "Sound Two"])
+            let soundThree = Sound(value: ["identifier": 666, "name": "Sound Three"])
+            
+            let soundGroups = [
+                SoundGroup(value: ["identifier": 1, "name": "Section One", "sounds": [soundOne, soundTwo]]),
+                SoundGroup(value: ["identifier": 2, "name": "Section Two", "sounds": [soundThree]])
+            ]
 
             beforeEach {
-                Fleet.setApplicationWindowRootViewController(subject)
+                UIApplication.shared.keyWindow?.rootViewController = subject
+                let _ = subject.view
             }
 
-            it("gets the songs from the cache") {
-                expect(songCache.calledGetSongs).to(beTruthy())
+            it("gets the sounds from the cache") {
+                expect(soundCache.calledGetSounds).to(beTruthy())
             }
 
             it("sets the title") {
-                expect(subject.title).to(equal("YACHTY"))
+                expect(subject.title).to(equal("Choose a Sound"))
             }
 
             it("sets itself as the data source for the table view") {
@@ -102,51 +166,57 @@ class ListViewControllerSpec: QuickSpec {
 
             it("sets up a refresh control") {
                 expect(subject.refreshControl!).toNot(beNil())
-                expect(subject.tableView.subviews).to(contain(subject.refreshControl))
+                expect(subject.tableView.subviews).to(contain(subject.refreshControl!))
             }
 
             it("starts the spinner on the refresh control") {
-                expect(subject.refreshControl!.refreshing).to(beTruthy())
+                expect(subject.refreshControl!.isRefreshing).to(beTruthy())
             }
-
+            
             describe("As a UITableViewDataSource") {
+                describe(".tableView:titleForHeaderInSection:") {
+                    it("Sets the title for the table sections") {
+                        expect(subject.tableView(subject.tableView, titleForHeaderInSection: 0)).to(beNil())
+                    }
+                }
+                
                 describe(".numberOfSectionsInTableView") {
-                    it("should have 1 section") {
-                        expect(subject.numberOfSectionsInTableView(subject.tableView)).to(equal(1))
+                    it("should have 2 sections") {
+                        expect(subject.numberOfSections(in: subject.tableView)).to(equal(1))
                     }
                 }
 
                 describe(".tableView:numberOfRowsInSection:") {
-                    it("should start with 0 rows in the first section") {
-                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 0)).to(equal(0))
+                    it("should start with 1 row in the first section") {
+                        expect(subject.tableView(subject.tableView, numberOfRowsInSection: 0)).to(equal(1))
                     }
                 }
             }
 
-            describe("When the cache resolves with songs") {
+            describe("When the cache resolves with sounds") {
                 beforeEach {
-                    songCache.capturedGetSongsCompletion!(songs)
+                    soundCache.capturedGetSoundsCompletion!(soundGroups)
                 }
 
-                itBehavesLike("reloading songs")
+                itBehavesLike("reloading sounds")
             }
 
             describe("Pulling to refresh") {
                 beforeEach {
-                    subject.refreshControl!.sendActionsForControlEvents(.ValueChanged)
+                    subject.refreshControl!.sendActions(for: .valueChanged)
                     subject.refreshControl!.beginRefreshing()
                 }
 
-                it("gets the songs from the cache and refreashes the cache") {
-                    expect(songCache.calledGetSongsAndRefreshCache).to(beTruthy())
+                it("gets the sounds from the cache and refreashes the cache") {
+                    expect(soundCache.calledGetSoundsAndRefreshCache).to(beTruthy())
                 }
 
-                describe("When the cache resolves with songs") {
+                describe("When the cache resolves with sounds") {
                     beforeEach {
-                        songCache.capturedGetSongsAndRefreshCacheCompletion!(songs)
+                        soundCache.capturedGetSoundsAndRefreshCacheCompletion!(soundGroups)
                     }
 
-                    itBehavesLike("reloading songs")
+                    itBehavesLike("reloading sounds")
                 }
             }
         }

@@ -3,9 +3,9 @@ import Alamofire
 import Foundation
 
 protocol HTTPClientProtocol: class {
-    func makeJsonRequest(request: HTTPRequest, completion: ((JSON?, NSError?) -> ()))
+    func makeJsonRequest(request: HTTPRequest, completion: @escaping ((JSON?, NSError?) -> ()))
 
-    func downloadFile(url: String, folderPath: String, completion: ((NSURL?) -> ()))
+    func downloadFile(url: String, folderPath: String, completion: @escaping ((URL?) -> ()))
 }
 
 class HTTPClient: HTTPClientProtocol {
@@ -14,43 +14,43 @@ class HTTPClient: HTTPClientProtocol {
     var diskMaster: DiskMasterProtocol! = DiskMaster()
     var activityIndicator: ActivityIndicatorProtocol! = ActivityIndicator()
 
-    func makeJsonRequest(request: HTTPRequest, completion: ((JSON?, NSError?) -> ())) {
+    func makeJsonRequest(request: HTTPRequest, completion: @escaping ((JSON?, NSError?) -> ())) {
         self.activityIndicator.start()
 
-        let alamofireRequest = self.requestTranslator.translateRequestForAlamofire(request)
-        alamofireRequest.validate().responseJSON(completionHandler: { [weak self] response in
+        let alamofireRequest = self.requestTranslator.translateRequestForAlamofire(request: request)
+        alamofireRequest.validate().responseJSON { [weak self] response in
             var json: JSON?
             self?.activityIndicator.stop()
-
+            
             switch response.result {
-            case .Success:
+            case .success:
                 if let jsonResult = response.data {
                     json = JSON(data: jsonResult)
                 }
-            case .Failure(_):
+            case .failure(_):
                 break
             }
-
-            completion(json, response.result.error)
-        })
+            
+            completion(json, response.result.error as NSError!)
+        }
     }
 
-    func downloadFile(url: String, folderPath: String, completion: ((NSURL?) -> ())) {
-        var destinationURL: NSURL?
+    func downloadFile(url: String, folderPath: String, completion: @escaping ((URL?) -> ())) {
         self.activityIndicator.start()
-
-        Alamofire.download(.GET, url) {[weak self] (temporaryURL, response) in
-            destinationURL = self?.diskMaster.mediaURLForSongWithFilename(folderPath, filename: response.suggestedFilename!)
-
-            return destinationURL!
-        }.validate().response {[weak self] _, _, _, error in
-            var url: NSURL?
+        
+        let destination: DownloadRequest.DownloadFileDestination = { [weak self] _, response in
+            let destinationURL = self!.diskMaster.mediaURLForFileWithFilename(folder: folderPath, filename: response.suggestedFilename!)
+            
+            return (destinationURL, [.removePreviousFile, .createIntermediateDirectories])
+        }
+        
+        Alamofire.download(url, to: destination).validate().response { [weak self] response in
             self?.activityIndicator.stop()
-
-            if error == nil {
-                url = destinationURL
+            if response.error == nil {
+                completion(response.destinationURL)
+            } else {
+                completion(nil)
             }
-            completion(url)
         }
     }
 }

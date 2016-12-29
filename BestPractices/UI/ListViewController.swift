@@ -3,52 +3,72 @@ import UIKit
 class ListViewController: UITableViewController {
 
     var dispatcher: DispatcherProtocol! = Dispatcher()
-    var songCache: SongCacheProtocol! = SongCache()
-    var songSelectionDelegate: SongSelectionDelegate!
+    var soundCache: SoundCacheProtocol! = SoundCache()
+    weak var soundSelectionDelegate: SoundSelectionDelegate!
 
-    var songs: [Song] = []
+    var soundGroups: [SoundGroup] = []
 
-    var songsCompletion: ([Song] -> ())!
+    var soundsCompletion: (([SoundGroup]) -> ())!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "YACHTY"
+        self.title = "Choose a Sound"
 
         self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: #selector(refresh(_:)), forControlEvents: .ValueChanged)
+        self.refreshControl!.addTarget(self, action: #selector(refresh(refreshControl:)), for: .valueChanged)
 
         self.refreshControl!.beginRefreshing()
 
-        songsCompletion = { [weak self] songs in
+        soundsCompletion = { [weak self] soundGroups in
             if self != nil {
-                self!.songs = songs
+                self!.soundGroups = soundGroups
             }
-            self?.dispatcher.dispatchToMainQueue({
+            self?.dispatcher.dispatchToMainQueue {
                 self?.tableView.reloadData()
                 self?.refreshControl!.endRefreshing()
-            })
+            }
         }
 
-        self.songCache.getSongs(songsCompletion)
+        self.soundCache.getSounds(completion: soundsCompletion)
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.songs.count
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return self.soundGroups.count + 1
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return nil
+        } else {
+            return self.soundGroups[section-1].name
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? 1 : self.soundGroups[section-1].sounds.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: PullToRefreshTableViewCell.cellIdentifier, for: indexPath)
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: SoundTableViewCell.cellIdentifier, for: indexPath) as! SoundTableViewCell
+            cell.configureWithSound(sound: self.soundGroups[indexPath.section-1].sounds[indexPath.row])
+            
+            return cell
+        }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(SongTableViewCell.cellIdentifier, forIndexPath: indexPath) as! SongTableViewCell
-        cell.configureWithSong(self.songs[indexPath.row])
-
-        return cell
-    }
-
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.songSelectionDelegate.songWasSelected(self.songs[indexPath.row])
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section > 0 {
+            self.soundSelectionDelegate.soundWasSelected(sound: self.soundGroups[indexPath.section-1].sounds[indexPath.row])
+        }
     }
 
     func refresh(refreshControl: UIRefreshControl) {
-        self.songCache.getSongsAndRefreshCache(songsCompletion)
+        self.soundCache.getSoundsAndRefreshCache(completion: soundsCompletion)
     }
 }

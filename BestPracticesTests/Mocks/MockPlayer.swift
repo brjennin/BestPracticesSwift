@@ -1,23 +1,35 @@
 @testable import BestPractices
 
 class MockPlayer: PlayerProtocol {
-    var loadedSong = false
+    var loadedSound = false
     var capturedFilePath: String?
     
-    func loadSong(filePath: String) {
-        loadedSong = true
+    func loadSound(filePath: String) {
+        loadedSound = true
         capturedFilePath = filePath
     }
     
-    var playedSong = false
+    var playedSound = false
+    var capturedDelay: Bool?
+    var capturedReverb: Bool?
     
-    func play() {
-        playedSong = true
+    func play(delay: Bool, reverb: Bool) {
+        playedSound = true
+        capturedDelay = delay
+        capturedReverb = reverb
     }
     
-    var calledClearSong = false
+    var calledClearSound = false
     
-    func clearSong() {
-        calledClearSong = true
+    func clearSound() {
+        calledClearSound = true
+    }
+    
+    var calledPitchShift = false
+    var capturedPitchShiftAmount: Float?
+    
+    func pitchShift(amount: Float) {
+        calledPitchShift = true
+        capturedPitchShiftAmount = amount
     }
 }

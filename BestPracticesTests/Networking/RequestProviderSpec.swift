@@ -1,6 +1,6 @@
 import Quick
 import Nimble
-import Fleet
+import Alamofire
 @testable import BestPractices
 
 class RequestProviderSpec: QuickSpec {
@@ -12,16 +12,16 @@ class RequestProviderSpec: QuickSpec {
             subject = RequestProvider()
         }
         
-        describe(".getSongsListRequest") {
+        describe(".getSoundsListRequest") {
             var result: HTTPRequest!
             
             beforeEach {
-                result = subject.getSongsListRequest()
+                result = subject.getSoundsListRequest()
             }
             
             it("returns a request") {
                 expect(result.urlString).to(equal("https://yachty.herokuapp.com/api/v1/songs"))
-                expect(result.httpMethod).to(equal(HTTPMethod.GET))
+                expect(result.httpMethod).to(equal(HTTPMethod.get))
                 expect(result.params).to(beNil())
                 expect(result.headers).to(beNil())
             }

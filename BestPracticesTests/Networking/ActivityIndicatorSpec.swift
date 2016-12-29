@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 @testable import BestPractices
 
 class ActivityIndicatorSpec: QuickSpec {
@@ -14,17 +13,17 @@ class ActivityIndicatorSpec: QuickSpec {
 
         describe(".start") {
             it("shows the status bar indicator") {
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 subject.start()
-                expect(UIApplication.sharedApplication().networkActivityIndicatorVisible).to(beTruthy())
+                expect(UIApplication.shared.isNetworkActivityIndicatorVisible).to(beTruthy())
             }
         }
 
         describe(".stop") {
             it("shows the status bar indicator") {
-                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                UIApplication.shared.isNetworkActivityIndicatorVisible = true
                 subject.stop()
-                expect(UIApplication.sharedApplication().networkActivityIndicatorVisible).to(beFalsy())
+                expect(UIApplication.shared.isNetworkActivityIndicatorVisible).to(beFalsy())
             }
         }
 

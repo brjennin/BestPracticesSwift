@@ -3,7 +3,7 @@ import Foundation
 protocol DiskMasterProtocol: class {
     func wipeLocalStorage()
 
-    func mediaURLForSongWithFilename(folder: String, filename: String) -> NSURL
+    func mediaURLForFileWithFilename(folder: String, filename: String) -> URL
 
     func isMediaFilePresent(path: String) -> Bool
 }
@@ -11,32 +11,32 @@ protocol DiskMasterProtocol: class {
 class DiskMaster: DiskMasterProtocol {
 
     var rootFolderName = "media"
-    let fileManager = NSFileManager.defaultManager()
+    let fileManager = FileManager.default
 
     func wipeLocalStorage() {
-        let directoryURL = self.fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-        let rootMediaFolder = directoryURL.URLByAppendingPathComponent(self.rootFolderName)
-        if fileManager.fileExistsAtPath(rootMediaFolder.path!) {
-            _ = try? fileManager.removeItemAtURL(rootMediaFolder)
+        let directoryURL = self.fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let rootMediaFolder = directoryURL.appendingPathComponent(self.rootFolderName)
+        if fileManager.fileExists(atPath: rootMediaFolder.path) {
+            _ = try? fileManager.removeItem(at: rootMediaFolder)
         }
     }
 
-    func mediaURLForSongWithFilename(folder: String, filename: String) -> NSURL {
-        let directoryURL = self.fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-        let directoryForFile = directoryURL.URLByAppendingPathComponent("\(self.rootFolderName)/\(folder)")
-        let fileURL = directoryForFile.URLByAppendingPathComponent(filename)
+    func mediaURLForFileWithFilename(folder: String, filename: String) -> URL {
+        let directoryURL = self.fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let directoryForFile = directoryURL.appendingPathComponent("\(self.rootFolderName)/\(folder)")
+        let fileURL = directoryForFile.appendingPathComponent(filename)
 
-        try! fileManager.createDirectoryAtURL(directoryForFile, withIntermediateDirectories: true, attributes: nil)
-        if fileManager.fileExistsAtPath(fileURL.path!) {
-            try! fileManager.removeItemAtURL(fileURL)
+        try! fileManager.createDirectory(at: directoryForFile, withIntermediateDirectories: true, attributes: nil)
+        if fileManager.fileExists(atPath: fileURL.path) {
+            try! fileManager.removeItem(at: fileURL)
         }
 
         return fileURL
     }
 
     func isMediaFilePresent(path: String) -> Bool {
-        let directoryURL = self.fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-        let fileURL = directoryURL.URLByAppendingPathComponent("\(self.rootFolderName)/\(path)")
-        return fileManager.fileExistsAtPath(fileURL.path!)
+        let directoryURL = self.fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = directoryURL.appendingPathComponent("\(self.rootFolderName)/\(path)")
+        return fileManager.fileExists(atPath: fileURL.path)
     }
 }

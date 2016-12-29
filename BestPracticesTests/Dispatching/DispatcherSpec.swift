@@ -1,6 +1,5 @@
 import Quick
 import Nimble
-import Fleet
 @testable import BestPractices
 
 class DispatcherSpec: QuickSpec {
@@ -14,7 +13,7 @@ class DispatcherSpec: QuickSpec {
         
         describe("With a real Dispatcher") {
             it("correctly sets the mainQueue property") {
-                expect(subject.mainQueue).to(beIdenticalTo(NSOperationQueue.mainQueue()))
+                expect(subject.mainQueue).to(beIdenticalTo(OperationQueue.main))
             }
         }
         
@@ -30,7 +29,7 @@ class DispatcherSpec: QuickSpec {
                 var blockCalled = false
                 
                 beforeEach {
-                    subject.dispatchToMainQueue({ blockCalled = true })
+                    subject.dispatchToMainQueue { blockCalled = true }
                 }
                 
                 it("does not call the block until it is executed on the main queue") {

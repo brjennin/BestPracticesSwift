@@ -1,12 +1,10 @@
-enum HTTPMethod {
-    case GET
-}
+import Alamofire
 
 struct HTTPRequest {
-    private(set) var urlString: String
-    private(set) var httpMethod: HTTPMethod
-    private(set) var params: [String: AnyObject]?
-    private(set) var headers: [String: String]?
+    fileprivate(set) var urlString: String
+    fileprivate(set) var httpMethod: HTTPMethod
+    fileprivate(set) var params: [String: AnyObject]?
+    fileprivate(set) var headers: [String: String]?
     
     init(urlString: String, httpMethod: HTTPMethod, params: [String: AnyObject]?, headers: [String: String]?) {
         self.urlString = urlString

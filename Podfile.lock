@@ -1,43 +1,43 @@
 PODS:
-  - Alamofire (3.5.0)
-  - Fleet (0.2.5)
-  - Mockingjay (1.2.2):
-    - Mockingjay/Core (= 1.2.2)
-    - Mockingjay/XCTest (= 1.2.2)
-  - Mockingjay/Core (1.2.2):
-    - URITemplate (~> 1.3)
-  - Mockingjay/XCTest (1.2.2):
+  - Alamofire (4.2.0)
+  - Fleet (2.0.2)
+  - Mockingjay (2.0.0):
+    - Mockingjay/Core (= 2.0.0)
+    - Mockingjay/XCTest (= 2.0.0)
+  - Mockingjay/Core (2.0.0):
+    - URITemplate (~> 2.0)
+  - Mockingjay/XCTest (2.0.0):
     - Mockingjay/Core
-  - Nimble (4.1.0)
-  - Quick (0.9.3)
+  - Nimble (5.0.0)
+  - Quick (0.10.0)
   - Realm (1.1.0):
     - Realm/Headers (= 1.1.0)
   - Realm/Headers (1.1.0)
   - RealmSwift (1.1.0):
     - Realm (= 1.1.0)
-  - SwiftyJSON (2.3.2)
-  - URITemplate (1.3.1)
+  - SwiftyJSON (3.1.0)
+  - URITemplate (2.0.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 3.5)
-  - Fleet (~> 0.2)
-  - Mockingjay (~> 1.2)
-  - Nimble (~> 4.1)
-  - Quick (~> 0.9)
+  - Alamofire (~> 4.2)
+  - Fleet (~> 2.0)
+  - Mockingjay (~> 2.0)
+  - Nimble (~> 5.0)
+  - Quick (~> 0.10)
   - RealmSwift (~> 1.1)
-  - SwiftyJSON (~> 2.3)
+  - SwiftyJSON (~> 3.1)
 
 SPEC CHECKSUMS:
-  Alamofire: b70a7352335f8ea5babd0a923eb7e8eacc67b877
-  Fleet: e82f05ad207d6c9b2d05e7c26a2b4b76d06aa466
-  Mockingjay: 5de65f14108473afc6727e05df9a3ecc9cef8562
-  Nimble: 97a0a4cae5124c117115634b2d055d8c97d0af19
-  Quick: 13a2a2b19a5d8e3ed4fd0c36ee46597fd77ebf71
+  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  Fleet: 5647317c246f007c3090c0a4fc1a8bae6eba646e
+  Mockingjay: 7122a3fc0597aa63438e4cd9b71b7bc8aac05b87
+  Nimble: 56fc9f5020effa2206de22c3dd910f4fb011b92f
+  Quick: 5d290df1c69d5ee2f0729956dcf0fd9a30447eaa
   Realm: ceecf1a4540c4ce9efe196fe73fa9855bce05bd8
   RealmSwift: 838058b2db95b12cb86bd0cf209df642c33fb60a
-  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
-  URITemplate: 398a48d6559e23b77bd41176b675b017ad1fc959
+  SwiftyJSON: 29b9f2a64f118c07e691667c2ba1efe536acfe0b
+  URITemplate: a5acb3f76c6a2338116fde88b658d83f91bbac45
 
-PODFILE CHECKSUM: 4e6c382427327e246f28e876cd6cc4d9414a5c68
+PODFILE CHECKSUM: 82c682aaea7cc32f5a860040a80d66951e9a6db8
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.1.1

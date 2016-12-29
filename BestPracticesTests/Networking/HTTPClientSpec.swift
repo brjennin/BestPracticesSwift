@@ -1,8 +1,8 @@
 import Quick
 import Nimble
-import Fleet
 import SwiftyJSON
 import Mockingjay
+import Alamofire
 @testable import BestPractices
 
 class HTTPClientSpec: QuickSpec {
@@ -14,6 +14,8 @@ class HTTPClientSpec: QuickSpec {
         var diskMaster: MockDiskMaster!
         var activityIndicator: MockActivityIndicator!
 
+        var completionCalled: Bool!
+        
         beforeEach {
             subject = HTTPClient()
 
@@ -30,39 +32,51 @@ class HTTPClientSpec: QuickSpec {
         sharedExamples("displaying network activity") {
             it("started the activity indicator") {
                 expect(activityIndicator.calledStart).to(beTruthy())
-            }
-
-            it("stopped the activity indicator") {
                 expect(activityIndicator.calledStop).toEventually(beTruthy())
-            }
-
-            it("is not currently spinning") {
                 expect(activityIndicator.spinning).toEventually(beFalsy())
+                expect(completionCalled).toEventually(beTruthy())
             }
         }
 
         describe(".makeJsonRequest") {
-            var returnedJSON: JSON?
-            var returnedError: NSError?
-            var completionCalled: Bool!
+            var expectedJSON: JSON?
+            var expectedError: NSError?
+            
             var request: HTTPRequest!
             var completion: ((JSON?, NSError?) -> ())!
 
             beforeEach {
+                expectedJSON = nil
+                expectedError = nil
+                completionCalled = false
+                
                 completion = { json, error in
                     completionCalled = true
-                    returnedJSON = json
-                    returnedError = error
+
+                    if let expJSON = expectedJSON {
+                        expect(json).to(equal(expJSON));
+                    } else {
+                        expect(json).to(beNil());
+                    }
+                    if let expError = expectedError {
+                        expect(error).to(equal(expError));
+                    } else {
+                        expect(error).to(beNil());
+                    }
                 }
-                completionCalled = false
-                request = HTTPRequest(urlString: "urlstring", httpMethod: HTTPMethod.GET, params: nil, headers: nil)
+                request = HTTPRequest(urlString: "urlstring", httpMethod: HTTPMethod.get, params: nil, headers: nil)
             }
 
             context("When a 200 response code") {
                 context("With JSON") {
                     beforeEach {
-                        self.stub(uri("translatedURL"), builder: json(["key": "val"], status: 200))
-                        subject.makeJsonRequest(request, completion: completion)
+                        requestTranslator.returnValueForRequestTranslation = "translatedURL1"
+                        self.stub(uri("translatedURL1"), json(["key": "val"], status: 200))
+                        
+                        expectedJSON = JSON(["key": "val"])
+                        expectedError = nil
+                        
+                        subject.makeJsonRequest(request: request, completion: completion)
                     }
 
                     itBehavesLike("displaying network activity")
@@ -70,23 +84,19 @@ class HTTPClientSpec: QuickSpec {
                     it("translates the request into an Alamofire request") {
                         expect(requestTranslator.calledTranslate).to(beTruthy())
                         expect(requestTranslator.capturedRequest!.urlString).to(equal("urlstring"))
-                    }
-
-                    it("returns json") {
                         expect(completionCalled).toEventually(beTruthy())
-                        expect(returnedJSON).toEventuallyNot(beNil())
-                        expect(returnedJSON).toEventually(equal(JSON(["key": "val"])))
-                    }
-
-                    it("does not send an error") {
-                        expect(returnedError).to(beNil())
                     }
                 }
 
                 context("Without JSON") {
                     beforeEach {
-                        self.stub(uri("translatedURL"), builder: http(200))
-                        subject.makeJsonRequest(request, completion: completion)
+                        requestTranslator.returnValueForRequestTranslation = "translatedURL2"
+                        self.stub(uri("translatedURL2"), http(200))
+                        
+                        expectedJSON = nil
+                        expectedError = NSError(domain: "Alamofire.AFError", code: 4, userInfo: nil);
+                        
+                        subject.makeJsonRequest(request: request, completion: completion)
                     }
 
                     itBehavesLike("displaying network activity")
@@ -94,23 +104,20 @@ class HTTPClientSpec: QuickSpec {
                     it("translates the request into an Alamofire request") {
                         expect(requestTranslator.calledTranslate).to(beTruthy())
                         expect(requestTranslator.capturedRequest!.urlString).to(equal("urlstring"))
-                    }
-
-                    it("returns nil for json") {
                         expect(completionCalled).toEventually(beTruthy())
-                        expect(returnedJSON).toEventually(beNil())
-                    }
-
-                    it("sends along the error") {
-                        expect(returnedError).toNot(beNil())
                     }
                 }
             }
 
             context("When a non-200 response code") {
                 beforeEach {
-                    self.stub(uri("translatedURL"), builder: json(["key": "val"], status: 300))
-                    subject.makeJsonRequest(request, completion: completion)
+                    requestTranslator.returnValueForRequestTranslation = "translatedURL3"
+                    self.stub(uri("translatedURL3"), json(["key": "val"], status: 300))
+                    
+                    expectedJSON = nil
+                    expectedError = NSError(domain: "Alamofire.AFError", code: 3, userInfo: nil);
+                    
+                    subject.makeJsonRequest(request: request, completion: completion)
                 }
 
                 itBehavesLike("displaying network activity")
@@ -118,23 +125,20 @@ class HTTPClientSpec: QuickSpec {
                 it("translates the request into an Alamofire request") {
                     expect(requestTranslator.calledTranslate).to(beTruthy())
                     expect(requestTranslator.capturedRequest!.urlString).to(equal("urlstring"))
-                }
-
-                it("returns nil for the json") {
                     expect(completionCalled).toEventually(beTruthy())
-                    expect(returnedJSON).toEventually(beNil())
-                }
-
-                it("returns the error") {
-                    expect(returnedError).toNot(beNil())
                 }
             }
 
             context("When there is a server error") {
                 beforeEach {
+                    requestTranslator.returnValueForRequestTranslation = "translatedURL4"
                     let error = NSError(domain: "com.error.thing", code: 500, userInfo: nil)
-                    self.stub(uri("translatedURL"), builder: failure(error))
-                    subject.makeJsonRequest(request, completion: completion)
+                    self.stub(uri("translatedURL4"), failure(error))
+                    
+                    expectedJSON = nil
+                    expectedError = error
+                    
+                    subject.makeJsonRequest(request: request, completion: completion)
                 }
 
                 itBehavesLike("displaying network activity")
@@ -142,101 +146,96 @@ class HTTPClientSpec: QuickSpec {
                 it("translates the request into an Alamofire request") {
                     expect(requestTranslator.calledTranslate).to(beTruthy())
                     expect(requestTranslator.capturedRequest!.urlString).to(equal("urlstring"))
-                }
-
-                it("returns nil for the json") {
                     expect(completionCalled).toEventually(beTruthy())
-                    expect(returnedJSON).toEventually(beNil())
-                }
-
-                it("returns the error") {
-                    expect(returnedError!.code).to(equal(500))
                 }
             }
         }
 
         describe(".downloadFile") {
-            let bundle = NSBundle(forClass: self.dynamicType)
-            let path = bundle.pathForResource("maneater", ofType: "mp3")!
-            let sampleData = NSData(contentsOfFile: path)
-
-            let fileManager = NSFileManager.defaultManager()
-            let directoryURL = fileManager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-            let testFile = directoryURL.URLByAppendingPathComponent("tests/testfile.example")
+            let bundle = Bundle(for: type(of: self))
+            let path = bundle.path(forResource: "maneater", ofType: "mp3")!
+            let url = URL(fileURLWithPath: path)
+            let sampleData = try! Data(contentsOf: url)
+            let download = Download.content(sampleData)
+            
+            let fileManager = FileManager.default
+            let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+            let testFile = directoryURL.appendingPathComponent("tests/testfile.example")
 
             context("When a 200 response code") {
                 beforeEach {
-                    self.stub(uri("dataURL"), builder: http(200, data: sampleData))
+                    self.stub(uri("dataURL"), http(200, headers: nil, download: download))
                 }
 
                 it("returns a url") {
                     var completionCalled = false
 
                     waitUntil { done in
-                        subject.downloadFile("dataURL", folderPath: "something/or/other/", completion: {url in
+                        subject.downloadFile(url: "dataURL", folderPath: "something/or/other/", completion: { url in
                             completionCalled = true
-                            expect(diskMaster.calledMediaURLForSongWithFilename).to(beTruthy())
+                        
+                            expect(diskMaster.calledMediaURLForFileWithFilename).to(beTruthy())
                             expect(diskMaster.capturedFolderForMediaURL!).to(equal("something/or/other/"))
                             expect(diskMaster.capturedFilenameForMediaURL!).to(equal("dataURL.mp3"))
                             expect(url).to(equal(testFile))
-                            expect(fileManager.fileExistsAtPath(url!.path!)).to(beTruthy())
-                            expect(NSData(contentsOfURL: url!)).to(equal(sampleData))
+                            expect(fileManager.fileExists(atPath: url!.path)).to(beTruthy())
+                            expect(try! Data(contentsOf: url!)).to(equal(sampleData))
 
                             done()
                         })
                     }
 
-                    expect(completionCalled).toEventually(beTruthy())
                     expect(activityIndicator.calledStart).to(beTruthy())
                     expect(activityIndicator.calledStop).toEventually(beTruthy())
                     expect(activityIndicator.spinning).toEventually(beFalsy())
+                    expect(completionCalled).toEventually(beTruthy())
                 }
             }
 
             context("When a non-200 response code") {
                 beforeEach {
-                    self.stub(uri("dataURL"), builder: http(300, data: sampleData))
+                    self.stub(uri("dataURL"), http(300, headers: nil, download: download))
                 }
 
                 it("returns nil for the URL") {
                     var completionCalled = false
 
                     waitUntil { done in
-                        subject.downloadFile("dataURL", folderPath: "something/or/other/", completion: {url in
+                        subject.downloadFile(url: "dataURL", folderPath: "something/or/other/", completion: {url in
                             completionCalled = true
                             expect(url).to(beNil())
                             done()
                         })
                     }
-
-                    expect(completionCalled).toEventually(beTruthy())
+                    
                     expect(activityIndicator.calledStart).to(beTruthy())
                     expect(activityIndicator.calledStop).toEventually(beTruthy())
                     expect(activityIndicator.spinning).toEventually(beFalsy())
+                    expect(completionCalled).toEventually(beTruthy())
                 }
             }
 
             context("When there is a server error") {
                 beforeEach {
                     let error = NSError(domain: "com.error.thing", code: 500, userInfo: nil)
-                    self.stub(uri("dataURL"), builder: failure(error))
+                    self.stub(uri("dataURL"), failure(error))
                 }
 
                 it("returns nil for the URL") {
                     var completionCalled = false
 
                     waitUntil { done in
-                        subject.downloadFile("dataURL", folderPath: "something/or/other/", completion: {url in
+                        subject.downloadFile(url: "dataURL", folderPath: "something/or/other/", completion: {url in
                             completionCalled = true
                             expect(url).to(beNil())
                             done()
                         })
                     }
 
-                    expect(completionCalled).toEventually(beTruthy())
                     expect(activityIndicator.calledStart).to(beTruthy())
                     expect(activityIndicator.calledStop).toEventually(beTruthy())
                     expect(activityIndicator.spinning).toEventually(beFalsy())
+                    expect(completionCalled).toEventually(beTruthy())
                 }
             }
         }

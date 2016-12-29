@@ -2,30 +2,47 @@ import AVKit
 import AVFoundation
 
 protocol PlayerProtocol: class {
-    func loadSong(filePath: String)
-    
-    func clearSong()
-    
-    func play()
+    func loadSound(filePath: String)
+
+    func clearSound()
+
+    func play(delay: Bool, reverb: Bool)
+
+    func pitchShift(amount: Float)
 }
 
 class Player: PlayerProtocol {
-    
-    var audioPlayer: AVAudioPlayer?
-    
-    func loadSong(filePath: String) {
-        let url = NSURL(fileURLWithPath: filePath)
-        self.audioPlayer = try? AVAudioPlayer(contentsOfURL: url)
-    }
-    
-    func clearSong() {
-        self.audioPlayer = nil
-    }
-    
-    func play() {
-        if let player = self.audioPlayer {
-            player.play()
+
+    var engineBuilder: EngineBuilderProtocol! = EngineBuilder()
+    var shiftTranslator: ShiftTranslatorProtocol! = ShiftTranslator()
+
+    var audioBox: AudioBoxProtocol?
+
+    func loadSound(filePath: String) {
+        let url = URL(fileURLWithPath: filePath)
+        let file = try? AVAudioFile.init(forReading: url)
+
+        if let file = file {
+            do {
+                audioBox = engineBuilder.buildEngine(audioFile: file)
+                try audioBox!.start()
+            } catch {
+                audioBox = nil
+            }
         }
     }
-    
+
+    func clearSound() {
+        audioBox?.stop()
+        audioBox = nil
+    }
+
+    func play(delay: Bool, reverb: Bool) {
+        audioBox?.play(delay: delay, reverb: reverb)
+    }
+
+    func pitchShift(amount: Float) {
+        audioBox?.pitchShift(amount: shiftTranslator.translateSlider(value: amount))
+    }
+
 }
