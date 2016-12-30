@@ -18,11 +18,11 @@ class EngineBuilder: EngineBuilderProtocol {
         let eqNode = AVAudioUnitEQ()
         var nodes: [AVAudioNode] = [playerNode]
         nodes.append(eqNode)
-        nodes.append(pitchShiftNode)
         nodes.append(reverbNode)
         for node in delayNodes {
             nodes.append(node)
         }
+        nodes.append(pitchShiftNode)
 
         var previousNode: AVAudioNode?
         for node in nodes {

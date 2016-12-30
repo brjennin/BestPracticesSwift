@@ -89,9 +89,14 @@ class EngineBuilderSpec: QuickSpec {
 
             it("sets up an engine with 5 delays, pitch shift, reverb and eq attached to a player") {
                 let outputConnectionPoint = engine.inputConnectionPoint(for: engine.outputNode, inputBus: 0)!
-                expect(outputConnectionPoint.node!).to(beAKindOf(AVAudioUnitDelay.self))
-
-                let delay1 = outputConnectionPoint.node! as! AVAudioUnitDelay
+                expect(outputConnectionPoint.node!).to(beAKindOf(AVAudioUnitVarispeed.self))
+                
+                let pitchShiftNode = outputConnectionPoint.node! as! AVAudioUnitVarispeed
+                expect(pitchShiftNode).to(beIdenticalTo(pitchShift))
+                let pitchShiftConnection = engine.inputConnectionPoint(for: pitchShiftNode, inputBus: 0)!
+                expect(pitchShiftConnection.node!).to(beAKindOf(AVAudioUnitDelay.self))
+                
+                let delay1 = pitchShiftConnection.node! as! AVAudioUnitDelay
                 expect(delayNodes).to(contain(delay1))
                 let delay1Connection = engine.inputConnectionPoint(for: delay1, inputBus: 0)!
                 expect(delay1Connection.node!).to(beAKindOf(AVAudioUnitDelay.self))
@@ -119,14 +124,9 @@ class EngineBuilderSpec: QuickSpec {
                 let reverbNode = delay5Connection.node! as! AVAudioUnitReverb
                 expect(reverbNode).to(beIdenticalTo(reverb))
                 let reverbConnection = engine.inputConnectionPoint(for: reverbNode, inputBus: 0)!
-                expect(reverbConnection.node!).to(beAKindOf(AVAudioUnitVarispeed.self))
+                expect(reverbConnection.node!).to(beAKindOf(AVAudioUnitEQ.self))
 
-                let pitchShiftNode = reverbConnection.node! as! AVAudioUnitVarispeed
-                expect(pitchShiftNode).to(beIdenticalTo(pitchShift))
-                let pitchShiftConnection = engine.inputConnectionPoint(for: pitchShiftNode, inputBus: 0)!
-                expect(pitchShiftConnection.node!).to(beAKindOf(AVAudioUnitEQ.self))
-
-                let eqNode = pitchShiftConnection.node! as! AVAudioUnitEQ
+                let eqNode = reverbConnection.node! as! AVAudioUnitEQ
                 expect(eqNode).to(beIdenticalTo(eq))
                 let eqConnection = engine.inputConnectionPoint(for: eqNode, inputBus: 0)!
                 expect(eqConnection.node!).to(beAKindOf(AVAudioPlayerNode.self))
