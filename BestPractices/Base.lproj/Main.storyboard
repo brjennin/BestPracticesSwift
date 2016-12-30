@@ -24,12 +24,22 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bg5-RO-Cu9" userLabel="album art">
-                                <rect key="frame" x="51" y="40" width="273.5" height="273.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gXh-qb-lep" userLabel="Album Art Container">
+                                <rect key="frame" x="50.5" y="40" width="273.5" height="273.5"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bg5-RO-Cu9" userLabel="album art">
+                                        <rect key="frame" x="10" y="10" width="253.5" height="253.5"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.75027508799999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="Bg5-RO-Cu9" secondAttribute="height" multiplier="1:1" id="XZv-Vy-hcb"/>
+                                    <constraint firstItem="Bg5-RO-Cu9" firstAttribute="leading" secondItem="gXh-qb-lep" secondAttribute="leading" constant="10" id="MDi-vt-jWc"/>
+                                    <constraint firstAttribute="width" secondItem="gXh-qb-lep" secondAttribute="height" multiplier="1:1" id="Ydv-tD-NDj"/>
+                                    <constraint firstAttribute="bottom" secondItem="Bg5-RO-Cu9" secondAttribute="bottom" constant="10" id="hUU-fy-NBz"/>
+                                    <constraint firstAttribute="trailing" secondItem="Bg5-RO-Cu9" secondAttribute="trailing" constant="10" id="jic-h5-uuC"/>
+                                    <constraint firstItem="Bg5-RO-Cu9" firstAttribute="top" secondItem="gXh-qb-lep" secondAttribute="top" constant="10" id="qxq-h9-dHd"/>
                                 </constraints>
-                            </imageView>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IAW-bD-sJH" userLabel="Title Label">
                                 <rect key="frame" x="46" y="323.5" width="283" height="27.5"/>
                                 <constraints>
@@ -258,15 +268,15 @@
                             <constraint firstAttribute="trailing" secondItem="Ggc-DK-rLb" secondAttribute="trailing" id="1E0-NV-2Ca"/>
                             <constraint firstItem="lgV-VT-P0Y" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4yX-Hh-uMR"/>
                             <constraint firstItem="IAW-bD-sJH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="30" id="DxZ-3k-cEq"/>
-                            <constraint firstItem="IAW-bD-sJH" firstAttribute="top" secondItem="Bg5-RO-Cu9" secondAttribute="bottom" constant="10" id="PoI-Sd-bx3"/>
+                            <constraint firstItem="gXh-qb-lep" firstAttribute="centerX" secondItem="IAW-bD-sJH" secondAttribute="centerX" id="QSo-Sl-C8T"/>
+                            <constraint firstItem="gXh-qb-lep" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="XiG-Pd-a51"/>
                             <constraint firstAttribute="trailingMargin" secondItem="IAW-bD-sJH" secondAttribute="trailing" constant="30" id="ca4-Kz-sr2"/>
-                            <constraint firstItem="IAW-bD-sJH" firstAttribute="centerX" secondItem="Bg5-RO-Cu9" secondAttribute="centerX" id="egQ-1L-TJ6"/>
+                            <constraint firstItem="gXh-qb-lep" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="eJg-pK-N2h"/>
+                            <constraint firstItem="IAW-bD-sJH" firstAttribute="top" secondItem="gXh-qb-lep" secondAttribute="bottom" constant="10" id="gig-Si-eDM"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lgV-VT-P0Y" secondAttribute="bottom" constant="20" id="iOD-l6-1Ba"/>
                             <constraint firstItem="Gvc-Dv-EEH" firstAttribute="top" secondItem="IAW-bD-sJH" secondAttribute="bottom" constant="40" id="pkp-SD-eLc"/>
-                            <constraint firstItem="Bg5-RO-Cu9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="qSd-gU-cgE"/>
                             <constraint firstItem="lgV-VT-P0Y" firstAttribute="top" secondItem="Gvc-Dv-EEH" secondAttribute="bottom" constant="40" id="qbU-FG-HAl"/>
                             <constraint firstAttribute="trailing" secondItem="Gvc-Dv-EEH" secondAttribute="trailing" constant="10" id="rg6-dx-owX"/>
-                            <constraint firstItem="Bg5-RO-Cu9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="sO8-ff-aSd"/>
                             <constraint firstItem="Gvc-Dv-EEH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="z2Q-2z-fCp"/>
                             <constraint firstItem="Ggc-DK-rLb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="zLn-dR-nqa"/>
                         </constraints>
@@ -301,6 +311,7 @@
                         <outletCollection property="circleRadiusElements" destination="lgV-VT-P0Y" collectionClass="NSMutableArray" id="EI9-RY-8Ye"/>
                         <outletCollection property="circleRadiusElements" destination="NVg-wo-ubL" collectionClass="NSMutableArray" id="rm8-Vz-Bnd"/>
                         <outletCollection property="circleRadiusElements" destination="Bg5-RO-Cu9" collectionClass="NSMutableArray" id="V2q-vl-TYa"/>
+                        <outletCollection property="circleRadiusElements" destination="gXh-qb-lep" collectionClass="NSMutableArray" id="SId-KM-iaV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
