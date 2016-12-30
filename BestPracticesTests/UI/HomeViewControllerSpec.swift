@@ -151,7 +151,7 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("sets the label to the sound name") {
-                        expect(subject.title).to(equal("Sound One"))
+                        expect(subject.nameLabel.text).to(equal("Sound One"))
                     }
 
                     itBehavesLike("downloading sound assets")
@@ -171,8 +171,7 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("resets the title to the app name") {
-                        expect(AppDelegate.applicationName).toNot(beNil())
-                        expect(subject.title).to(equal(AppDelegate.applicationName))
+                        expect(subject.nameLabel.text).to(equal(""))
                     }
                 }
             }
@@ -283,7 +282,7 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("sets the label to the sound name") {
-                        expect(subject.title).to(equal("Hall and Oates"))
+                        expect(subject.nameLabel.text).to(equal("Hall and Oates"))
                     }
 
                     itBehavesLike("downloading sound assets")

@@ -9,6 +9,8 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var whammySlider: UISlider!
     @IBOutlet weak var reverbNation: UISwitch!
     @IBOutlet weak var chooseSoundButton: UIBarButtonItem!
+    @IBOutlet weak var nameLabel: UILabel!
+    
     @IBOutlet var smallRadiusElements: [UIView]!
     @IBOutlet var largeRadiusElements: [UIView]!
     @IBOutlet var circleRadiusElements: [UIView]!
@@ -21,6 +23,21 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         self.title = AppDelegate.applicationName
+        self.playButton.setFAIcon(icon: FAType.FAPhone, iconSize: 50, forState: .normal)
+        
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.chooseSoundButton.FAIcon = FAType.FAUserPlus
+        self.nameLabel.text = ""
+        
+        soundCache.getSounds { [weak self] soundGroups in
+            if soundGroups.count > 0 {
+                self?.soundWasSelected(sound: soundGroups.first!.sounds.first!)
+            }
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         for element in smallRadiusElements {
             element.layer.cornerRadius = 1
@@ -33,16 +50,6 @@ class HomeViewController: UIViewController {
         for element in circleRadiusElements {
             element.layer.cornerRadius = element.bounds.width / 2.0
             element.layer.masksToBounds = true
-        }
-        self.playButton.setFAIcon(icon: FAType.FABullhorn, iconSize: 30, forState: .normal)
-        
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        self.chooseSoundButton.FAIcon = FAType.FAEject
-        
-        soundCache.getSounds { [weak self] soundGroups in
-            if soundGroups.count > 0 {
-                self?.soundWasSelected(sound: soundGroups.first!.sounds.first!)
-            }
         }
     }
 
@@ -74,7 +81,7 @@ extension HomeViewController: SoundSelectionDelegate {
         _ = self.navigationController?.popViewController(animated: true)
         self.albumArtImageView.image = nil
         self.player.clearSound()
-        self.title = sound.name
+        self.nameLabel.text = sound.name
 
         self.soundLoader.loadSoundAssets(sound: sound, soundCompletion: { [weak self] soundWithSound in
             if let soundPath = soundWithSound.soundLocalPath {

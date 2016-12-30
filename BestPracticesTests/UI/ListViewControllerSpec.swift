@@ -167,7 +167,7 @@ class ListViewControllerSpec: QuickSpec {
             }
 
             it("sets the title") {
-                expect(subject.title).to(equal("Choose a Sound"))
+                expect(subject.title).to(equal("Contacts"))
             }
 
             it("sets itself as the data source for the table view") {

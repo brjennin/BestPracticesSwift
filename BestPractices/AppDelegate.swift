@@ -7,7 +7,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var applicationProvider: ApplicationProviderProtocol! = ApplicationProvider()
-    static let applicationName = "YACHTY"
+    static let applicationName = "U DON'T HAVE TO CALL"
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
