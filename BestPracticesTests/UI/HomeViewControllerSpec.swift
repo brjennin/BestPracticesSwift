@@ -109,7 +109,8 @@ class HomeViewControllerSpec: QuickSpec {
             }
 
             it("sets the title default to the app name") {
-                expect(subject.title).to(equal("YACHTY"))
+                expect(AppDelegate.applicationName).toNot(beNil())
+                expect(subject.title).to(equal(AppDelegate.applicationName))
             }
 
             it("gets the sounds from the cache") {
@@ -170,7 +171,8 @@ class HomeViewControllerSpec: QuickSpec {
                     }
 
                     it("resets the title to the app name") {
-                        expect(subject.title).to(equal("YACHTY"))
+                        expect(AppDelegate.applicationName).toNot(beNil())
+                        expect(subject.title).to(equal(AppDelegate.applicationName))
                     }
                 }
             }

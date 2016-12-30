@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.title = "YACHTY"
+        self.title = AppDelegate.applicationName
         
         for element in smallRadiusElements {
             element.layer.cornerRadius = 1
