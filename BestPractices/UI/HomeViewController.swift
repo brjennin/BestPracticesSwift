@@ -11,6 +11,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var chooseSoundButton: UIBarButtonItem!
     @IBOutlet var smallRadiusElements: [UIView]!
     @IBOutlet var largeRadiusElements: [UIView]!
+    @IBOutlet var circleRadiusElements: [UIView]!
     
     var player: PlayerProtocol! = Player()
     var soundLoader: SoundLoaderProtocol! = SoundLoader()
@@ -29,6 +30,11 @@ class HomeViewController: UIViewController {
             element.layer.cornerRadius = 5
             element.layer.masksToBounds = true
         }
+        for element in circleRadiusElements {
+            element.layer.cornerRadius = element.bounds.width / 2.0
+            element.layer.masksToBounds = true
+        }
+        self.playButton.setFAIcon(icon: FAType.FABullhorn, iconSize: 30, forState: .normal)
         
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.chooseSoundButton.FAIcon = FAType.FAEject
