@@ -105,7 +105,7 @@ class HomeViewControllerSpec: QuickSpec {
 
             it("has a button to go to the list view") {
                 expect(subject.chooseSoundButton).toNot(beNil())
-                expect(subject.chooseSoundButton.FAIcon).to(equal(FAType.FAEject))
+                expect(subject.chooseSoundButton.FAIcon).to(equal(FAType.FAUserPlus))
             }
 
             it("sets the title default to the app name") {
