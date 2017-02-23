@@ -3,7 +3,7 @@ import Foundation
 protocol DiskMasterProtocol: class {
     func wipeLocalStorage()
 
-    func mediaURLForFileWithFilename(folder: String, filename: String) -> URL
+    func destructiveMediaURLForFileWithFilename(folder: String, filename: String) -> URL
 
     func isMediaFilePresent(path: String) -> Bool
 }
@@ -21,7 +21,7 @@ class DiskMaster: DiskMasterProtocol {
         }
     }
 
-    func mediaURLForFileWithFilename(folder: String, filename: String) -> URL {
+    func destructiveMediaURLForFileWithFilename(folder: String, filename: String) -> URL {
         let directoryURL = self.fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         let directoryForFile = directoryURL.appendingPathComponent("\(self.rootFolderName)/\(folder)")
         let fileURL = directoryForFile.appendingPathComponent(filename)

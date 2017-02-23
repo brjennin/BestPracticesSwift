@@ -174,9 +174,9 @@ class HTTPClientSpec: QuickSpec {
                         subject.downloadFile(url: "dataURL", folderPath: "something/or/other/", completion: { url in
                             completionCalled = true
                         
-                            expect(diskMaster.calledMediaURLForFileWithFilename).to(beTruthy())
-                            expect(diskMaster.capturedFolderForMediaURL!).to(equal("something/or/other/"))
-                            expect(diskMaster.capturedFilenameForMediaURL!).to(equal("dataURL.mp3"))
+                            expect(diskMaster.calledDestructiveMediaURLForFileWithFilename).to(beTruthy())
+                            expect(diskMaster.capturedFolderForDestructiveMediaURL!).to(equal("something/or/other/"))
+                            expect(diskMaster.capturedFilenameForDestructiveMediaURL!).to(equal("dataURL.mp3"))
                             expect(url).to(equal(testFile))
                             expect(fileManager.fileExists(atPath: url!.path)).to(beTruthy())
                             expect(try! Data(contentsOf: url!)).to(equal(sampleData))

@@ -54,7 +54,7 @@ class DiskMasterSpec: QuickSpec {
             }
         }
 
-        describe(".mediaURLForSoundWithFilename") {
+        describe(".destructiveMediaURLForFileWithFilename") {
             var result: URL!
 
             context("When the root folder doesn't exist") {
@@ -63,7 +63,7 @@ class DiskMasterSpec: QuickSpec {
                         try! fileManager.removeItem(at: mediaDirectory)
                     }
 
-                    result = subject.mediaURLForFileWithFilename(folder: "sounds/thing/1/", filename: "file.mp3")
+                    result = subject.destructiveMediaURLForFileWithFilename(folder: "sounds/thing/1/", filename: "file.mp3")
                 }
 
                 it("creates intermediate folders and returns the URL to where the file would go") {
@@ -95,7 +95,7 @@ class DiskMasterSpec: QuickSpec {
                     context("When the file already exists") {
                         beforeEach {
                             fileManager.createFile(atPath: filePath.path, contents: nil, attributes: nil)
-                            result = subject.mediaURLForFileWithFilename(folder: "sounds/thing/1/", filename: "file.mp3")
+                            result = subject.destructiveMediaURLForFileWithFilename(folder: "sounds/thing/1/", filename: "file.mp3")
                         }
 
                         it("creates intermediate folders and returns the URL to where the file would go") {
@@ -110,7 +110,7 @@ class DiskMasterSpec: QuickSpec {
 
                     context("When the file does not already exist") {
                         beforeEach {
-                            result = subject.mediaURLForFileWithFilename(folder: "sounds/thing/1/", filename: "file.mp3")
+                            result = subject.destructiveMediaURLForFileWithFilename(folder: "sounds/thing/1/", filename: "file.mp3")
                         }
 
                         it("creates intermediate folders and returns the URL to where the file would go") {
@@ -130,7 +130,7 @@ class DiskMasterSpec: QuickSpec {
                             try! fileManager.removeItem(at: soundsDirectory)
                         }
 
-                        result = subject.mediaURLForFileWithFilename(folder: "sounds/thing/1/", filename: "file.mp3")
+                        result = subject.destructiveMediaURLForFileWithFilename(folder: "sounds/thing/1/", filename: "file.mp3")
                     }
 
                     it("creates intermediate folders and returns the URL to where the file would go") {

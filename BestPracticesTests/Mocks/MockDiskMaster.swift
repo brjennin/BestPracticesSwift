@@ -11,14 +11,14 @@ class MockDiskMaster: DiskMasterProtocol {
         calledWipeLocalStorage = true
     }
 
-    var calledMediaURLForFileWithFilename = false
-    var capturedFolderForMediaURL: String?
-    var capturedFilenameForMediaURL: String?
+    var calledDestructiveMediaURLForFileWithFilename = false
+    var capturedFolderForDestructiveMediaURL: String?
+    var capturedFilenameForDestructiveMediaURL: String?
 
-    func mediaURLForFileWithFilename(folder: String, filename: String) -> URL {
-        calledMediaURLForFileWithFilename = true
-        capturedFolderForMediaURL = folder
-        capturedFilenameForMediaURL = filename
+    func destructiveMediaURLForFileWithFilename(folder: String, filename: String) -> URL {
+        calledDestructiveMediaURLForFileWithFilename = true
+        capturedFolderForDestructiveMediaURL = folder
+        capturedFilenameForDestructiveMediaURL = filename
 
         let fileManager = FileManager.default
         let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
