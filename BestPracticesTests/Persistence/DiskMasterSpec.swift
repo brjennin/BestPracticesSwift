@@ -141,6 +141,19 @@ class DiskMasterSpec: QuickSpec {
             }
         }
 
+        describe(".mediaURLForFileWithFilename") {
+            var result: URL!
+            let filePath = finalDirectory.appendingPathComponent("file.mp3")
+
+            beforeEach {
+                result = subject.mediaURLForFileWithFilename(filepath: "sounds/thing/1/file.mp3")
+            }
+
+            it("returns the url for the item on disk") {
+                expect(result).to(equal(filePath))
+            }
+        }
+
         describe(".isMediaFilePresent") {
             let filePath = finalDirectory.appendingPathComponent("file.mp3")
             var result: Bool!

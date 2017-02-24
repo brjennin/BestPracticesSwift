@@ -5,6 +5,8 @@ protocol DiskMasterProtocol: class {
 
     func destructiveMediaURLForFileWithFilename(folder: String, filename: String) -> URL
 
+    func mediaURLForFileWithFilename(filepath: String) -> URL
+
     func isMediaFilePresent(path: String) -> Bool
 }
 
@@ -32,6 +34,13 @@ class DiskMaster: DiskMasterProtocol {
         }
 
         return fileURL
+    }
+
+    func mediaURLForFileWithFilename(filepath: String) -> URL {
+        let directoryURL = self.fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let directoryForFile = directoryURL.appendingPathComponent("\(self.rootFolderName)/")
+
+        return directoryForFile.appendingPathComponent(filepath)
     }
 
     func isMediaFilePresent(path: String) -> Bool {

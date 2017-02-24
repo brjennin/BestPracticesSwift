@@ -18,6 +18,7 @@ class HomeViewController: UIViewController {
     var player: PlayerProtocol! = Player()
     var soundLoader: SoundLoaderProtocol! = SoundLoader()
     var soundCache: SoundCacheProtocol! = SoundCache()
+    var diskMaster: DiskMasterProtocol! = DiskMaster()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,11 +86,17 @@ extension HomeViewController: SoundSelectionDelegate {
 
         self.soundLoader.loadSoundAssets(sound: sound, soundCompletion: { [weak self] soundWithSound in
             if let soundPath = soundWithSound.soundLocalPath {
-                self?.player.loadSound(filePath: soundPath)
+                let fullURL = self?.diskMaster.mediaURLForFileWithFilename(filepath: soundPath)
+                if let fullURL = fullURL {
+                    self?.player.loadSound(filePath: fullURL.path)
+                }
             }
         }, imageCompletion: { [weak self] soundWithImage in
             if let imagePath = soundWithImage.imageLocalPath {
-                self?.albumArtImageView.image = UIImage(contentsOfFile: imagePath)
+                let fullURL = self?.diskMaster.mediaURLForFileWithFilename(filepath: imagePath)
+                if let fullURL = fullURL {
+                    self?.albumArtImageView.image = UIImage(contentsOfFile: fullURL.path)
+                }
             }
         })
     }
