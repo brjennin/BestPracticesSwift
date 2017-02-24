@@ -65,7 +65,7 @@ class SoundLoaderSpec: QuickSpec {
                         it("persists the new sound url") {
                             expect(soundPersistence.calledUpdateSoundUrl).to(beTruthy())
                             expect(soundPersistence.capturedUpdateSoundUrlSound!.identifier).to(equal(384))
-                            expect(soundPersistence.capturedUpdateSoundUrlUrl!).to(equal(sampleFileURL.path))
+                            expect(soundPersistence.capturedUpdateSoundUrlUrl!).to(equal("audio/384/maneater.mp3"))
                         }
                     }
 
@@ -109,7 +109,7 @@ class SoundLoaderSpec: QuickSpec {
                         it("persists the new sound url") {
                             expect(soundPersistence.calledUpdateImageUrl).to(beTruthy())
                             expect(soundPersistence.capturedUpdateImageUrlSound!.identifier).to(equal(384))
-                            expect(soundPersistence.capturedUpdateImageUrlUrl!).to(equal(sampleFileURL.path))
+                            expect(soundPersistence.capturedUpdateImageUrlUrl!).to(equal("images/384/hall_and_oates_cover.jpeg"))
                         }
                     }
 

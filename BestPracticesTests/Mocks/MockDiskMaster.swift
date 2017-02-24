@@ -29,6 +29,18 @@ class MockDiskMaster: DiskMasterProtocol {
         return directoryURL.appendingPathComponent("\(MockDiskMaster.rootFolderName)/testfile.example")
     }
 
+    var calledMediaURLForFileWithFilename = false
+    var capturedFilepathForMediaURL: String?
+    func mediaURLForFileWithFilename(filepath: String) -> URL {
+        calledMediaURLForFileWithFilename = true
+        capturedFilepathForMediaURL = filepath
+
+        let fileManager = FileManager.default
+        let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!        
+
+        return directoryURL.appendingPathComponent("\(MockDiskMaster.rootFolderName)/testfile.example")
+    }
+
     var calledIsMediaFilePresent = false
     var capturedPathForMediaFilePresent: String?
     var returnValueForIsMediaFilePresent: Bool!

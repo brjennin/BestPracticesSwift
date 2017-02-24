@@ -13,6 +13,7 @@ class HomeViewControllerSpec: QuickSpec {
         var player: MockPlayer!
         var soundLoader: MockSoundLoader!
         var soundCache: MockSoundCache!
+        var diskMaster: MockDiskMaster!
 
         let bundle = Bundle(for: type(of: self))
         let imagePath = bundle.path(forResource: "hall_and_oates_cover", ofType: "jpeg")!
@@ -34,16 +35,24 @@ class HomeViewControllerSpec: QuickSpec {
             soundCache = MockSoundCache()
             subject.soundCache = soundCache
 
+            diskMaster = MockDiskMaster()
+            subject.diskMaster = diskMaster
+
             navigationController = UINavigationController(rootViewController: subject)
         }
 
         sharedExamples("downloading sound assets") {
             describe("When the image asset has loaded") {
                 context("When the image asset exists") {
-                    let soundWithAssets = Sound(value: ["imageLocalPath": imagePath])
+                    let soundWithAssets = Sound(value: ["imageLocalPath": "imagePath"])
 
                     beforeEach {
                         soundLoader.capturedImageCompletion!(soundWithAssets)
+                    }
+
+                    it("gets the media url for the image") {
+                        expect(diskMaster.calledMediaURLForFileWithFilename).to(beTrue())
+                        expect(diskMaster.capturedFilepathForMediaURL).to(equal("imagePath"))
                     }
 
                     it("sets the album art image") {
@@ -71,10 +80,15 @@ class HomeViewControllerSpec: QuickSpec {
                 let soundAssetPath = bundle.path(forResource: "maneater", ofType: "mp3")!
 
                 context("When the sound asset exists") {
-                    let soundWithAssets = Sound(value: ["soundLocalPath": soundAssetPath])
+                    let soundWithAssets = Sound(value: ["soundLocalPath": "soundPath"])
 
                     beforeEach {
                         soundLoader.capturedSoundCompletion!(soundWithAssets)
+                    }
+
+                    it("gets the media url for the image") {
+                        expect(diskMaster.calledMediaURLForFileWithFilename).to(beTrue())
+                        expect(diskMaster.capturedFilepathForMediaURL).to(equal("soundPath"))
                     }
 
                     it("loads the sound into the player") {

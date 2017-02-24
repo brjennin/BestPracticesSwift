@@ -21,7 +21,7 @@ class SoundLoader: SoundLoaderProtocol {
             let folder = "\(folderName)/\(sound.identifier)/"
             self.httpClient.downloadFile(url: downloadURL, folderPath: folder) { url in
                 if let url = url {
-                    updateFunction(sound, url.path)
+                    updateFunction(sound, "\(folder)\(url.lastPathComponent)")
                 }
                 completion(sound)
             }

@@ -18,6 +18,7 @@ class HomeViewController: UIViewController {
     var player: PlayerProtocol! = Player()
     var soundLoader: SoundLoaderProtocol! = SoundLoader()
     var soundCache: SoundCacheProtocol! = SoundCache()
+    var diskMaster: DiskMasterProtocol! = DiskMaster()
 
     override func viewDidLoad() {
         super.viewDidLoad()
